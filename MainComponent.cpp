@@ -21,8 +21,10 @@ MainComponent::MainComponent()
     }
 
     addAndMakeVisible(playButton);
+    playButton.addListener(this);
+    addAndMakeVisible(stopButton);
+    stopButton.addListener(this);
     addAndMakeVisible(volumeSlider);
-    addAndMakeVisible(toggleButton);
 }
 
 MainComponent::~MainComponent()
@@ -69,9 +71,9 @@ void MainComponent::paint (juce::Graphics& g)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
     // You can add your drawing code here!
-    g.setFont(20.0f);
-    g.drawText("Hello from Port Talbot!", getLocalBounds(),
-        Justification::centred, true);
+    //g.setFont(20.0f);
+    //g.drawText("Hello from Port Talbot!", getLocalBounds(),
+        //Justification::centred, true);
 
 }
 
@@ -81,10 +83,33 @@ void MainComponent::resized()
     // If you add any child components, this is where you  should
     // update their positions.
 
-    double rowHeight = getHeight() / 5; 
+    DBG("MainComponent::resized");
+    
+    double rowHeight = getHeight() / 5;
 
     playButton.setBounds(0, 0, getWidth(), rowHeight);
-    volumeSlider.setBounds(0, rowHeight, getWidth(), rowHeight);
-    toggleButton.setBounds(0, 0, getWidth(), rowHeight);
-    
+    stopButton.setBounds(0, rowHeight, getWidth(), rowHeight);
+    volumeSlider.setBounds(0, rowHeight * 2, getWidth(), rowHeight);
+}
+
+void MainComponent::buttonClicked(Button* button)
+{
+    if (button == &playButton)
+    {
+        std::cout << "Play Button was clicked" << std::endl;
+    }
+
+    if (button == &stopButton)
+    {
+        std::cout << "Stop Button was clicked" << std::endl;
+    }
+   
+}
+
+void MainComponent::sliderValueChanged(Slider* slider)
+{
+    if (slider == &volumeSlider)
+    {
+        std::cout << "Volume slider value is: " << slider->getValue() << std::endl;
+    }
 }
