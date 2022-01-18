@@ -22,9 +22,19 @@ MainComponent::MainComponent()
 
     addAndMakeVisible(playButton);
     playButton.addListener(this);
+
     addAndMakeVisible(stopButton);
     stopButton.addListener(this);
+
     addAndMakeVisible(volumeSlider);
+    volumeSlider.setRange(0, 1);
+
+    addAndMakeVisible(loadButton);
+    loadButton.addListener(this);
+    loadButton.setButtonText("LOAD");
+
+    formatManager.registerBasicFormats();
+
 }
 
 MainComponent::~MainComponent()
@@ -43,6 +53,13 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     // but be careful - it will be called on the audio thread, not the GUI thread.
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
+    playing = false;
+
+    gain = 0.5;
+    phase = 0;
+    dphase = 0;
+
+    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -53,7 +70,29 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
-    bufferToFill.clearActiveBufferRegion();
+
+    if (!playing)
+    {
+        bufferToFill.clearActiveBufferRegion();
+        return;
+    }
+
+    /*
+
+    auto* leftChannel = bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
+    auto* rightChannel = bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
+
+    for (auto i = 0;i < bufferToFill.numSamples; ++i)
+    {
+        auto sample = fmod(phase, 1.0f);
+        phase += fmod(dphase, 0.01f);
+        dphase += 0.0000005f;
+
+        leftChannel[i] = sample * 0.125f * gain;
+        rightChannel[i] = sample * 0.125f * gain;
+    } */
+
+    transportSource.getNextAudioBlock(bufferToFill);
 }
 
 void MainComponent::releaseResources()
@@ -62,6 +101,7 @@ void MainComponent::releaseResources()
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
+    transportSource.releaseResources();
 }
 
 //==============================================================================
@@ -71,45 +111,66 @@ void MainComponent::paint (juce::Graphics& g)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
     // You can add your drawing code here!
-    //g.setFont(20.0f);
-    //g.drawText("Hello from Port Talbot!", getLocalBounds(),
-        //Justification::centred, true);
-
 }
 
 void MainComponent::resized()
 {
     // This is called when the MainContentComponent is resized.
-    // If you add any child components, this is where you  should
+    // If you add any child components, this is where you should
     // update their positions.
 
-    DBG("MainComponent::resized");
-    
-    double rowHeight = getHeight() / 5;
-
-    playButton.setBounds(0, 0, getWidth(), rowHeight);
-    stopButton.setBounds(0, rowHeight, getWidth(), rowHeight);
-    volumeSlider.setBounds(0, rowHeight * 2, getWidth(), rowHeight);
+    playButton.setBounds(0, 0, getWidth(), getHeight() / 5);
+    stopButton.setBounds(0, getHeight() / 5, getWidth(), getHeight() / 5);
+    loadButton.setBounds(0, getHeight() / 5 * 2, getWidth(), getHeight() / 5);
+    volumeSlider.setBounds(0, getHeight() / 5 * 3, getWidth(), getHeight() / 5);
 }
 
 void MainComponent::buttonClicked(Button* button)
 {
-    if (button == &playButton)
+    DBG(" MainComponent::buttonClicked: They clicked a button");
+    if (button == &playButton) // clicked button has same memory address as playButton
     {
-        std::cout << "Play Button was clicked" << std::endl;
-    }
+        playing = true;
+        dphase = 0;
 
+        transportSource.setPosition(0);
+        transportSource.start();
+    }
     if (button == &stopButton)
     {
-        std::cout << "Stop Button was clicked" << std::endl;
+        playing = false;;
+        transportSource.stop();
     }
-   
+
+    if (button == &loadButton)
+    {
+        FileChooser chooser{ "Select a file..." };
+        if (chooser.browseForFileToOpen())
+        {
+            loadURL(URL{ chooser.getResult() });
+        }
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)
 {
     if (slider == &volumeSlider)
     {
-        std::cout << "Volume slider value is: " << slider->getValue() << std::endl;
+        DBG("MainComponent::sliderValueChanged: gainSlider");
+        gain = volumeSlider.getValue();
+
+        transportSource.setGain(gain);
+    }
+}
+
+void MainComponent::loadURL(URL audioURL)
+{
+    auto* reader = formatManager.createReaderFor(audioURL.createInputStream(false));
+    if (reader != nullptr) // good file!
+    {
+        std::unique_ptr<AudioFormatReaderSource> newSource
+        (new AudioFormatReaderSource(reader, true));
+        transportSource.setSource(
+            newSource.get(), 0, nullptr, reader->sampleRate);
+        readerSource.reset(newSource.release());
     }
 }
