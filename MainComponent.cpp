@@ -144,11 +144,13 @@ void MainComponent::buttonClicked(Button* button)
 
     if (button == &loadButton)
     {
-        FileChooser chooser{ "Select a file..." };
-        if (chooser.browseForFileToOpen())
-        {
-            loadURL(URL{ chooser.getResult() });
-        }
+        auto dlgFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles;
+        this->chooser.launchAsync(dlgFlags, [this](const juce::FileChooser& chooser)
+            {
+                auto fileUri = chooser.getURLResult();
+                this->loadURL(fileUri);
+            });
+    }
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)
@@ -156,7 +158,7 @@ void MainComponent::sliderValueChanged(Slider* slider)
     if (slider == &volumeSlider)
     {
         DBG("MainComponent::sliderValueChanged: gainSlider");
-        gain = volumeSlider.getValue();
+        gain = (float) volumeSlider.getValue();
 
         transportSource.setGain(gain);
     }

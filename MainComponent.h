@@ -47,6 +47,8 @@ private:
     juce::AudioTransportSource transportSource;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
 
+
+    juce::FileChooser chooser{ "Browse audio file" };
     juce::TextButton loadButton;
     void loadURL(URL audioURL);
 
