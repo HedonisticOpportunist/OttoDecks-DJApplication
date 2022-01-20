@@ -1,6 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "DJAudioPlayer.h"
 
 //==============================================================================
 /*
@@ -8,8 +9,8 @@
     your controls and content.
 */
 class MainComponent  : public juce::AudioAppComponent, 
-                       public Button::Listener,
-                       public Slider::Listener
+                       public Button::Listener
+                  
 {
 public:
     //==============================================================================
@@ -27,30 +28,19 @@ public:
 
     //===============================================================================
     void buttonClicked(Button* button) override;
-    void sliderValueChanged(Slider* slider) override;
 
 private:
     //==============================================================================
     // Your private member variables go here...
     juce::TextButton playButton{ "PLAY"};
     juce::TextButton stopButton{ "STOP" };
-    juce::Slider volumeSlider{};
+    //juce::Slider volumeSlider{};
 
-    juce::Random random;
     bool playing;
-
-    double gain;
-    float phase;
-    double dphase;
-
-    juce::AudioFormatManager formatManager;
-    juce::AudioTransportSource transportSource;
-    std::unique_ptr<AudioFormatReaderSource> readerSource;
-
 
     juce::FileChooser chooser{ "Browse audio file" };
     juce::TextButton loadButton;
-    void loadURL(URL audioURL);
+    DJAudioPlayer player1;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
