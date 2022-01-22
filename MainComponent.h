@@ -3,6 +3,7 @@
 #include "DeckGui.h"
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
+#include "PlaylistComponent.h"
 
 //==============================================================================
 /*
@@ -29,13 +30,16 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
-    DJAudioPlayer player1;
-    DeckGui deck1{ &player1 };
+    AudioFormatManager formatManager;
+    AudioThumbnailCache thumbCache{ 100 };
+    DJAudioPlayer player1{formatManager};
+    DeckGui deck1{ &player1, formatManager, thumbCache};
 
-    DJAudioPlayer player2;
-    DeckGui deck2{ &player2 };
+    DJAudioPlayer player2{formatManager};
+    DeckGui deck2{&player2, formatManager, thumbCache};
 
     MixerAudioSource mixerSource;
+    PlaylistComponent playlistComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

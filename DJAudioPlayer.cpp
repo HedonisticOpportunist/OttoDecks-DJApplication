@@ -1,5 +1,6 @@
 #include "DJAudioPlayer.h"
-DJAudioPlayer::DJAudioPlayer()
+DJAudioPlayer::DJAudioPlayer(AudioFormatManager& _formatManager)
+	: formatManager(_formatManager)
 {
 	formatManager.registerBasicFormats();
 }
@@ -46,23 +47,18 @@ void DJAudioPlayer::setGain(double gain)
 void DJAudioPlayer::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
 	transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
+	resampleSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void DJAudioPlayer::getNextAudioBlock(const AudioSourceChannelInfo& bufferToFill)
 {
-	if (readerSource.get() == nullptr)
-
-	{
-		bufferToFill.clearActiveBufferRegion();
-		return;
-	}
-
-	transportSource.getNextAudioBlock(bufferToFill);
+	resampleSource.getNextAudioBlock(bufferToFill);
 }
 
 void DJAudioPlayer::releaseResources()
 {
 	transportSource.releaseResources();
+	resampleSource.releaseResources();
 }
 
 void DJAudioPlayer::setPositionRelative(double pos)
@@ -71,7 +67,18 @@ void DJAudioPlayer::setPositionRelative(double pos)
 	setPosition(posInSecs);
 }
 
-void DJAudioPlayer::setSpeed(double speed)
+void DJAudioPlayer::setSpeed(double ratio)
 {
+	if (ratio < 0 || ratio > 100.0)
+	{
+		std::cout << "DJAudioPlayer::setSpeed ratio should be between 0 and 100" << std::endl;
+	}
+	else {
+		resampleSource.setResamplingRatio(ratio);
+	}
+}
 
+double DJAudioPlayer::getPositionRelative()
+{
+	return transportSource.getCurrentPosition() / transportSource.getLengthInSeconds();
 }

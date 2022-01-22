@@ -23,6 +23,7 @@ MainComponent::MainComponent()
     setSize(800, 600);
     addAndMakeVisible(deck1);
     addAndMakeVisible(deck2);
+    addAndMakeVisible(playlistComponent);
 }
 
 MainComponent::~MainComponent()
@@ -77,7 +78,7 @@ void MainComponent::releaseResources()
 void MainComponent::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll(Colour(255, 203, 203));
 
     // You can add your drawing code here!
 }
@@ -88,6 +89,7 @@ void MainComponent::resized()
     // If you add any child components, this is where you should
     // update their positions.
 
-    deck1.setBounds(0, 0, getWidth() / 2, getHeight());
-    deck2.setBounds(getWidth() / 2, 0, getWidth() / 2, getHeight());
+    deck1.setBounds(0, 0, getWidth() / 3, getHeight());
+    deck2.setBounds(getWidth() / 3, 0, getWidth() / 3, getHeight());
+    playlistComponent.setBounds(0, getHeight() / 3, getWidth(), getHeight() / 3);
 }

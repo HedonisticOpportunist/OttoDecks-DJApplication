@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "DJAudioPlayer.h"
+#include "WaveformDisplay.h"
 
 //==============================================================================
 /*
@@ -19,10 +20,12 @@
 class DeckGui  : public juce::Component,
                  public Button::Listener,
                  public Slider::Listener,
-                 public FileDragAndDropTarget
+                 public FileDragAndDropTarget,
+                 public Timer 
 {
 public:
-    DeckGui(DJAudioPlayer* _djAudioPlayer);
+    DeckGui(DJAudioPlayer* _djAudioPlayer, AudioFormatManager& formatManagerToUse,
+        AudioThumbnailCache& cacheToUse);
     ~DeckGui() override;
 
     void paint (juce::Graphics&) override;
@@ -31,6 +34,7 @@ public:
     void sliderValueChanged(Slider* slider) override;
     bool isInterestedInFileDrag(const StringArray& files) override;
     void filesDropped(const StringArray& files, int x, int y) override;
+    void timerCallback() override;
 
 private:
     TextButton playButton
@@ -47,12 +51,15 @@ private:
     {
         "LOAD"
     };
+
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;
+    WaveformDisplay waveformDisplay; 
 
     juce::FileChooser chooser{ "Browse audio file" };
-    DJAudioPlayer* djAudioPlayer;
+
+    DJAudioPlayer* player;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DeckGui)
 };

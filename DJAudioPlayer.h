@@ -8,7 +8,7 @@ class DJAudioPlayer : public AudioSource
 {
 public:
 	/** The DJAudioPlayer constructor */
-	DJAudioPlayer();
+	DJAudioPlayer(AudioFormatManager& formatManager);
 	/** The DJAudioPlayer destructor */
 	~DJAudioPlayer();
 	/**loads a file from a given URL  */
@@ -31,10 +31,12 @@ public:
 	void setPositionRelative(double pos);
 	/** Sets speed */
 	void setSpeed(double speed);
-
+	/** get the relative position of the play head */
+	double getPositionRelative();
 
 private:
-	AudioFormatManager formatManager;
+	AudioFormatManager& formatManager;
 	std::unique_ptr<AudioFormatReaderSource> readerSource;
 	AudioTransportSource transportSource;
+	ResamplingAudioSource resampleSource{ &transportSource, false, 2 };
 };
