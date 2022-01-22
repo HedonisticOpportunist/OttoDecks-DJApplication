@@ -29,6 +29,8 @@ public:
 	void releaseResources() override;
 	/** Sets a relative position */
 	void setPositionRelative(double pos);
+	/** Sets speed */
+	void setSpeed(double speed);
 
 
 private:

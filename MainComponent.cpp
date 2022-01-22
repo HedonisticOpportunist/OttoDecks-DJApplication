@@ -20,18 +20,9 @@ MainComponent::MainComponent()
         setAudioChannels(2, 2);
     }
 
-    addAndMakeVisible(playButton);
-    playButton.addListener(this);
-
-    addAndMakeVisible(stopButton);
-    stopButton.addListener(this);
-
-    //addAndMakeVisible(volumeSlider);
-    //volumeSlider.setRange(0, 1);
-
-    addAndMakeVisible(loadButton);
-    loadButton.addListener(this);
-    loadButton.setButtonText("LOAD");
+    setSize(800, 600);
+    addAndMakeVisible(deck1);
+    addAndMakeVisible(deck2);
 }
 
 MainComponent::~MainComponent()
@@ -51,7 +42,10 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
 
+    mixerSource.addInputSource(&player1, false);
+    mixerSource.addInputSource(&player2, false);
     player1.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    player2.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -63,7 +57,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
 
-    player1.getNextAudioBlock(bufferToFill);
+    mixerSource.getNextAudioBlock(bufferToFill);
 }
 
 void MainComponent::releaseResources()
@@ -73,7 +67,10 @@ void MainComponent::releaseResources()
 
     // For more details, see the help for AudioProcessor::releaseResources()
 
+    mixerSource.removeAllInputs();
+    mixerSource.releaseResources();
     player1.releaseResources();
+    player2.releaseResources();
 }
 
 //==============================================================================
@@ -91,33 +88,6 @@ void MainComponent::resized()
     // If you add any child components, this is where you should
     // update their positions.
 
-    playButton.setBounds(0, 0, getWidth(), getHeight() / 5);
-    stopButton.setBounds(0, getHeight() / 5, getWidth(), getHeight() / 5);
-    loadButton.setBounds(0, getHeight() / 5 * 2, getWidth(), getHeight() / 5);
-    //volumeSlider.setBounds(0, getHeight() / 5 * 3, getWidth(), getHeight() / 5);
-}
-
-void MainComponent::buttonClicked(Button* button)
-{
-    DBG(" MainComponent::buttonClicked: They clicked a button");
-    if (button == &playButton) // clicked button has same memory address as playButton
-    {
-        playing = true;
-        player1.play();
-    }
-
-    if (button == &stopButton)
-    {
-        player1.stop();
-    }
-
-    if (button == &loadButton)
-    {
-        auto dlgFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles;
-        this->chooser.launchAsync(dlgFlags, [this](const juce::FileChooser& chooser)
-            {
-                auto fileUri = chooser.getURLResult();
-                player1.loadURL(fileUri);
-            });
-    }
+    deck1.setBounds(0, 0, getWidth() / 2, getHeight());
+    deck2.setBounds(getWidth() / 2, 0, getWidth() / 2, getHeight());
 }

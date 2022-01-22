@@ -1,15 +1,15 @@
 #pragma once
 
-#include <JuceHeader.h>
+#include "DeckGui.h"
 #include "DJAudioPlayer.h"
+#include <JuceHeader.h>
 
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent  : public juce::AudioAppComponent, 
-                       public Button::Listener
+class MainComponent  : public juce::AudioAppComponent
                   
 {
 public:
@@ -26,22 +26,16 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
-    //===============================================================================
-    void buttonClicked(Button* button) override;
-
 private:
     //==============================================================================
     // Your private member variables go here...
-    juce::TextButton playButton{ "PLAY"};
-    juce::TextButton stopButton{ "STOP" };
-    //juce::Slider volumeSlider{};
-
-    bool playing;
-
-    juce::FileChooser chooser{ "Browse audio file" };
-    juce::TextButton loadButton;
     DJAudioPlayer player1;
+    DeckGui deck1{ &player1 };
 
+    DJAudioPlayer player2;
+    DeckGui deck2{ &player2 };
+
+    MixerAudioSource mixerSource;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
