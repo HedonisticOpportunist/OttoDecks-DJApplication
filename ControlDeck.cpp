@@ -25,13 +25,21 @@ ControlDeck::ControlDeck
     addAndMakeVisible(speedSlider);
     addAndMakeVisible(waveformDisplay);
 
-    // add the listener events 
+    // add the listener events to the buttons
     playButton.addListener(this);
     stopButton.addListener(this);
+    loadButton.addListener(this);
+
+
+    // add the listener events to the sliders 
     volumeSlider.addListener(this);
     positionSlider.addListener(this);
     speedSlider.addListener(this);
-    loadButton.addListener(this);
+   
+    // change the look of the sliders
+    volumeSlider.setSliderStyle(juce::Slider::Rotary);
+    speedSlider.setSliderStyle(juce::Slider::Rotary);
+    speedSlider.setSliderStyle(juce::Slider::Rotary);
 
     // set ranges for the slider 
     volumeSlider.setRange(0.0, 1.0);
