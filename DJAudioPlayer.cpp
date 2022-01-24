@@ -1,4 +1,14 @@
+/*
+  ==============================================================================
+
+	DJAudioPlayer.cpp
+	Author:  anita.pal
+
+  ==============================================================================
+*/
+
 #include "DJAudioPlayer.h"
+
 DJAudioPlayer::DJAudioPlayer(AudioFormatManager& _formatManager)
 	: formatManager(_formatManager)
 {
@@ -10,10 +20,10 @@ DJAudioPlayer::~DJAudioPlayer()
 void DJAudioPlayer::loadURL(URL audioURL)
 {
 	auto* reader = formatManager.createReaderFor(audioURL.createInputStream(false));
-	if (reader != nullptr) // good file!
+
+	if (reader != nullptr) 
 	{
-		std::unique_ptr<AudioFormatReaderSource> newSource(new AudioFormatReaderSource(reader,
-			true));
+		std::unique_ptr<AudioFormatReaderSource> newSource(new AudioFormatReaderSource(reader, true));
 		transportSource.setSource(newSource.get(), 0, nullptr, reader->sampleRate);
 		readerSource.reset(newSource.release());
 	}
@@ -30,7 +40,8 @@ void DJAudioPlayer::stop()
 
 void DJAudioPlayer::setPosition(double posInSecs)
 {
-	if (posInSecs < 0 || posInSecs > transportSource.getLengthInSeconds()) {
+	if (posInSecs < 0 || posInSecs > transportSource.getLengthInSeconds()) 
+	{
 		DBG("DJAudioPlayer::setPosition: warning set position " << posInSecs \
 			<< " greater than length " << transportSource.getLengthInSeconds());
 		return;
@@ -73,7 +84,8 @@ void DJAudioPlayer::setSpeed(double ratio)
 	{
 		std::cout << "DJAudioPlayer::setSpeed ratio should be between 0 and 100" << std::endl;
 	}
-	else {
+	else 
+	{
 		resampleSource.setResamplingRatio(ratio);
 	}
 }
