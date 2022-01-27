@@ -38,7 +38,6 @@ ControlDeck::ControlDeck
     speedSlider.addListener(this);
    
     // change the look of the sliders
-    getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::hotpink);
     getLookAndFeel().setColour(juce::Slider::trackColourId, juce::Colours::lightcoral); 
 
     getLookAndFeel().setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::honeydew);
@@ -68,24 +67,25 @@ void ControlDeck::paint(juce::Graphics& g)
 
     //A call to the buttons and sliders painting functions
     repaintButtons(); 
+    repaintSliders(); 
 }
 
 void ControlDeck::resized()
 {
-    double rowH = getHeight() / 8;
+    double rowH = getHeight() / 8.0;  
 
     // button positions
-    playButton.setBounds(0, 0, getWidth(), rowH);
-    stopButton.setBounds(0, rowH, getWidth(), rowH);
-    loadButton.setBounds(0, rowH * 2, getWidth(), rowH);
+    playButton.setBounds(0, 0, getWidth(), rowH * 1.0); 
+    stopButton.setBounds(0, rowH * 1.0, getWidth(), rowH * 1.0);
+    loadButton.setBounds(0, rowH * 2.0, getWidth(), rowH * 1.0);
 
     // slider positions 
-    volumeSlider.setBounds(0, rowH * 3, getWidth(), rowH);
-    positionSlider.setBounds(0, rowH * 4, getWidth(), rowH);
-    speedSlider.setBounds(0, rowH * 5, getWidth(), rowH);
+    volumeSlider.setBounds(0, rowH * 3.0, getWidth(), rowH * 1.0);
+    positionSlider.setBounds(0, rowH * 4.0, getWidth(), rowH * 1.0);
+    speedSlider.setBounds(0, rowH * 5.0, getWidth(), rowH * 1.0);
 
     // wave form display 
-    waveformDisplay.setBounds(0, rowH * 7, getWidth(), rowH);
+    waveformDisplay.setBounds(0, rowH  * 6.0, getWidth(), rowH * 1.0);
 }
 
 void ControlDeck::repaintButtons()
@@ -118,6 +118,19 @@ void ControlDeck::repaintButtons()
     else
     {
         loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkorange);
+    }
+}
+
+void ControlDeck::repaintSliders()
+{
+    if (volumeSlider.isMouseOver() || positionSlider.isMouseOver() || speedSlider.isMouseOver())
+    {
+        getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::lavender);
+    }
+
+    else
+    {
+        getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::aquamarine);
     }
 }
 

@@ -29,12 +29,12 @@ void WaveformDisplay::paint (juce::Graphics& g)
     g.drawRect(getLocalBounds(), 1);
 
     // setting the colour of the wave form 
-    g.setColour(juce::Colours::ghostwhite);
+    g.setColour(juce::Colours::gold);
 
     if (fileLoaded)
     {
         audioThumbnail.drawChannel(g, getLocalBounds(), 0, audioThumbnail.getTotalLength(), 0, 1.0f);
-        g.setColour(Colours::powderblue);
+        g.setColour(Colours::purple);
         g.drawRect(position * getWidth(), 0, getWidth() / 20, getHeight());
     }
     else
@@ -62,7 +62,7 @@ void WaveformDisplay::changeListenerCallback(ChangeBroadcaster* source)
 
 void WaveformDisplay::setPositionRelative(double pos)
 {
-    if (pos != position)
+    if (pos != position && !isnan(position))
     {
         position = pos;
         repaint();

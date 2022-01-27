@@ -48,8 +48,11 @@ public:
     /** Allows timer callback */
     void timerCallback() override;
 
-    /** Repaint the buttons if they have stopped playing */
+    /** Repaint the buttons if they are not in use */
     void repaintButtons();
+
+    /** Repaint the sliders if they are not in use */
+    void repaintSliders();
 
 private:
 
