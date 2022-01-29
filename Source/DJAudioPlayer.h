@@ -25,10 +25,16 @@ public:
 	void loadURL(URL file);
 
 	/** Plays a file */
-	void play();
+	void playSong();
 
 	/** Stops playing a file */
-	void stop();
+	void stopSong();
+
+	/** Rewinds a file **/
+	void rewindSong();
+
+	/** Fastforwards a file */
+	void fastForwardSong();
 
 	/** Sets a position */
 	void setPosition(double posInSecs);

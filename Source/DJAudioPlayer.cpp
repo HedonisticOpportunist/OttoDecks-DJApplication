@@ -30,14 +30,35 @@ void DJAudioPlayer::loadURL(URL audioURL)
 		readerSource.reset(newSource.release());
 	}
 }
-void DJAudioPlayer::play()
+void DJAudioPlayer::playSong()
 {
 	transportSource.start();
 }
 
-void DJAudioPlayer::stop()
+void DJAudioPlayer::stopSong()
 {
 	transportSource.stop();
+}
+
+void DJAudioPlayer::rewindSong()
+{
+	int currentPosition = transportSource.getCurrentPosition();
+
+	if (currentPosition - 0.5 < 0)
+	{
+		transportSource.setPosition(currentPosition - 1);
+	}
+}
+
+void DJAudioPlayer::fastForwardSong()
+{
+	double lastPositionHeld = transportSource.getLengthInSeconds();
+	int currentPosition = transportSource.getCurrentPosition();
+
+	if (currentPosition + 1.5 != lastPositionHeld && currentPosition + 1.5 > lastPositionHeld)
+	{
+		transportSource.setPosition(currentPosition + 2);
+	}
 }
 
 void DJAudioPlayer::setPosition(double posInSecs)

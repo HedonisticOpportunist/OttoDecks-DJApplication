@@ -34,7 +34,7 @@ public:
 private:
   
     AudioFormatManager formatManager;
-    AudioThumbnailCache thumbCache{ 100 };
+    AudioThumbnailCache thumbCache{100};
     DJAudioPlayer player1{formatManager};
     ControlDeck deck1{ &player1, formatManager, thumbCache};
 

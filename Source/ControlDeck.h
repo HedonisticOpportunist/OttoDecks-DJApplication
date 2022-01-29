@@ -8,8 +8,9 @@
 */
 
 #pragma once
-#include <JuceHeader.h>
+
 #include "DJAudioPlayer.h"
+#include <JuceHeader.h>
 #include "WaveformDisplay.h"
 
 class ControlDeck: public juce::Component,
@@ -54,25 +55,30 @@ public:
     /** Repaint the sliders if they are not in use */
     void repaintSliders();
 
+    /** Deal with the differing states of the play button status */
+    void displayPlayButtonText(bool paused);
+
 private:
 
     // buttons 
     TextButton playButton{"Play"};
-    TextButton stopButton{"Stop"};
+    TextButton stopButton{"Stop / Pause"};
     TextButton loadButton{"Load"};
 
-    TextButton pauseButton{"Pause"};
-    TextButton loopButton{ "Loop"};
+    TextButton rewindButton{"<< Rewind"};
+    TextButton fastForwardButton{"FastForward >>"};
 
 
     // sliders 
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;
+
+    // wave form 
     WaveformDisplay waveformDisplay; 
 
     // status of pause button 
-    bool paused = false;
+    bool paused = false; 
 
     // audio-related variables
     juce::FileChooser chooser{"Browse audio file"};

@@ -11,7 +11,6 @@
 
 MainComponent::MainComponent()
 {
-   
     setSize(800, 600);
 
     if (juce::RuntimePermissions::isRequired(juce::RuntimePermissions::recordAudio)

@@ -21,8 +21,8 @@ ControlDeck::ControlDeck
     addAndMakeVisible(stopButton);
     addAndMakeVisible(loadButton);
 
-    addAndMakeVisible(pauseButton);
-    addAndMakeVisible(loopButton);
+    addAndMakeVisible(rewindButton);
+    addAndMakeVisible(fastForwardButton);
 
     // make the sliders visible 
     addAndMakeVisible(volumeSlider);
@@ -35,8 +35,8 @@ ControlDeck::ControlDeck
     stopButton.addListener(this);
     loadButton.addListener(this);
 
-    pauseButton.addListener(this);
-    loopButton.addListener(this);
+    rewindButton.addListener(this);
+    fastForwardButton.addListener(this);
 
     // add the listener events to the sliders 
     volumeSlider.addListener(this);
@@ -92,8 +92,8 @@ void ControlDeck::resized()
     stopButton.setBounds(0, rowH * 2.0, getWidth(), rowH * 1.0);
     loadButton.setBounds(0, rowH * 3.0, getWidth(), rowH * 1.0);
 
-    pauseButton.setBounds(0, rowH * 4.0, getWidth(), rowH * 1.0);
-    loopButton.setBounds(0, rowH * 5, getWidth(), rowH * 1.0);
+    rewindButton.setBounds(0, rowH * 4.0, getWidth(), rowH * 1.0);
+    fastForwardButton.setBounds(0, rowH * 5, getWidth(), rowH * 1.0);
 
     // slider positions 
     volumeSlider.setBounds(0, rowH * 6.0, getWidth(), rowH * 1.0);
@@ -140,28 +140,28 @@ void ControlDeck::repaintButtons()
         loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkorange);
     }
 
-    // set the colour for the pause button if mouse over OR it has stopped playing 
-    if (pauseButton.isOver() || pauseButton.isMouseOver())
+    // set the colour for the rewind button if mouse over OR it has stopped playing 
+    if (rewindButton.isOver() || rewindButton.isMouseOver())
     {
-        pauseButton.setColour(juce::TextButton::buttonColourId, juce::Colours::forestgreen);
+        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::forestgreen);
     }
 
-    // set the colour of the pause button when mouse is not hovering over it 
+    // set the colour of the rewind button when mouse is not hovering over it 
     else
     {
-        pauseButton.setColour(juce::TextButton::buttonColourId, juce::Colours::mediumorchid);
+        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::mediumorchid);
     }
 
     // set the colour for the loop button if mouse over OR it has stopped playing 
-    if (loopButton.isOver() || loopButton.isMouseOver())
+    if (fastForwardButton.isOver() || fastForwardButton.isMouseOver())
     {
-        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::fuchsia);
+        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::fuchsia);
     }
 
     // set the colour of the loop button when mouse is not hovering over it 
     else
     {
-        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::gold);
+        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::gold);
     }
 }
 
@@ -181,25 +181,17 @@ void ControlDeck::repaintSliders()
 //R2B: Component enables the user to control the playback of a deck somehow
 void ControlDeck::buttonClicked(Button* button)
 {
-    if (button == &playButton && pauseButton.isOver())
+    if (button == &playButton)
     {
         player->setPosition(0);
-        player->play();
-
-        /* if paused has been clickedand the button
-        is no longer active, reset the pause and play buttons 
-        to their default positions 
-        */
-        if (paused == true)
-        {
-            player->setPosition(0);
-            player->play();
-        }
+        player->playSong();
+        paused = false; 
     }
     
     if (button == &stopButton)
     {
-         player->stop(); 
+         player->stopSong(); 
+         paused = true; 
     }
     
     if (button == &loadButton)
@@ -211,16 +203,22 @@ void ControlDeck::buttonClicked(Button* button)
                 player->loadURL(fileUri);
                 waveformDisplay.loadURL(fileUri);
         });
+
+        paused = false; 
     }
 
-    // if the pause button has been clicked, set the flag paused
-    // to true and set the play button's text to 'Resume'
-    if (button == &pauseButton)
+    if (button == &fastForwardButton)
     {
-        player->stop();
-        paused = true; 
-        playButton.setButtonText("Resume");
+        paused = false; 
     }
+
+    if (button == &rewindButton)
+    {
+        player->rewindSong();
+        paused = false; 
+    }
+
+    displayPlayButtonText(paused);
 }
 
 // R1C: can mix the tracks by varying each of their volumes
@@ -259,4 +257,24 @@ void ControlDeck::filesDropped(const StringArray& files, int x, int y)
 void ControlDeck::timerCallback()
 {
     waveformDisplay.setPositionRelative(player->getPositionRelative());
+}
+
+void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
+{
+    std::string playButtonText = "";
+    switch (pauseButtonStatus)
+    {
+    case true:
+        playButtonText = "Resume";
+        break;
+    case false:
+        playButtonText = "Play";
+        break;
+
+    default:
+        playButtonText = "Play";
+        break;
+    }
+
+    playButton.setButtonText(playButtonText);
 }
