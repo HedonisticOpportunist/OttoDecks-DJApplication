@@ -56,34 +56,26 @@ public:
 
 private:
 
-    // private members 
-    TextButton playButton
-    {
-        "PLAY"
-    };
-        
-    TextButton stopButton
-    { 
-        
-        "STOP" 
-    };
+    // buttons 
+    TextButton playButton{"Play"};
+    TextButton stopButton{"Stop"};
+    TextButton loadButton{"Load"};
 
-    TextButton loadButton
-    {
-        "LOAD"
-    };
+    TextButton pauseButton{"Pause"};
+    TextButton loopButton{ "Loop"};
 
-    TextButton pauseButton
-    {
-        "PAUSE"
-    };
 
+    // sliders 
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;
     WaveformDisplay waveformDisplay; 
 
-    juce::FileChooser chooser{ "Browse audio file" };
+    // status of pause button 
+    bool paused = false;
+
+    // audio-related variables
+    juce::FileChooser chooser{"Browse audio file"};
     DJAudioPlayer* player;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControlDeck)

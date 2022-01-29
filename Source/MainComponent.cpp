@@ -27,7 +27,6 @@ MainComponent::MainComponent()
         setAudioChannels(2, 2);
     }
 
-   
     // make the decks visible 
     addAndMakeVisible(deck1);
     addAndMakeVisible(deck2);
@@ -39,6 +38,7 @@ MainComponent::~MainComponent()
     shutdownAudio();
 }
 
+// R1B: can play two or more tracks
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     mixerSource.addInputSource(&player1, false);

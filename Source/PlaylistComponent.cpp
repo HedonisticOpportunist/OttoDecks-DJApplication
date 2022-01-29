@@ -28,13 +28,13 @@ PlaylistComponent::~PlaylistComponent()
 {
 }
 
-void PlaylistComponent::paint (juce::Graphics& g)
+// R4C: GUI layout includes the music library component fro R3
+void PlaylistComponent::paint (juce::Graphics& graphics)
 {
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   
-
-    g.setColour (juce::Colours::beige);
-    g.drawRect (getLocalBounds(), 1);   
-    g.setColour (juce::Colours::white);
+    graphics.fillAll(juce::Colours::blanchedalmond);   
+    graphics.setColour (juce::Colours::beige);
+    graphics.drawRect (getLocalBounds(), 1);   
+    graphics.setColour (juce::Colours::white);
 }
 
 void PlaylistComponent::resized()

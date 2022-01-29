@@ -22,25 +22,23 @@ WaveformDisplay::~WaveformDisplay()
 {
 }
 
-void WaveformDisplay::paint (juce::Graphics& g)
+void WaveformDisplay::paint (juce::Graphics& graphics)
 {
-    g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
-    g.setColour(juce::Colours::peachpuff);
-    g.drawRect(getLocalBounds(), 1);
-
-    // setting the colour of the wave form 
-    g.setColour(juce::Colours::aliceblue);
+    graphics.fillAll(juce::Colours::darksalmon);
+    graphics.setColour(juce::Colours::peachpuff);
+    graphics.drawRect(getLocalBounds(), 1);
 
     if (fileLoaded)
     {
-        audioThumbnail.drawChannel(g, getLocalBounds(), 0, audioThumbnail.getTotalLength(), 0, 1.0f);
-        g.setColour(Colours::purple);
-        g.drawRect(position * getWidth(), 0, getWidth() / 20, getHeight());
+        // setting the colour of the wave form 
+        graphics.setColour(juce::Colours::blueviolet); 
+        audioThumbnail.drawChannel(graphics, getLocalBounds(), 0, audioThumbnail.getTotalLength(), 0, 1.0f);
+        graphics.drawRect(position * getWidth(), 0, getWidth() / 20, getHeight());
     }
     else
     {
-        g.setFont(20.0f);
-        g.drawText("File has not been loaded...", getLocalBounds(),
+        graphics.setFont(15.0f);
+        graphics.drawText("File has not been loaded...", getLocalBounds(),
             Justification::centred, true);
     }
 }
