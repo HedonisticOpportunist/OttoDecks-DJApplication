@@ -71,6 +71,6 @@ void MainComponent::resized()
 {
     deck1.setBounds(0, 0, getWidth() / 2, getHeight() / 2);
     deck2.setBounds(getWidth() / 2, 0, getWidth() / 2, getHeight() / 2);
-    //playlistComponent.setBounds(0, getHeight() / 2, getWidth(), getHeight() / 2);
+    playlistComponent.setBounds(0, getHeight() / 2, getWidth(), getHeight() / 2);
 
 }

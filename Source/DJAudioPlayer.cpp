@@ -17,6 +17,8 @@ DJAudioPlayer::DJAudioPlayer(AudioFormatManager& _formatManager)
 DJAudioPlayer::~DJAudioPlayer()
 {
 }
+
+// R1A: can load audio files into audio players
 void DJAudioPlayer::loadURL(URL audioURL)
 {
 	auto* reader = formatManager.createReaderFor(audioURL.createInputStream(false));

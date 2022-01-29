@@ -20,6 +20,7 @@ ControlDeck::ControlDeck
     addAndMakeVisible(playButton);
     addAndMakeVisible(stopButton);
     addAndMakeVisible(loadButton);
+    addAndMakeVisible(pauseButton);
 
     // make the sliders visible 
     addAndMakeVisible(volumeSlider);
@@ -31,6 +32,7 @@ ControlDeck::ControlDeck
     playButton.addListener(this);
     stopButton.addListener(this);
     loadButton.addListener(this);
+    pauseButton.addListener(this);
 
     // add the listener events to the sliders 
     volumeSlider.addListener(this);
@@ -59,6 +61,7 @@ ControlDeck::~ControlDeck()
     stopTimer();
 }
 
+// R2A: Component has custom graphics implemented in a paint function
 void ControlDeck::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));   
@@ -72,17 +75,18 @@ void ControlDeck::paint(juce::Graphics& g)
 
 void ControlDeck::resized()
 {
-    double rowH = getHeight() / 8.0;  
+    double rowH = getHeight() / 9.0;  
 
     // button positions
     playButton.setBounds(0, 0, getWidth(), rowH * 1.0); 
     stopButton.setBounds(0, rowH * 1.0, getWidth(), rowH * 1.0);
     loadButton.setBounds(0, rowH * 2.0, getWidth(), rowH * 1.0);
+    pauseButton.setBounds(0, rowH * 3.0, getWidth(), rowH * 1.0);
 
     // slider positions 
-    volumeSlider.setBounds(0, rowH * 3.0, getWidth(), rowH * 1.0);
-    positionSlider.setBounds(0, rowH * 4.0, getWidth(), rowH * 1.0);
-    speedSlider.setBounds(0, rowH * 5.0, getWidth(), rowH * 1.0);
+    volumeSlider.setBounds(0, rowH * 4.0, getWidth(), rowH * 1.0);
+    positionSlider.setBounds(0, rowH * 5.0, getWidth(), rowH * 1.0);
+    speedSlider.setBounds(0, rowH * 6.0, getWidth(), rowH * 1.0);
 
     // wave form display 
     waveformDisplay.setBounds(0, rowH  * 6.0, getWidth(), rowH * 1.0);
@@ -90,7 +94,8 @@ void ControlDeck::resized()
 
 void ControlDeck::repaintButtons()
 {
-    if (playButton.isOver())
+  
+    if (playButton.isOver() || playButton.isMouseOver())
     {
         playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkblue);
     }
@@ -100,7 +105,7 @@ void ControlDeck::repaintButtons()
         playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkslateblue);
     }
 
-    if (stopButton.isOver())
+    if (stopButton.isOver() || stopButton.isMouseOver())
     {
         stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkorchid);
     }
@@ -110,7 +115,7 @@ void ControlDeck::repaintButtons()
         stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkturquoise);
     }
 
-    if (loadButton.isOver())
+    if (loadButton.isOver() || loadButton.isMouseOver())
     {
         loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::blanchedalmond);
     }
@@ -134,6 +139,7 @@ void ControlDeck::repaintSliders()
     }
 }
 
+//R2B: Component enables the user to control the playback of a deck somehow
 void ControlDeck::buttonClicked(Button* button)
 {
     if (button == &playButton)
@@ -156,6 +162,11 @@ void ControlDeck::buttonClicked(Button* button)
                 player->loadURL(fileUri);
                 waveformDisplay.loadURL(fileUri);
         });
+    }
+
+    if (button == &pauseButton)
+    {
+        player->stop();
     }
 }
 

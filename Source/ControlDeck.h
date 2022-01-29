@@ -67,9 +67,15 @@ private:
         
         "STOP" 
     };
+
     TextButton loadButton
     {
         "LOAD"
+    };
+
+    TextButton pauseButton
+    {
+        "PAUSE"
     };
 
     Slider volumeSlider;

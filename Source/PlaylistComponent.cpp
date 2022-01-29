@@ -2,7 +2,6 @@
   ==============================================================================
 
     PlaylistComponent.cpp
-    Created: 22 Jan 2022 2:15:06pm
     Author:  anita.pal
 
   ==============================================================================
@@ -56,10 +55,10 @@ void PlaylistComponent::paintRowBackground(Graphics& g,
 {
     if (rowIsSelected)
     {
-        g.fillAll(Colours::orange);
+        g.fillAll(Colours::lavenderblush);
     }
     else {
-        g.fillAll(Colours::darkgrey);
+        g.fillAll(Colours::aquamarine);
     }
 }
 
@@ -70,11 +69,15 @@ void PlaylistComponent::paintCell(Graphics& g,
     int height,
     bool rowIsSelected)
 {
-    g.drawText(trackTitles[rowNumber], 
-        2, 0,
-        width - 4, height,
-        Justification::centredLeft,
-        true);
+    if (rowNumber < getNumRows())
+    {
+        g.drawText(
+            trackTitles[rowNumber],
+            2, 0,
+            width - 4, height,
+            Justification::centredLeft,
+            true);
+    }
 }
 
 Component* PlaylistComponent::refreshComponentForCell(
@@ -102,4 +105,17 @@ void PlaylistComponent::buttonClicked(Button* button)
 {
     int id = std::stoi(button->getComponentID().toStdString());
     DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
+}
+
+bool PlaylistComponent::isInterestedInFileDrag(const StringArray& files)
+{
+    return true;  
+}
+
+void PlaylistComponent::filesDropped(const StringArray& files, int x, int y)
+{
+    for (String filename : files)
+    {
+        return;
+    }
 }

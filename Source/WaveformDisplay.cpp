@@ -29,7 +29,7 @@ void WaveformDisplay::paint (juce::Graphics& g)
     g.drawRect(getLocalBounds(), 1);
 
     // setting the colour of the wave form 
-    g.setColour(juce::Colours::gold);
+    g.setColour(juce::Colours::aliceblue);
 
     if (fileLoaded)
     {

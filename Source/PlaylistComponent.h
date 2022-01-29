@@ -12,6 +12,7 @@
 
 class PlaylistComponent  : public juce::Component,
                            public TableListBoxModel,
+                           public FileDragAndDropTarget,
                            public Button::Listener
 {
 public:
@@ -54,6 +55,12 @@ public:
 
     /** Checks what happens when button is clicked */
     void buttonClicked(Button* button) override;
+
+    /** Allows drag and drop */
+    bool isInterestedInFileDrag(const StringArray& files) override;
+
+    /** Allows files to be dropped */
+    void filesDropped(const StringArray& files, int x, int y) override;
 
 private:
 
