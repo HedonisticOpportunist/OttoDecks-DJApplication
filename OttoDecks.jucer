@@ -3,6 +3,7 @@
 <JUCERPROJECT id="aE38mL" name="OttoDecks" projectType="guiapp" displaySplashScreen="1"
               jucerFormatVersion="1" useAppConfig="0">
   <MAINGROUP id="g1th1Q" name="OttoDecks">
+    <FILE id="gt6enX" name="background.png" compile="0" resource="1" file="Source/background.png"/>
     <GROUP id="{5C119B31-75FC-9F7E-FE0A-0D3FB45B1D6C}" name="Source">
       <FILE id="RTks5i" name="ControlDeck.h" compile="0" resource="0" file="Source/ControlDeck.h"/>
       <FILE id="vFjsKP" name="ControlDeck.cpp" compile="1" resource="0" file="Source/ControlDeck.cpp"/>

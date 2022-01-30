@@ -23,6 +23,7 @@ ControlDeck::ControlDeck
 
     addAndMakeVisible(rewindButton);
     addAndMakeVisible(fastForwardButton);
+    addAndMakeVisible(loopButton);
 
     // make the sliders visible 
     addAndMakeVisible(volumeSlider);
@@ -37,6 +38,7 @@ ControlDeck::ControlDeck
 
     rewindButton.addListener(this);
     fastForwardButton.addListener(this);
+    loopButton.addListener(this);
 
     // add the listener events to the sliders 
     volumeSlider.addListener(this);
@@ -82,23 +84,26 @@ void ControlDeck::paint(juce::Graphics& graphics)
 // R4B: GUI layout includes the custom Component from R2
 void ControlDeck::resized()
 {
-    double rowH = getHeight() / 10.0;  
+    double rowH = getHeight() / 10.5;  
 
     // wave form display 
     waveformDisplay.setBounds(0, 0, getWidth(), rowH * 1);
 
-    // button positions
+    // play, stop and load button positions
     playButton.setBounds(0, rowH * 1.0 , getWidth(), rowH * 1.0); 
     stopButton.setBounds(0, rowH * 2.0, getWidth(), rowH * 1.0);
     loadButton.setBounds(0, rowH * 3.0, getWidth(), rowH * 1.0);
 
-    rewindButton.setBounds(0, rowH * 4.0, getWidth(), rowH * 1.0);
-    fastForwardButton.setBounds(0, rowH * 5, getWidth(), rowH * 1.0);
-
     // slider positions 
-    volumeSlider.setBounds(0, rowH * 6.0, getWidth(), rowH * 1.0);
-    positionSlider.setBounds(0, rowH * 7.0, getWidth(), rowH * 1.0);
-    speedSlider.setBounds(0, rowH * 8.0, getWidth(), rowH * 1.0);
+    volumeSlider.setBounds(0, rowH * 4.2, getWidth(), rowH * 1.5);
+    positionSlider.setBounds(0, rowH * 5.2, getWidth(), rowH * 1.5);
+    speedSlider.setBounds(0, rowH * 6.2, getWidth(), rowH * 1.5);
+
+    // loop / playback buttons
+    rewindButton.setBounds(0, rowH * 7.5, getWidth(), rowH * 1.0);
+    fastForwardButton.setBounds(0, rowH * 8.5, getWidth(), rowH * 1.0);
+    loopButton.setBounds(0, rowH * 9.5, getWidth(), rowH * 1.0);
+
 }
 
 void ControlDeck::repaintButtons()
@@ -152,16 +157,28 @@ void ControlDeck::repaintButtons()
         rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::mediumorchid);
     }
 
-    // set the colour for the loop button if mouse over OR it has stopped playing 
+    // set the colour for the fast forward button if mouse over OR it has stopped playing 
     if (fastForwardButton.isOver() || fastForwardButton.isMouseOver())
     {
         fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::fuchsia);
     }
 
-    // set the colour of the loop button when mouse is not hovering over it 
+    // set the colour of the fast forward button when mouse is not hovering over it 
     else
     {
         fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::gold);
+    }
+
+    // set the colour for the loop button if mouse over OR it has stopped playing 
+    if (loopButton.isOver() || loopButton.isMouseOver())
+    {
+        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::silver);
+    }
+
+    // set the colour of the loop button when mouse is not hovering over it 
+    else
+    {
+        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::palevioletred);
     }
 }
 
@@ -216,6 +233,17 @@ void ControlDeck::buttonClicked(Button* button)
     {
         player->rewindSong();
         paused = false; 
+    }
+
+    // only loop when the loop button has been pressed 
+    if (button == &loopButton)
+    {
+        paused = false; 
+        player->startLoop();
+    }
+    else
+    {
+        player->endLoop();
     }
 
     displayPlayButtonText(paused);

@@ -11,7 +11,8 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class DJAudioPlayer : public AudioSource
+class DJAudioPlayer : public AudioSource,
+	                  public PositionableAudioSource
 {
 public:
 
@@ -59,6 +60,17 @@ public:
 
 	/** get the relative position of the play head */
 	double getPositionRelative();
+
+	/** Starts a loop */
+	void startLoop();
+
+	/** Ends a loop */
+	void endLoop();
+
+	void setNextReadPosition(juce::int64 newPosition) override;
+	juce::int64 getNextReadPosition() const override;
+	juce::int64 getTotalLength() const override;
+	bool isLooping() const override;
 
 private:
 

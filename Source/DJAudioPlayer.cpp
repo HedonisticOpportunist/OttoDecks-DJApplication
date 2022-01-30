@@ -117,3 +117,43 @@ double DJAudioPlayer::getPositionRelative()
 {
 	return transportSource.getCurrentPosition() / transportSource.getLengthInSeconds();
 }
+
+void DJAudioPlayer::setNextReadPosition(juce::int64 newPosition)
+{
+
+}
+
+juce::int64 DJAudioPlayer::getNextReadPosition() const
+{
+	return readerSource->getNextReadPosition();
+}
+
+juce::int64 DJAudioPlayer::getTotalLength() const
+{
+	return readerSource->getTotalLength();
+}
+
+//Returning true if it is looping, or false if it is not
+bool DJAudioPlayer::isLooping() const
+{
+	return false;
+}
+
+void DJAudioPlayer::startLoop()
+{
+	
+	if (readerSource != nullptr)
+	{
+		readerSource->setLooping(true);
+	}
+}
+
+void DJAudioPlayer::endLoop()
+{
+	//if the readerSource is not a null pointer, the readerSource is set to not loop
+	//using the function from the PositionableAudioSource class
+	if (readerSource != nullptr)
+	{
+		readerSource->setLooping(false);
+	}
+}

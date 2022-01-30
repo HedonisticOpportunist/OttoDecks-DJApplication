@@ -10,8 +10,12 @@
 #include <JuceHeader.h>
 #include "PlaylistComponent.h"
 
-PlaylistComponent::PlaylistComponent()
+PlaylistComponent::PlaylistComponent(
+    DJAudioPlayer* _player,
+    AudioFormatManager& formatManagerToUse)
 {
+    // make buttons visible 
+    addAndMakeVisible(loadButton);
     addAndMakeVisible(tableComponent);
     tableComponent.getHeader().addColumn("Track title", 1, 400);
     tableComponent.getHeader().addColumn("", 2, 200);
@@ -28,18 +32,20 @@ PlaylistComponent::~PlaylistComponent()
 {
 }
 
-// R4C: GUI layout includes the music library component fro R3
+// R4C: GUI layout includes the music library component from R3
 void PlaylistComponent::paint (juce::Graphics& graphics)
 {
-    graphics.fillAll(juce::Colours::blanchedalmond);   
-    graphics.setColour (juce::Colours::beige);
+    graphics.fillAll(juce::Colours::beige);
     graphics.drawRect (getLocalBounds(), 1);   
     graphics.setColour (juce::Colours::white);
 }
 
 void PlaylistComponent::resized()
 {
-    tableComponent.setBounds(0, 0, getWidth(), getHeight());
+    double rowH = getHeight() / 2;
+
+    tableComponent.setBounds(0, 0, getWidth(), rowH * 1.0);
+    loadButton.setBounds(0, rowH * 1.0, getWidth(), rowH * 1.0);
 }
 
 int PlaylistComponent::getNumRows()
@@ -105,6 +111,17 @@ void PlaylistComponent::buttonClicked(Button* button)
 {
     int id = std::stoi(button->getComponentID().toStdString());
     DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
+
+    // R3A: Component allows the user to add files to their library
+    if (button == &loadButton)
+    {
+        auto dlgFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles;
+        this->chooser.launchAsync(dlgFlags, [this](const juce::FileChooser& chooser)
+            {
+                auto fileUri = chooser.getURLResult();
+                player->loadURL(fileUri);
+            });
+    }
 }
 
 bool PlaylistComponent::isInterestedInFileDrag(const StringArray& files)

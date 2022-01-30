@@ -26,7 +26,7 @@ public:
         AudioThumbnailCache& cacheToUse);
 
     /** The ControlDeck destructor */
-    ~ControlDeck() override;
+    ~ControlDeck();
 
     /** Paints the screen */
     void paint (juce::Graphics&) override;
@@ -61,13 +61,13 @@ public:
 private:
 
     // buttons 
-    TextButton playButton{"Play"};
-    TextButton stopButton{"Stop / Pause"};
+    TextButton playButton{"Play |>"};
+    TextButton stopButton{"Stop / Pause ||| "};
     TextButton loadButton{"Load"};
 
     TextButton rewindButton{"<< Rewind"};
     TextButton fastForwardButton{"FastForward >>"};
-
+    TextButton loopButton{ "Loop ()"};
 
     // sliders 
     Slider volumeSlider;

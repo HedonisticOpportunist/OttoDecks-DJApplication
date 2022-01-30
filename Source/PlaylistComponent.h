@@ -8,6 +8,7 @@
 */
 
 #pragma once
+#include "DJAudioPlayer.h"
 #include <JuceHeader.h>
 
 class PlaylistComponent  : public juce::Component,
@@ -18,7 +19,7 @@ class PlaylistComponent  : public juce::Component,
 public:
 
     /** The Playlist constructor */
-    PlaylistComponent();
+    PlaylistComponent(DJAudioPlayer* _player, AudioFormatManager& formatManagerToUse);
 
     /** The Playlist Component destructor */
     ~PlaylistComponent();
@@ -65,6 +66,10 @@ public:
 private:
 
     // private members of the class 
+    TextButton loadButton{ "Load" };
+    juce::FileChooser chooser{ "Browse audio file"};
+    DJAudioPlayer* player;
+
     TableListBox tableComponent;
     std::vector<std::string> trackTitles;
 

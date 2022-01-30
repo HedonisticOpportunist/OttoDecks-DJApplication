@@ -33,6 +33,7 @@ public:
 
 private:
   
+    Image backgroundImage;
     AudioFormatManager formatManager;
     AudioThumbnailCache thumbCache{100};
     DJAudioPlayer player1{formatManager};
@@ -42,7 +43,7 @@ private:
     ControlDeck deck2{&player2, formatManager, thumbCache};
 
     MixerAudioSource mixerSource;
-    PlaylistComponent playlistComponent;
+    PlaylistComponent playlistComponent{&player1, formatManager};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

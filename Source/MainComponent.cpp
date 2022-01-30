@@ -11,7 +11,11 @@
 
 MainComponent::MainComponent()
 {
-    setSize(800, 600);
+    setSize(1200, 800);
+
+    // add background image 
+    // credit @ https://unsplash.com/@markusspiske
+    backgroundImage = ImageCache::getFromMemory(BinaryData::background_png, BinaryData::background_pngSize);
 
     if (juce::RuntimePermissions::isRequired(juce::RuntimePermissions::recordAudio)
         && !juce::RuntimePermissions::isGranted(juce::RuntimePermissions::recordAudio))
@@ -61,15 +65,15 @@ void MainComponent::releaseResources()
     player2.releaseResources();
 }
 
-void MainComponent::paint (juce::Graphics& g)
+void MainComponent::paint (juce::Graphics& graphics)
 {
-    g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
+    graphics.drawImage(backgroundImage, getLocalBounds().toFloat());
 }
 
 void MainComponent::resized()
 {
-    deck1.setBounds(0, 0, getWidth() / 2, getHeight() / 2);
-    deck2.setBounds(getWidth() / 2, 0, getWidth() / 2, getHeight() / 2);
-    playlistComponent.setBounds(0, getHeight() / 2, getWidth(), getHeight() / 2);
-
+    // layout is smaller, as we want to display the background image 
+    deck1.setBounds(0, 0, getWidth() / 3.2, getHeight() / 3.2);
+    deck2.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2);
+    playlistComponent.setBounds(0, getHeight() / 3, getWidth() / 3, getHeight() / 3);
 }
