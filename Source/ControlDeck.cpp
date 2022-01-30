@@ -267,21 +267,6 @@ void ControlDeck::sliderValueChanged(Slider* slider)
     }
 }
 
-bool ControlDeck::isInterestedInFileDrag(const StringArray& files)
-{
-    return true;
-}
-
-void ControlDeck::filesDropped(const StringArray& files, int x, int y)
-{
-    for (String filename : files)
-    {
-        URL fileURL = URL{ File{filename} };
-        player->loadURL(fileURL);
-        return;
-    }
-}
-
 void ControlDeck::timerCallback()
 {
     waveformDisplay.setPositionRelative(player->getPositionRelative());
@@ -305,4 +290,10 @@ void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
     }
 
     playButton.setButtonText(playButtonText);
+}
+
+void ControlDeck::loadDroppedTrack(juce::URL songURL)
+{
+    player->loadURL(songURL);
+    waveformDisplay.loadURL(songURL);
 }

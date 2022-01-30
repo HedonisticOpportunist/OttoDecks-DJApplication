@@ -16,7 +16,6 @@
 class ControlDeck: public juce::Component,
                  public Button::Listener,
                  public Slider::Listener,
-                 public FileDragAndDropTarget,
                  public Timer 
 {
 
@@ -26,7 +25,7 @@ public:
         AudioThumbnailCache& cacheToUse);
 
     /** The ControlDeck destructor */
-    ~ControlDeck();
+    ~ControlDeck() override;
 
     /** Paints the screen */
     void paint (juce::Graphics&) override;
@@ -40,12 +39,6 @@ public:
     /** Deals with slider value changes */
     void sliderValueChanged(Slider* slider) override;
 
-    /** Allows drag and drop */
-    bool isInterestedInFileDrag(const StringArray& files) override;
-
-    /** Allows files to be dropped */
-    void filesDropped(const StringArray& files, int x, int y) override;
-
     /** Allows timer callback */
     void timerCallback() override;
 
@@ -57,6 +50,9 @@ public:
 
     /** Deal with the differing states of the play button status */
     void displayPlayButtonText(bool paused);
+
+    /** Load a file that has been dragged and dropped */
+    void loadDroppedTrack(juce::URL url);
 
 private:
 

@@ -20,7 +20,7 @@ public:
 	DJAudioPlayer(AudioFormatManager& formatManager);
 
 	/** The DJAudioPlayer destructor */
-	~DJAudioPlayer();
+	~DJAudioPlayer() override;
 
 	/**loads a file from a given URL  */
 	void loadURL(URL file);

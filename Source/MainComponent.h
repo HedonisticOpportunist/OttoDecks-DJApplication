@@ -11,7 +11,9 @@
 #include "ControlDeck.h"
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
-#include "PlaylistComponent.h"
+#include "MusicLibraryControlDeck.h"
+#include "MusicLibraryManager.h"
+
 class MainComponent  : public juce::AudioAppComponent
                   
 {
@@ -33,17 +35,26 @@ public:
 
 private:
   
+    // background image 
     Image backgroundImage;
+
+    // audio-related object instantiations 
     AudioFormatManager formatManager;
     AudioThumbnailCache thumbCache{100};
-    DJAudioPlayer player1{formatManager};
-    ControlDeck deck1{ &player1, formatManager, thumbCache};
-
-    DJAudioPlayer player2{formatManager};
-    ControlDeck deck2{&player2, formatManager, thumbCache};
-
     MixerAudioSource mixerSource;
-    PlaylistComponent playlistComponent{&player1, formatManager};
 
+    // Deck 1
+    DJAudioPlayer deckOnePlayer{formatManager};
+    ControlDeck deck1{ &deckOnePlayer, formatManager, thumbCache};
+
+    // Deck 2
+    DJAudioPlayer deckTwoPlayer{formatManager};
+    ControlDeck deck2{&deckTwoPlayer, formatManager, thumbCache};
+
+    // Player List 
+    DJAudioPlayer musicManagerPlayer{formatManager};
+    MusicLibraryManager musicLibraryManager;
+    MusicLibraryControlDeck musicControlDeck{&musicManagerPlayer, formatManager};
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

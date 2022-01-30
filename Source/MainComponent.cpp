@@ -33,7 +33,10 @@ MainComponent::MainComponent()
     // make the decks visible 
     addAndMakeVisible(deck1);
     addAndMakeVisible(deck2);
-    addAndMakeVisible(playlistComponent);
+
+    // make the music library-related decks visible 
+    addAndMakeVisible(musicControlDeck);
+    addAndMakeVisible(musicLibraryManager);
 }
 
 MainComponent::~MainComponent()
@@ -44,11 +47,11 @@ MainComponent::~MainComponent()
 // R1B: can play two or more tracks
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    mixerSource.addInputSource(&player1, false);
-    mixerSource.addInputSource(&player2, false);
+    mixerSource.addInputSource(&deckOnePlayer, false);
+    mixerSource.addInputSource(&deckTwoPlayer, false);
 
-    player1.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    player2.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    deckOnePlayer.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    deckTwoPlayer.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -61,8 +64,8 @@ void MainComponent::releaseResources()
     mixerSource.removeAllInputs();
     mixerSource.releaseResources();
 
-    player1.releaseResources();
-    player2.releaseResources();
+    deckOnePlayer.releaseResources();
+    deckTwoPlayer.releaseResources();
 }
 
 void MainComponent::paint (juce::Graphics& graphics)
@@ -74,6 +77,7 @@ void MainComponent::resized()
 {
     // layout is smaller, as we want to display the background image 
     deck1.setBounds(0, 0, getWidth() / 3.2, getHeight() / 3.2);
-    deck2.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2);
-    playlistComponent.setBounds(0, getHeight() / 3, getWidth() / 3, getHeight() / 3);
+    deck2.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2); 
+    musicControlDeck.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2);
+    musicLibraryManager.setBounds(0, getHeight() / 3, getWidth() / 3, getHeight() / 3);
 }

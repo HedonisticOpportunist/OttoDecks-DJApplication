@@ -46,7 +46,7 @@ void DJAudioPlayer::rewindSong()
 
 	if (currentPosition - 0.5 < 0)
 	{
-		transportSource.setPosition(currentPosition - 1);
+		transportSource.setPosition(currentPosition - 1.0);
 	}
 }
 
@@ -57,7 +57,7 @@ void DJAudioPlayer::fastForwardSong()
 
 	if (currentPosition + 1.5 != lastPositionHeld && currentPosition + 1.5 > lastPositionHeld)
 	{
-		transportSource.setPosition(currentPosition + 2);
+		transportSource.setPosition(currentPosition + 2.0);
 	}
 }
 

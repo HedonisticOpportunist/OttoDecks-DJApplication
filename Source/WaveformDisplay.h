@@ -20,7 +20,7 @@ public:
         AudioThumbnailCache& cacheToUse);
 
     /** The waveform destructor */
-    ~WaveformDisplay();
+    ~WaveformDisplay() override;
 
     /** Paint the wave form */
     void paint (juce::Graphics&) override;
