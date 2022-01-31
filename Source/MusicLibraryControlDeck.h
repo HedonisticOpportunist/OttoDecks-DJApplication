@@ -10,6 +10,7 @@
 #pragma once
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
+#include "MusicLibraryManager.h"
 
 class MusicLibraryControlDeck  : public juce::Component,
                                  public Button::Listener
@@ -30,7 +31,8 @@ public:
     void addToDeck();
 
 private:
-    // private members of the class 
+
+    // Text Buttons 
     TextButton loadButton{ "Load" };
     TextButton loadToDeckOne{ "Load to Deck One" };
     TextButton loadToDeckTwo{ "Load to Deck Two" };
@@ -41,6 +43,9 @@ private:
 
     // background image 
     Image backgroundImage;
+
+    // Music Library Manager object
+    MusicLibraryManager musicLibraryManager; 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryControlDeck)
 };

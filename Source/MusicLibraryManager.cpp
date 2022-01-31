@@ -16,15 +16,13 @@ MusicLibraryManager::MusicLibraryManager()
     addAndMakeVisible(tableComponent);
 
     // column and tracks 
-    tableComponent.getHeader().addColumn("Track title", 1, 400);
-    tableComponent.getHeader().addColumn("", 2, 200);
+    tableComponent.getHeader().addColumn("Track title", 1, 150);
+    tableComponent.getHeader().addColumn("Duration", 2, 100);
+    tableComponent.getHeader().addColumn("First Deck", 3, 100);
+    tableComponent.getHeader().addColumn("Second Deck", 4, 100);
+    tableComponent.setModel(this);  
 
-    tableComponent.setModel(this);
-
-    trackTitles.push_back("Track 1");
-    trackTitles.push_back("Track 2");
-    trackTitles.push_back("Track 3");
-    trackTitles.push_back("Track 4");
+    trackTitles.push_back("");
 }
 
 MusicLibraryManager::~MusicLibraryManager()
@@ -89,6 +87,8 @@ Component* MusicLibraryManager::refreshComponentForCell(
     Component* existingComponentToUpdate)
 {
     String id{ std::to_string(rowNumber) };
+
+
    
     if (columnId == 1)
     {
@@ -107,4 +107,11 @@ void MusicLibraryManager::buttonClicked(Button* button)
 {
     int id = std::stoi(button->getComponentID().toStdString());
     DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
+}
+
+std::vector <juce::String> MusicLibraryManager::updateTracks(juce::String fileName)
+{
+    trackTitles.push_back(fileName);
+    tableComponent.updateContent();
+    return trackTitles;
 }

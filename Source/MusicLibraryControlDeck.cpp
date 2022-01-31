@@ -34,6 +34,7 @@ MusicLibraryControlDeck::~MusicLibraryControlDeck()
 {
 }
 
+// R4C: GUI layout includes the music library component from R3
 void MusicLibraryControlDeck::paint (juce::Graphics& graphics)
 {
     graphics.fillAll(juce::Colours::whitesmoke);
@@ -98,8 +99,14 @@ void MusicLibraryControlDeck::loadTracks()
     auto dlgFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles;
     this->chooser.launchAsync(dlgFlags, [this](const juce::FileChooser& chooser)
         {
+            // load the file 
             auto fileUri = chooser.getURLResult();
             player->loadURL(fileUri);
+
+            juce::String fileName = fileUri.getFileName();
+
+            // add the file to the tracks 
+            musicLibraryManager.updateTracks(fileName);
         });
 }
 

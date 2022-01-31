@@ -11,8 +11,8 @@
 #include <JuceHeader.h>
 
 class MusicLibraryManager  : public juce::Component,
-                           public TableListBoxModel,
-                           public Button::Listener
+                             public TableListBoxModel,
+                             public Button::Listener
 {
 public:
 
@@ -55,10 +55,12 @@ public:
     /** Checks what happens when button is clicked */
     void buttonClicked(Button* button) override;
 
+    std::vector<juce::String> updateTracks(juce::String fileName);
+
 private:
 
     TableListBox tableComponent;
-    std::vector<std::string> trackTitles;
+    std::vector<juce::String> trackTitles;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryManager)
 };
