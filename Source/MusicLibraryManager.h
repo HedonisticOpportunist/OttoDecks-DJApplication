@@ -55,12 +55,13 @@ public:
     /** Checks what happens when button is clicked */
     void buttonClicked(Button* button) override;
 
-    std::vector<juce::String> updateTracks(juce::String fileName);
+    /** Update the tracklist vector */
+    void updateTracks(Array<File> file);
 
 private:
 
     TableListBox tableComponent;
-    std::vector<juce::String> trackTitles;
+    std::vector<juce::String> trackList;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryManager)
 };

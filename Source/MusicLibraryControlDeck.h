@@ -20,6 +20,7 @@ public:
     ~MusicLibraryControlDeck() override;
 
     void paint (juce::Graphics&) override;
+
     void resized() override;
 
     void buttonClicked(Button* button);

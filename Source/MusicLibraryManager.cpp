@@ -12,9 +12,7 @@
 
 MusicLibraryManager::MusicLibraryManager()
 {
-    // make table component visible 
-    addAndMakeVisible(tableComponent);
-
+ 
     // column and tracks 
     tableComponent.getHeader().addColumn("Track title", 1, 150);
     tableComponent.getHeader().addColumn("Duration", 2, 100);
@@ -22,7 +20,13 @@ MusicLibraryManager::MusicLibraryManager()
     tableComponent.getHeader().addColumn("Second Deck", 4, 100);
     tableComponent.setModel(this);  
 
-    trackTitles.push_back("");
+    // make table component visible 
+    addAndMakeVisible(tableComponent); 
+   
+    trackList.push_back("Track 1");
+    trackList.push_back("Track 2");
+    trackList.push_back("Track 3");
+    trackList.push_back("Track 4");
 }
 
 MusicLibraryManager::~MusicLibraryManager()
@@ -44,7 +48,7 @@ void MusicLibraryManager::resized()
 
 int MusicLibraryManager::getNumRows()
 {
-    return trackTitles.size();
+    return trackList.size();
 }
 
 void MusicLibraryManager::paintRowBackground(Graphics& g,
@@ -71,47 +75,73 @@ void MusicLibraryManager::paintCell(Graphics& g,
 {
     if (rowNumber < getNumRows())
     {
-        g.drawText(
-            trackTitles[rowNumber],
-            2, 0,
-            width - 4, height,
-            Justification::centredLeft,
-            true);
+        if (columnId == 1)
+        {
+            g.drawText(trackList[rowNumber],
+                2,
+                0,
+                width - 4,
+                height,
+                juce::Justification::centredLeft,
+                true
+            );
+        }
     }
 }
 
+// @ credit goes to: 
+// https://stackoverflow.com/questions/69111741/
+// how-do-i-add-an-playable-audio-file-to-a-tablelistbox-playlist-juce-c
 Component* MusicLibraryManager::refreshComponentForCell(
     int rowNumber,
     int columnId,
     bool isRowSelected,
     Component* existingComponentToUpdate)
 {
-    String id{ std::to_string(rowNumber) };
+    if (columnId == 0) 
+    {
+        jassert(existingComponentToUpdate == nullptr);
+        return nullptr;
+    }
 
-
-   
     if (columnId == 1)
     {
-        if (existingComponentToUpdate == nullptr)
+        TextButton* btn = static_cast<TextButton*> (existingComponentToUpdate);
+
+        if (btn == 0)
         {
-            TextButton * btn = new TextButton("play");
-            btn->setComponentID(id);
-            existingComponentToUpdate = btn;
-            btn->addListener(this);
+            btn = new TextButton{ "Play" };
         }
+
+        String id{ std::to_string(rowNumber) };
+        btn->setComponentID(id);
+        btn->addListener(this);
+        existingComponentToUpdate = btn;
     }
+
     return existingComponentToUpdate;
 }
 
+// @ credit goes to: 
+// https://stackoverflow.com/questions/69111741/
+// how-do-i-add-an-playable-audio-file-to-a-tablelistbox-playlist-juce-c
 void MusicLibraryManager::buttonClicked(Button* button)
 {
-    int id = std::stoi(button->getComponentID().toStdString());
-    DBG("PlaylistComponent::buttonClicked " << trackTitles[id]);
+    // player->loadURL(file[std::stoi(button->getComponentID().toStdString())]);
+    // player->start();
 }
 
-std::vector <juce::String> MusicLibraryManager::updateTracks(juce::String fileName)
+// @ credit goes to: 
+// https://stackoverflow.com/questions/69111741/
+// how-do-i-add-an-playable-audio-file-to-a-tablelistbox-playlist-juce-c
+void MusicLibraryManager::updateTracks(Array<File> trackFile)
 {
-    trackTitles.push_back(fileName);
+    for (unsigned int i = 0; i < trackFile.size(); ++i)
+    {
+        // ge the file name 
+        trackList.push_back(trackFile[i].getFileName());
+
+    }
+
     tableComponent.updateContent();
-    return trackTitles;
 }

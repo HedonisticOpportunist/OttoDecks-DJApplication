@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="aE38mL" name="OttoDecks" projectType="guiapp" displaySplashScreen="1"
-              jucerFormatVersion="1" useAppConfig="0">
+              jucerFormatVersion="1" useAppConfig="0" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
   <MAINGROUP id="g1th1Q" name="OttoDecks">
     <FILE id="gt6enX" name="background.png" compile="0" resource="1" file="Source/background.png"/>
     <FILE id="toRtyL" name="background_img.png" compile="0" resource="1"
