@@ -13,22 +13,25 @@
 MusicLibraryManager::MusicLibraryManager()
 {
  
-    // column and tracks 
-    tableComponent.getHeader().addColumn("Track title", 1, 150);
+    // Set the columns 
+    tableComponent.getHeader().addColumn("Track Title", 1, 150);
     tableComponent.getHeader().addColumn("Duration", 2, 100);
     tableComponent.getHeader().addColumn("First Deck", 3, 100);
     tableComponent.getHeader().addColumn("Second Deck", 4, 100);
     tableComponent.setModel(this);  
 
-    // make table component visible 
+    // Make the table component visible 
     addAndMakeVisible(tableComponent); 
+
+    // Load the playlist 
+    loadPlayList();
 }
 
 MusicLibraryManager::~MusicLibraryManager()
 {
     // R3E: The music library persists so that it is restored 
     // when the user exits then restarts the application
-    saveTracksToPlaylist();
+    saveTracksToPlayList();
 }
 
 // R4C: GUI layout includes the music library component from R3
@@ -75,7 +78,7 @@ void MusicLibraryManager::paintCell(Graphics& g,
     {
         if (columnId == 1)
         {
-            g.drawText(trackList[rowNumber].getFileNameWithoutExtension(),
+            g.drawText(trackList[rowNumber].getFileName(),
                 2,
                 0,
                 width - 4,
@@ -120,45 +123,83 @@ Component* MusicLibraryManager::refreshComponentForCell(
     return existingComponentToUpdate;
 }
 
-// @ credit goes to: 
-// https://stackoverflow.com/questions/69111741/
-// how-do-i-add-an-playable-audio-file-to-a-tablelistbox-playlist-juce-c
-void MusicLibraryManager::buttonClicked(Button* button)
+void MusicLibraryManager::saveTracksToPlayList()
 {
-    int id = std::stoi(button->getComponentID().toStdString());
+    // Playlist file csv creation 
+    std::ofstream playList("playList.csv");
+
+    // save library to file
+    for (unsigned int i = 0; i < trackList.size(); ++i)
+    {
+        playList << trackList[i].getFileName() << "," << trackList[i].getFileLength() << "\n";
+    }
+}
+
+void MusicLibraryManager::loadPlayList()
+{
+    std::ifstream loadedPlayList("playList.csv");
+    std::string filePath;
+    std::string fileLength;
+
+    // Read data, line by line
+    if (loadedPlayList.is_open())
+    {
+        while (std::getline(loadedPlayList, filePath, ',')) 
+        {
+            juce::File file{filePath};
+            TrackFile trackFile{file};
+
+            std::getline(loadedPlayList, fileLength);
+            trackFile.getFileLength() = fileLength;
+            trackList.push_back(trackFile);
+        }
+    }
+
+    // close the play list 
+    loadedPlayList.close();
+} 
+
+void MusicLibraryManager::populateTrackList(juce::File file)
+{
+    TrackFile trackFile{file};
+    juce::URL audioURL{file};
+
+    trackFile.setFileLength(getAudioLength(audioURL));
+
+    trackList.push_back(trackFile);
     tableComponent.updateContent();
 }
 
-void MusicLibraryManager::saveTracksToPlaylist()
+void MusicLibraryManager::playAudio(ControlDeck* deck)
 {
-    // create .csv to save library
-    //std::ofstream fileToSave("playlist.csv");
+    int selectedRow{tableComponent.getSelectedRow()};
 
-    // save library to file
-    for (auto &track : trackList)
+    if(selectedRow != -1)
     {
-        //fileToSave << track.getFullPathName() << "," << "\n";
+        //deck->loadFile(trackList[selectedRow]);
     }
 }
 
-/* void PlaylistComponent::loadLibrary()
+juce::String MusicLibraryManager::getAudioLength(juce::URL audioURL)
 {
-    // create input stream from saved library
-    std::ifstream loadedLibrary("my-library.csv");
-    std::string filePath;
-    std::string length;
+    djAudioPlayer->loadURL(audioURL);
+    //double seconds{ djAudioPlayer->getLengthInSeconds() };
+    //juce::String minutes{ secondsToMinutes(seconds) };
+    //return minutes;
+    return "";
+}
 
-    // Read data, line by line
-    if (myLibrary.is_open())
+juce::String secondsToMinutes(double seconds)
+{
+    //find seconds and minutes and make into string
+    int secondsRounded{ int(std::round(seconds)) };
+    juce::String min{ std::to_string(secondsRounded / 60) };
+    juce::String sec{ std::to_string(secondsRounded % 60) };
+
+    if (sec.length() < 2) // if seconds is 1 digit or less
     {
-        while (getline(myLibrary, filePath, ',')) {
-            juce::File file{ filePath };
-            Track newTrack{ file };
-
-            getline(myLibrary, length);
-            newTrack.length = length;
-            tracks.push_back(newTrack);
-        }
+        //add '0' to seconds until seconds is length 2
+        sec = sec.paddedLeft('0', 2);
     }
-    myLibrary.close();
-} */
+    return juce::String{ min + ":" + sec };
+}

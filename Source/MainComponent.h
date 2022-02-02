@@ -53,7 +53,7 @@ private:
 
     // Player List 
     DJAudioPlayer musicManagerPlayer{formatManager};
-    MusicLibraryManager musicLibraryManager;
+    //MusicLibraryManager musicLibraryManager;
     MusicLibraryControlDeck musicControlDeck{&musicManagerPlayer, formatManager};
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

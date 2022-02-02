@@ -8,7 +8,10 @@
 */
 
 #pragma once
+#include "ControlDeck.h"
+#include <fstream>
 #include <JuceHeader.h>
+#include "TrackFile.h"
 
 class MusicLibraryManager  : public juce::Component,
                              public TableListBoxModel,
@@ -52,17 +55,23 @@ public:
         bool isRowSelected,
         Component* existingComponentToUpdate) override;
 
-    /** Checks what happens when button is clicked */
-    void buttonClicked(Button* button) override;
-
     /** Update the tracklist vector */
-    void saveTracksToPlaylist();
+    void saveTracksToPlayList();
+
+    void loadPlayList(); 
+
+    void populateTrackList(juce::File file);
+
+    void playAudio(ControlDeck* controlDeck);
+
+    juce::String getAudioLength(juce::URL audioURL);
 
 private:
 
     TableListBox tableComponent;
+    DJAudioPlayer* djAudioPlayer;
 
-    // A vector of files 
-    std::vector<juce::File> trackList;
+    // A vector consisting of objects "TrackFile"
+    std::vector<TrackFile> trackList;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryManager)
 };

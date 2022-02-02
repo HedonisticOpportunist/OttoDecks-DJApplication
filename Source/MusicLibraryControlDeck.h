@@ -46,7 +46,7 @@ private:
     Image backgroundImage;
 
     // Music Library Manager object
-    MusicLibraryManager musicLibraryManager; 
+    //MusicLibraryManager musicLibraryManager; 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryControlDeck)
 };
