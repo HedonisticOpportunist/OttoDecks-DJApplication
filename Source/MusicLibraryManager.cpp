@@ -22,15 +22,13 @@ MusicLibraryManager::MusicLibraryManager()
 
     // make table component visible 
     addAndMakeVisible(tableComponent); 
-   
-    trackList.push_back("Track 1");
-    trackList.push_back("Track 2");
-    trackList.push_back("Track 3");
-    trackList.push_back("Track 4");
 }
 
 MusicLibraryManager::~MusicLibraryManager()
 {
+    // R3E: The music library persists so that it is restored 
+    // when the user exits then restarts the application
+    saveTracksToPlaylist();
 }
 
 // R4C: GUI layout includes the music library component from R3
@@ -77,7 +75,7 @@ void MusicLibraryManager::paintCell(Graphics& g,
     {
         if (columnId == 1)
         {
-            g.drawText(trackList[rowNumber],
+            g.drawText(trackList[rowNumber].getFileNameWithoutExtension(),
                 2,
                 0,
                 width - 4,
@@ -127,21 +125,40 @@ Component* MusicLibraryManager::refreshComponentForCell(
 // how-do-i-add-an-playable-audio-file-to-a-tablelistbox-playlist-juce-c
 void MusicLibraryManager::buttonClicked(Button* button)
 {
-    // player->loadURL(file[std::stoi(button->getComponentID().toStdString())]);
-    // player->start();
-}
-
-// @ credit goes to: 
-// https://stackoverflow.com/questions/69111741/
-// how-do-i-add-an-playable-audio-file-to-a-tablelistbox-playlist-juce-c
-void MusicLibraryManager::updateTracks(Array<File> trackFile)
-{
-    for (unsigned int i = 0; i < trackFile.size(); ++i)
-    {
-        // ge the file name 
-        trackList.push_back(trackFile[i].getFileName());
-
-    }
-
+    int id = std::stoi(button->getComponentID().toStdString());
     tableComponent.updateContent();
 }
+
+void MusicLibraryManager::saveTracksToPlaylist()
+{
+    // create .csv to save library
+    //std::ofstream fileToSave("playlist.csv");
+
+    // save library to file
+    for (auto &track : trackList)
+    {
+        //fileToSave << track.getFullPathName() << "," << "\n";
+    }
+}
+
+/* void PlaylistComponent::loadLibrary()
+{
+    // create input stream from saved library
+    std::ifstream loadedLibrary("my-library.csv");
+    std::string filePath;
+    std::string length;
+
+    // Read data, line by line
+    if (myLibrary.is_open())
+    {
+        while (getline(myLibrary, filePath, ',')) {
+            juce::File file{ filePath };
+            Track newTrack{ file };
+
+            getline(myLibrary, length);
+            newTrack.length = length;
+            tracks.push_back(newTrack);
+        }
+    }
+    myLibrary.close();
+} */

@@ -56,12 +56,13 @@ public:
     void buttonClicked(Button* button) override;
 
     /** Update the tracklist vector */
-    void updateTracks(Array<File> file);
+    void saveTracksToPlaylist();
 
 private:
 
     TableListBox tableComponent;
-    std::vector<juce::String> trackList;
 
+    // A vector of files 
+    std::vector<juce::File> trackList;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryManager)
 };

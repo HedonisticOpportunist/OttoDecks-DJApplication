@@ -113,7 +113,7 @@ void MusicLibraryControlDeck::loadTracks()
 
             // add the track file to the update tracks method 
             // in the Music Library Manager component 
-            musicLibraryManager.updateTracks(trackFile);
+            musicLibraryManager.saveTracksToPlaylist();
         }
     }
 }
