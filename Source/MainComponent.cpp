@@ -36,7 +36,7 @@ MainComponent::MainComponent()
 
     // make the music library-related decks visible 
     addAndMakeVisible(musicControlDeck);
-    //addAndMakeVisible(musicLibraryManager);
+    addAndMakeVisible(libraryManager);
 }
 
 MainComponent::~MainComponent()
@@ -79,5 +79,5 @@ void MainComponent::resized()
     deck1.setBounds(0, 0, getWidth() / 3.2, getHeight() / 3.2);
     deck2.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2); 
     musicControlDeck.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2);
-    //musicLibraryManager.setBounds(0, getHeight() / 3, getWidth() / 3, getHeight() / 3);
+    libraryManager.setBounds(0, getHeight() / 3, getWidth() / 3, getHeight() / 3);
 }

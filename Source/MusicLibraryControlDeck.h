@@ -8,6 +8,7 @@
 */
 
 #pragma once
+#include "ControlDeck.h"
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
 #include "MusicLibraryManager.h"
@@ -16,20 +17,21 @@ class MusicLibraryControlDeck  : public juce::Component,
                                  public Button::Listener
 {
 public:
-    MusicLibraryControlDeck(DJAudioPlayer* _dJPlayer, AudioFormatManager& formatManagerToUse);
+    MusicLibraryControlDeck(ControlDeck* _controlDeckOne, ControlDeck* _controlDeckTwo);
+
     ~MusicLibraryControlDeck() override;
 
     void paint (juce::Graphics&) override;
 
     void resized() override;
 
-    void buttonClicked(Button* button);
+    void buttonClicked(Button* button) override;
 
     void repaintButtons();
 
     void loadTracks();
 
-    void addToDeck();
+    void addToDeck(ControlDeck* deck);
 
 private:
 
@@ -40,13 +42,16 @@ private:
 
     // Audio components 
     juce::FileChooser chooser{ "Browse audio file" };
-    DJAudioPlayer* player;
+    URL audioURL;
+
+    // ControlDeck One and Two
+    ControlDeck* controlDeckOne;
+    ControlDeck* controlDeckTwo;
 
     // background image 
     Image backgroundImage;
 
     // Music Library Manager object
-    //MusicLibraryManager musicLibraryManager; 
-
+    MusicLibraryManager musicLibraryManager; 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryControlDeck)
 };

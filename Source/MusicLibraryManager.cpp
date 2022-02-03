@@ -12,7 +12,6 @@
 
 MusicLibraryManager::MusicLibraryManager()
 {
- 
     // Set the columns 
     tableComponent.getHeader().addColumn("Track Title", 1, 150);
     tableComponent.getHeader().addColumn("Duration", 2, 100);
@@ -126,7 +125,8 @@ Component* MusicLibraryManager::refreshComponentForCell(
 void MusicLibraryManager::saveTracksToPlayList()
 {
     // Playlist file csv creation 
-    std::ofstream playList("playList.csv");
+    std::ofstream playList;
+    playList.open("playlist.txt");
 
     // save library to file
     for (unsigned int i = 0; i < trackList.size(); ++i)
@@ -137,7 +137,7 @@ void MusicLibraryManager::saveTracksToPlayList()
 
 void MusicLibraryManager::loadPlayList()
 {
-    std::ifstream loadedPlayList("playList.csv");
+    std::ifstream loadedPlayList("playList.txt");
     std::string filePath;
     std::string fileLength;
 
@@ -164,29 +164,10 @@ void MusicLibraryManager::populateTrackList(juce::File file)
     TrackFile trackFile{file};
     juce::URL audioURL{file};
 
-    trackFile.setFileLength(getAudioLength(audioURL));
+    //trackFile.setFileLength(getAudioLength(audioURL));
 
     trackList.push_back(trackFile);
     tableComponent.updateContent();
-}
-
-void MusicLibraryManager::playAudio(ControlDeck* deck)
-{
-    int selectedRow{tableComponent.getSelectedRow()};
-
-    if(selectedRow != -1)
-    {
-        //deck->loadFile(trackList[selectedRow]);
-    }
-}
-
-juce::String MusicLibraryManager::getAudioLength(juce::URL audioURL)
-{
-    djAudioPlayer->loadURL(audioURL);
-    //double seconds{ djAudioPlayer->getLengthInSeconds() };
-    //juce::String minutes{ secondsToMinutes(seconds) };
-    //return minutes;
-    return "";
 }
 
 juce::String secondsToMinutes(double seconds)
@@ -202,4 +183,9 @@ juce::String secondsToMinutes(double seconds)
         sec = sec.paddedLeft('0', 2);
     }
     return juce::String{ min + ":" + sec };
+}
+
+void MusicLibraryManager::buttonClicked(Button* button)
+{
+
 }

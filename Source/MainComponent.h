@@ -52,9 +52,8 @@ private:
     ControlDeck deck2{&deckTwoPlayer, formatManager, thumbCache};
 
     // Player List 
-    DJAudioPlayer musicManagerPlayer{formatManager};
-    //MusicLibraryManager musicLibraryManager;
-    MusicLibraryControlDeck musicControlDeck{&musicManagerPlayer, formatManager};
+    MusicLibraryManager libraryManager;
+    MusicLibraryControlDeck musicControlDeck{&deck1, &deck2};
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

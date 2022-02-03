@@ -10,9 +10,12 @@
 #include <JuceHeader.h>
 #include "MusicLibraryControlDeck.h"
 
-MusicLibraryControlDeck::MusicLibraryControlDeck(
-  DJAudioPlayer* _player,
-  AudioFormatManager& formatManagerToUse) : player(_player)
+MusicLibraryControlDeck::MusicLibraryControlDeck
+(
+    ControlDeck* _controlDeckOne,
+    ControlDeck* _controlDeckTwo):
+    controlDeckOne(_controlDeckOne), 
+    controlDeckTwo(_controlDeckTwo)
 {
     // background image 
     // @credit https://unsplash.com/@gradienta
@@ -111,15 +114,15 @@ void MusicLibraryControlDeck::loadTracks()
         {
             // add the track file to the update tracks method 
             // in the Music Library Manager component 
-            //musicLibraryManager.populateTrackList(trackFile);
+            musicLibraryManager.populateTrackList(trackFile);
         }
     }
 }
 
 //R3D: Component allows the user to load files from the library into a deck
-void MusicLibraryControlDeck::addToDeck()
+void MusicLibraryControlDeck::addToDeck(ControlDeck* deck)
 {
-    //deckGUI->loadFile(tracks[selectedRow].URL);
+    deck->loadDroppedTrack(audioURL); 
 }
 
 void MusicLibraryControlDeck::buttonClicked(Button* button)
@@ -130,8 +133,13 @@ void MusicLibraryControlDeck::buttonClicked(Button* button)
     }
 
     // add trakcs to one of the decks 
-    if (button == &loadToDeckOne || button == &loadToDeckTwo)
+    if (button == &loadToDeckOne)
     {
-        addToDeck();
+        addToDeck(controlDeckOne);
+    }
+
+    if (button == &loadToDeckTwo)
+    {
+        addToDeck(controlDeckTwo);
     }
 }
