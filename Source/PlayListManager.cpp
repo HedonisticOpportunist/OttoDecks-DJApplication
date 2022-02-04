@@ -10,7 +10,7 @@
 #include <JuceHeader.h>
 #include "PlaylistManager.h"
 
-PlaylistComponent::PlaylistComponent()
+PlayListManager::PlayListManager()
 {
     // Set the columns 
     playList.getHeader().addColumn("Track Title", 1, 150);
@@ -24,13 +24,10 @@ PlaylistComponent::PlaylistComponent()
     searchField.setTextToShowWhenEmpty("Search The Track List", juce::Colours::orange);
     searchField.setInputRestrictions(24);
 
-    addAndMakeVisible(importButton);
     addAndMakeVisible(playList);
     addAndMakeVisible(searchField);
-
     searchField.addListener(this);
-    importButton.addListener(this);
-
+ 
     // Search field behaviour
     searchField.onTextChange = [this] {searchPlaylist(searchField.getText());};
     searchField.onEscapeKey = [this] {searchField.clear(); playList.deselectAllRows();};
@@ -38,19 +35,19 @@ PlaylistComponent::PlaylistComponent()
     loadTracks();
 }
 
-PlaylistComponent::~PlaylistComponent()
+PlayListManager::~PlayListManager()
 {
     saveTracks();
 }
 
-void PlaylistComponent::paint(juce::Graphics& graphics)
+void PlayListManager::paint(juce::Graphics& graphics)
 {
     graphics.fillAll(juce::Colours::beige);
     graphics.drawRect(getLocalBounds(), 1);
     graphics.setColour(juce::Colours::white);
 }
 
-void PlaylistComponent::resized()
+void PlayListManager::resized()
 {
     searchField.setBounds(0, 0, getWidth(), getHeight() / 10);
 
@@ -60,16 +57,14 @@ void PlaylistComponent::resized()
     playList.getHeader().setColumnWidth(3, getWidth() / 6);
     playList.getHeader().setColumnWidth(4, getWidth() / 6);
     playList.getHeader().setColumnWidth(5, getWidth() / 6);
-
-    importButton.setBounds(0, getHeight() * 9 / 10, getWidth(), getHeight() / 10);
 }
 
-int PlaylistComponent::getNumRows()
+int PlayListManager::getNumRows()
 {
     return trackList.size();
 }
 
-void PlaylistComponent::paintRowBackground(Graphics& graphics,
+void PlayListManager::paintRowBackground(Graphics& graphics,
     int rowNumber,
     int width,
     int height,
@@ -86,7 +81,7 @@ void PlaylistComponent::paintRowBackground(Graphics& graphics,
     }
 }
 
-void PlaylistComponent::paintCell(Graphics& graphics,
+void PlayListManager::paintCell(Graphics& graphics,
     int rowNumber,
     int columnId,
     int width,
@@ -116,7 +111,7 @@ void PlaylistComponent::paintCell(Graphics& graphics,
     }
 }
 
-juce::Component* PlaylistComponent::refreshComponentForCell(int rowNumber,
+juce::Component* PlayListManager::refreshComponentForCell(int rowNumber,
     int columnId,
     bool isRowSelected,
     juce::Component* existingComponentToUpdate)
@@ -141,7 +136,7 @@ juce::Component* PlaylistComponent::refreshComponentForCell(int rowNumber,
     return existingComponentToUpdate;
 }
 
-std::string PlaylistComponent::secondsToMinutes(double seconds)
+std::string PlayListManager::secondsToMinutes(double seconds)
 {
     // get minutes
     int minutes = int(trunc(seconds / 60.0));
@@ -161,52 +156,18 @@ std::string PlaylistComponent::secondsToMinutes(double seconds)
     return minStr + ":" + secStr;
 }
 
-void PlaylistComponent::populateTrackListTable(juce::Array<juce::File> files)
+void PlayListManager::populateTrackListTable()
 {
-    for (juce::File& file : files)
-    {
-        bool trackExists = checkIfTrackHasBeenLoaded();
-
-        // init audioTrack instance
-        TrackFile trackFile{ file };
-
-        //double length = MusicLibraryControlDeck::getTrackLength(player, trackFile.getFileURL());
-        //trackFile.setFileLength(secondsToMinutes(length));
-
-        if (!trackExists)
-        {
-            // save track to to the track list 
-            trackList.push_back(trackFile);
-        }
-    }
-
+    //trackList = MusicControlDeck::populateTrackListVector();
     playList.updateContent();
 }
 
-void PlaylistComponent::buttonClicked(juce::Button* button)
+void PlayListManager::buttonClicked(juce::Button* button)
 {
-    if (button == &importButton)
-    {
-        loadInTracks();
-    }     
+    // stuff   
 }
 
-bool PlaylistComponent::checkIfTrackHasBeenLoaded()
-{
-    bool trackAlreadyLoaded = false;
-   
-    for (TrackFile& existingTrackFile : trackList)
-    {
-        if (existingTrackFile.getFileName() == existingTrackFile.getFileName())
-        {
-            trackAlreadyLoaded = true;
-        }
-    }
-
-    return trackAlreadyLoaded;
-}
-
-void PlaylistComponent::searchPlaylist(juce::String inputText)
+void PlayListManager::searchPlaylist(juce::String inputText)
 {
     int matchingTrackId;
 
@@ -221,7 +182,7 @@ void PlaylistComponent::searchPlaylist(juce::String inputText)
     }
 }
 
-void PlaylistComponent::saveTracks()
+void PlayListManager::saveTracks()
 {
     std::ofstream savedTracksFile;
     savedTracksFile.open("tracks_file.txt");
@@ -234,7 +195,7 @@ void PlaylistComponent::saveTracks()
     savedTracksFile.close();
 }
 
-void PlaylistComponent::loadTracks()
+void PlayListManager::loadTracks()
 {
     std::ifstream savedTracksFile("tracks_file.txt");
     std::string filePath;
@@ -263,24 +224,4 @@ void PlaylistComponent::loadTracks()
 
     savedTracksFile.close();
     playList.updateContent();
-}
-
-// R3A: Component allows the user to add files to their library
-void PlaylistComponent::loadInTracks()
-{
-    // initialise the file and select the filters that it is limited to
-    juce::String filters = "*.mp3";
-    Array<File> file;
-
-    //initialize file chooser
-    juce::FileChooser chooser{ "Select files" };
-    if (chooser.browseForMultipleFilesToOpen())
-    {
-        juce::Array<juce::File> trackFiles = chooser.getResults();
-
-        // add the track file to the update tracks method 
-        // in the Music Library Manager component 
-        populateTrackListTable(trackFiles);
-
-    }
 }

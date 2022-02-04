@@ -34,8 +34,10 @@ MainComponent::MainComponent()
     addAndMakeVisible(deck1);
     addAndMakeVisible(deck2);
 
-    // make the music library-related decks visible 
+    // make the music control decks visible
     addAndMakeVisible(musicControlDeck);
+
+    // make the music library-related decks visible 
     addAndMakeVisible(playlistComponent);
 }
 

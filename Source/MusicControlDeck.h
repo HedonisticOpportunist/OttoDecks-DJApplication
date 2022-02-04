@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    MusicLibraryControlDeck.h
+    MusicControlDeck.h
     Author:  anita.pal
 
   ==============================================================================
@@ -9,22 +9,22 @@
 
 #pragma once
 #include "ControlDeck.h"
+#include <fstream>
+#include <iostream>
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
+#include "PlayListManager.h"
+#include "TrackFile.h"
 
-class MusicLibraryControlDeck  : public juce::Component,
-                                 public Button::Listener
+class MusicControlDeck : public juce::Component,
+                                public Button::Listener
 {
 public:
-    MusicLibraryControlDeck
-    (
-        ControlDeck* _controlDeckOne, 
-        ControlDeck* _controlDeckTwo
-    );
+    MusicControlDeck(ControlDeck* _controlDeckOne, ControlDeck* _controlDeckTwo);
 
-    ~MusicLibraryControlDeck() override;
+    ~MusicControlDeck() override;
 
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
 
     void resized() override;
 
@@ -32,21 +32,27 @@ public:
 
     void repaintButtons();
 
+    void addToDeck(ControlDeck* deck);
+
+    void populateTrackListVector();
+
+    juce::Array<juce::File> loadInTracks();
 
 private:
 
     // Text Buttons 
-    TextButton rewindButton{ "<< Rewind" };
-    TextButton fastForwardButton{ "FastForward >>" };
-    TextButton loopButton{ "Loop ()" };
+    TextButton loadButton{ "Load" };
+    TextButton loadToDeckOne{ "Load to Deck One" };
+    TextButton loadToDeckTwo{ "Load to Deck Two" };
 
     // ControlDeck One and Two
     ControlDeck* controlDeckOne;
     ControlDeck* controlDeckTwo;
 
-
     // background image 
     Image backgroundImage;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MusicLibraryControlDeck)
+    bool checkIfTrackHasBeenLoaded(std::vector<TrackFile>& trackList);
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MusicControlDeck)
 };

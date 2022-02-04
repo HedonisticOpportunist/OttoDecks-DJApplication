@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    PlaylistComponent.h
+    PlayListManager.h
     Author:  Anita
 
   ==============================================================================
@@ -19,15 +19,15 @@
 #include <iostream>
 #include <stdio.h>
 
-class PlaylistComponent : public juce::Component,
-    public juce::TableListBoxModel,
-    public juce::Button::Listener,
-    public juce::TextEditor::Listener
+class PlayListManager : public juce::Component,
+                          public juce::TableListBoxModel,
+                          public juce::Button::Listener,
+                          public juce::TextEditor::Listener
 {
 public:
-    PlaylistComponent();
+    PlayListManager();
 
-    ~PlaylistComponent() override;
+    ~PlayListManager() override;
 
     void paint(juce::Graphics&) override;
     void resized() override;
@@ -52,37 +52,26 @@ public:
         bool isRowSelected,
         juce::Component* existingComponentToUpdate) override;
 
-    void buttonClicked(juce::Button* button) override;
+    void buttonClicked(Button* button) override;
 
-    void populateTrackListTable(juce::Array<juce::File> files);
+  private:
 
-    bool checkIfTrackHasBeenLoaded();
-
-    void saveTracks();
-
-    void loadTracks();
-
-    void loadInTracks();
-
-    std::string secondsToMinutes(double seconds);
-
-    void searchPlaylist(juce::String inputText);
-
-private:
-
-    // 
+    // Tracks
     juce::TableListBox playList;
     std::vector<TrackFile> trackList;
 
     // Search Field 
     juce::TextEditor searchField;
-    //TrackFile& trackFile; 
+    
+    void saveTracks();
 
-    // Buttons 
-    juce::TextButton importButton{ "IMPORT TRACK FILE" };
+    void loadTracks();
 
-    juce::FileChooser chooser{ "Browse audio file" };
-    URL audioURL;
+    void populateTrackListTable();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlaylistComponent)
+    std::string secondsToMinutes(double seconds);
+
+    void searchPlaylist(juce::String inputText);
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayListManager)
 };

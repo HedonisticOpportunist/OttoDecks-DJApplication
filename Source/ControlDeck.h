@@ -13,22 +13,26 @@
 #include <JuceHeader.h>
 #include "WaveformDisplay.h"
 
-class ControlDeck: public juce::Component,
-                   public Button::Listener,
-                   public Slider::Listener,
-                   public Timer 
+class ControlDeck : public juce::Component,
+    public Button::Listener,
+    public Slider::Listener,
+    public Timer
 {
 
 public:
     /** The ControlDeck constructor */
-    ControlDeck(DJAudioPlayer* _djAudioPlayer, AudioFormatManager& formatManagerToUse,
-        AudioThumbnailCache& cacheToUse);
+    ControlDeck
+    (
+        DJAudioPlayer* _djAudioPlayer, 
+        AudioFormatManager& formatManagerToUse,
+        AudioThumbnailCache& cacheToUse
+    );
 
     /** The ControlDeck destructor */
     ~ControlDeck() override;
 
     /** Paints the screen */
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
 
     /** Resizes the screen */
     void resized() override;
@@ -57,13 +61,13 @@ public:
 private:
 
     // buttons 
-    TextButton playButton{"Play |>"};
-    TextButton stopButton{"Stop / Pause ||| "};
-    TextButton loadButton{"Load"};
+    TextButton playButton{ "Play |>" };
+    TextButton stopButton{ "Stop / Pause ||| " };
+    TextButton loadButton{ "Load" };
 
-    TextButton rewindButton{"<< Rewind"};
-    TextButton fastForwardButton{"FastForward >>"};
-    TextButton loopButton{ "Loop ()"};
+    TextButton rewindButton{ "<< Rewind" };
+    TextButton fastForwardButton{ "FastForward >>" };
+    TextButton loopButton{ "Loop ()" };
 
     // sliders 
     Slider volumeSlider;
@@ -71,13 +75,13 @@ private:
     Slider speedSlider;
 
     // wave form 
-    WaveformDisplay waveformDisplay; 
+    WaveformDisplay waveformDisplay;
 
     // status of pause button 
-    bool paused = false; 
+    bool paused = false;
 
     // audio-related variables
-    juce::FileChooser chooser{"Browse audio file"};
+    juce::FileChooser chooser{ "Browse audio file" };
     DJAudioPlayer* player;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControlDeck)
