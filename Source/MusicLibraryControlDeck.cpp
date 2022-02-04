@@ -96,50 +96,7 @@ void MusicLibraryControlDeck::repaintButtons()
     }
 }
 
-// R3A: Component allows the user to add files to their library
-// some credit goes to @:
-// https://stackoverflow.com/questions/69111741/
-// how-do-i-add-an-playable-audio-file-to-a-tablelistbox-playlist-juce-c
-void MusicLibraryControlDeck::loadTracks()
-{
-    // initialise the file and select the filters that it is limited to
-    juce::String filters = "*.mp3";
-    Array<File> file;
-
-    //initialize file chooser
-    juce::FileChooser chooser{ "Select files" };
-    if (chooser.browseForMultipleFilesToOpen())
-    {
-        for (const juce::File& trackFile : chooser.getResults())
-        {
-            // add the track file to the update tracks method 
-            // in the Music Library Manager component 
-            musicLibraryManager.populateTrackList(trackFile);
-        }
-    }
-}
-
-//R3D: Component allows the user to load files from the library into a deck
-void MusicLibraryControlDeck::addToDeck(ControlDeck* deck)
-{
-    deck->loadDroppedTrack(audioURL); 
-}
-
 void MusicLibraryControlDeck::buttonClicked(Button* button)
 {
-    if (button == &loadButton)
-    {
-        loadTracks();
-    }
 
-    // add trakcs to one of the decks 
-    if (button == &loadToDeckOne)
-    {
-        addToDeck(controlDeckOne);
-    }
-
-    if (button == &loadToDeckTwo)
-    {
-        addToDeck(controlDeckTwo);
-    }
 }

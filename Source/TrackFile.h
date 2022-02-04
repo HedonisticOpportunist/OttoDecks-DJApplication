@@ -19,11 +19,13 @@ public:
 
     ~TrackFile();
 
+    juce::File getTrackFileProperties();
+
     juce::String getFileName(); 
 
-    void setFileLength(juce::String length);
+    void setFileLength(std::string length);
 
-    juce::String getFileLength();
+    std::string getFileLength();
 
     juce::URL getFileURL();
 
@@ -31,5 +33,5 @@ private:
     juce::File trackFile; 
     juce::URL fileURL;
     juce::String trackTitle;
-    juce::String fileLength = "2";
+    std::string fileLength;
 };

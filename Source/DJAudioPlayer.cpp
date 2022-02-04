@@ -159,3 +159,8 @@ void DJAudioPlayer::endLoop()
 		readerSource->setLooping(false);
 	}
 }
+
+double DJAudioPlayer::getLengthInSeconds()
+{
+	return transportSource.getLengthInSeconds();
+}

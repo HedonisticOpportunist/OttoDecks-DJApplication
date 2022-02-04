@@ -14,9 +14,9 @@
 #include "WaveformDisplay.h"
 
 class ControlDeck: public juce::Component,
-                 public Button::Listener,
-                 public Slider::Listener,
-                 public Timer 
+                   public Button::Listener,
+                   public Slider::Listener,
+                   public Timer 
 {
 
 public:

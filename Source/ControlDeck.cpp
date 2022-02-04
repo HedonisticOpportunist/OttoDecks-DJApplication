@@ -283,10 +283,6 @@ void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
     case false:
         playButtonText = "Play";
         break;
-
-    default:
-        playButtonText = "Play";
-        break;
     }
 
     playButton.setButtonText(playButtonText);

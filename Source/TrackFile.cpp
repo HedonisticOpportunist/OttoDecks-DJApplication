@@ -27,12 +27,17 @@ juce::String TrackFile::getFileName()
     return trackTitle;
 }
 
-void TrackFile::setFileLength(juce::String length)
+juce::File TrackFile::getTrackFileProperties()
 {
-    this->fileLength = length; 
+    return trackFile;
 }
 
-juce::String TrackFile::getFileLength()
+void TrackFile::setFileLength(std::string length)
+{
+    this->fileLength = length;
+}
+
+std::string TrackFile::getFileLength()
 {
     return fileLength; 
 }

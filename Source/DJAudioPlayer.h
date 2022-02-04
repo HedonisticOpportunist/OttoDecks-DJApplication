@@ -67,6 +67,8 @@ public:
 	/** Ends a loop */
 	void endLoop();
 
+	double getLengthInSeconds();
+
 	void setNextReadPosition(juce::int64 newPosition) override;
 	juce::int64 getNextReadPosition() const override;
 	juce::int64 getTotalLength() const override;

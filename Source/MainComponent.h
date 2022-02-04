@@ -12,7 +12,7 @@
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
 #include "MusicLibraryControlDeck.h"
-#include "MusicLibraryManager.h"
+#include "PlaylistComponent.h"
 
 class MainComponent  : public juce::AudioAppComponent
                   
@@ -52,7 +52,8 @@ private:
     ControlDeck deck2{&deckTwoPlayer, formatManager, thumbCache};
 
     // Player List 
-    MusicLibraryManager libraryManager;
+    DJAudioPlayer metadataCheckPlayer{ formatManager };
+    PlaylistComponent playlistComponent;
     MusicLibraryControlDeck musicControlDeck{&deck1, &deck2};
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
