@@ -160,7 +160,7 @@ void DJAudioPlayer::endLoop()
 	}
 }
 
-double DJAudioPlayer::getLengthInSeconds()
+double DJAudioPlayer::determineFileLengthInSeconds()
 {
 	return transportSource.getLengthInSeconds();
 }

@@ -10,44 +10,59 @@
 #include <JuceHeader.h>
 #include "PlaylistComponent.h"
 
-PlaylistComponent::PlaylistComponent(ControlDeck* _deck1, ControlDeck* _deck2, DJAudioPlayer* _metaData) 
+PlayListComponent::PlayListComponent(ControlDeck* _deck1, ControlDeck* _deck2, DJAudioPlayer* _metaData)
     : deck1(_deck1), deck2(_deck2), metaData(_metaData)
 {
     // make the playlist table visible 
     addAndMakeVisible(playListTable);
 
+    // PLAYLIST COLUMNS
     playListTable.getHeader().addColumn("Track Title", 1, 100);
     playListTable.getHeader().addColumn("Track Duration", 2, 100);
     playListTable.setModel(this);
 
+    // SEARCH FIELD
+    addAndMakeVisible(searchField);
+    searchField.applyFontToAllText(juce::Font{ 12.0f });
+    searchField.setJustification(juce::Justification::centred);
+
+    searchField.setTextToShowWhenEmpty("SEARCH PLAYLIST (ESC KEY TO CLEAR)", juce::Colours::lightpink);
+    searchField.setInputRestrictions(24);
+    searchField.addListener(this);
+
+    searchField.onTextChange = [this] {searchThePlaylist(searchField.getText());};
+    searchField.onEscapeKey = [this] {searchField.clear(); playListTable.deselectAllRows();};
+
+
     loadTracks();
 }
 
-PlaylistComponent::~PlaylistComponent()
+PlayListComponent::~PlayListComponent()
 {
     saveTracks();
 }
 
-void PlaylistComponent::paint(juce::Graphics& graphics)
+void PlayListComponent::paint(juce::Graphics& graphics)
 {
     graphics.fillAll(juce::Colours::beige);
     graphics.drawRect(getLocalBounds(), 1);
     graphics.setColour(juce::Colours::white);
 }
 
-void PlaylistComponent::resized()
+void PlayListComponent::resized()
 {
+    searchField.setBounds(0, 0, getWidth(), getHeight() / 10);
     playListTable.setBounds(0, getHeight() * 1 / 10, getWidth(), getHeight() * 4 / 5);
     playListTable.getHeader().setColumnWidth(1, getWidth() / 4);
     playListTable.getHeader().setColumnWidth(2, getWidth() / 4);
 }
 
-int PlaylistComponent::getNumRows()
+int PlayListComponent::getNumRows()
 {
     return tracks.size();
 }
 
-void PlaylistComponent::paintRowBackground(juce::Graphics& graphics,
+void PlayListComponent::paintRowBackground(juce::Graphics& graphics,
     int rowNumber,
     int width,
     int height,
@@ -64,7 +79,7 @@ void PlaylistComponent::paintRowBackground(juce::Graphics& graphics,
     }
 }
 
-void PlaylistComponent::paintCell(juce::Graphics& g,
+void PlayListComponent::paintCell(juce::Graphics& g,
     int rowNumber,
     int columnId,
     int width,
@@ -99,7 +114,7 @@ void PlaylistComponent::paintCell(juce::Graphics& g,
     }
 }
 
-juce::Component* PlaylistComponent::refreshComponentForCell(int rowNumber,
+juce::Component* PlayListComponent::refreshComponentForCell(int rowNumber,
     int columnId,
     bool isRowSelected,
     Component* existingComponentToUpdate)
@@ -114,7 +129,7 @@ juce::Component* PlaylistComponent::refreshComponentForCell(int rowNumber,
 }
 
 // R3D: Component allows the user to load files from the library into a deck
-void PlaylistComponent::addTrackToPlayerOne()
+void PlayListComponent::addTrackToPlayerOne()
 {
     int selectedRow = playListTable.getSelectedRow();
 
@@ -125,7 +140,7 @@ void PlaylistComponent::addTrackToPlayerOne()
 }
 
 // R3D: Component allows the user to load files from the library into a deck
-void PlaylistComponent::addTrackToPlayerTwo()
+void PlayListComponent::addTrackToPlayerTwo()
 {
     int selectedRow = playListTable.getSelectedRow();
 
@@ -135,7 +150,7 @@ void PlaylistComponent::addTrackToPlayerTwo()
     }
 }
 
-void PlaylistComponent::addTracksToFile(TrackFile& trackFile)
+void PlayListComponent::addTracksToFile(TrackFile& trackFile)
 {
     File file = trackFile.getTrackFileProperties();
     juce::URL audioURL{ file };
@@ -143,15 +158,16 @@ void PlaylistComponent::addTracksToFile(TrackFile& trackFile)
     tracks.push_back(trackFile);
 }
 
-juce::String PlaylistComponent::getLength(juce::URL audioURL)
+//R3B: Component parsesand displays meta data such as filenameand song length
+juce::String PlayListComponent::getLength(juce::URL audioURL)
 {
     metaData->loadURL(audioURL);
-    double seconds{ metaData->getLengthInSeconds() };
-    juce::String minutes{ secondsToMinutes(seconds) };
+    double seconds{ metaData->determineFileLengthInSeconds()};
+    juce::String minutes{ convertSecondsToMinutes(seconds)};
     return minutes;
 }
 
-juce::String PlaylistComponent::secondsToMinutes(double seconds)
+juce::String PlayListComponent::convertSecondsToMinutes(double seconds)
 {
     //find seconds and minutes and make into string
     int secondsRounded{ int(std::round(seconds)) };
@@ -166,7 +182,7 @@ juce::String PlaylistComponent::secondsToMinutes(double seconds)
     return juce::String{ min + ":" + sec };
 }
 
-void PlaylistComponent::saveTracks()
+void PlayListComponent::saveTracks()
 {
     std::ofstream tracksToSave("tracks.txt.");
 
@@ -177,7 +193,7 @@ void PlaylistComponent::saveTracks()
     }
 }
 
-void PlaylistComponent::loadTracks()
+void PlayListComponent::loadTracks()
 {
     std::ifstream savedTracks("tracks.txt");
     std::string filePath;
@@ -201,4 +217,20 @@ void PlaylistComponent::loadTracks()
 
     savedTracks.close();
     playListTable.updateContent();
+}
+
+// R3C: Component allows the user to search for files
+void PlayListComponent::searchThePlaylist(juce::String inputText)
+{
+    int matchingTrackTitleId;
+
+    for (int i = 0; i < tracks.size(); ++i)
+    {
+        if (tracks[i].getFileName().contains(inputText))
+        {
+            matchingTrackTitleId = i;
+        }
+
+        playListTable.selectRow(matchingTrackTitleId);
+    }
 }

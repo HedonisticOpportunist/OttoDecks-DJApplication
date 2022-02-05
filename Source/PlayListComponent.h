@@ -15,14 +15,16 @@
 #include "ControlDeck.h"
 #include "DJAudioPlayer.h"
 
-class PlaylistComponent : public juce::Component,
-    public juce::TableListBoxModel
+class PlayListComponent : public juce::Component,
+                          public juce::TableListBoxModel,
+                          public juce::TextEditor::Listener
+                          
 {
 public:
 
-    PlaylistComponent(ControlDeck* _deck1, ControlDeck* _deck2, DJAudioPlayer* _metaData);
+    PlayListComponent(ControlDeck* _deck1, ControlDeck* _deck2, DJAudioPlayer* _metaData);
 
-    ~PlaylistComponent() override;
+    ~PlayListComponent() override;
 
     void paint(juce::Graphics&) override;
 
@@ -53,11 +55,16 @@ private:
     ControlDeck* deck1;
     ControlDeck* deck2;
 
+    // Search Field
+    juce::TextEditor searchField;
+
+    /* Private Methods */
     juce::String getLength(juce::URL audioURL);
-    juce::String secondsToMinutes(double seconds);
+    juce::String convertSecondsToMinutes(double seconds);
 
     void saveTracks();
     void loadTracks();
+    void searchThePlaylist(juce::String inputText);
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlaylistComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayListComponent)
 };

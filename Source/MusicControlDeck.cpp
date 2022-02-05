@@ -10,10 +10,10 @@
 #include <JuceHeader.h>
 #include "MusicControlDeck.h"
 
-MusicControlDeck::MusicControlDeck(PlaylistComponent* _playList): playList(_playList)      
+MusicControlDeck::MusicControlDeck(PlayListComponent* _playList): playList(_playList)
 {
     // background image 
-    // @credit https://unsplash.com/@gradienta
+    // @credit goes to https://unsplash.com/@gradienta
     backgroundImage = ImageCache::getFromMemory(BinaryData::background_img_png, BinaryData::background_img_pngSize);
 
     // make buttons visible 
@@ -49,10 +49,10 @@ void MusicControlDeck::resized()
     double rowH = getHeight() / 4.0;
 
     // play, stop and load button positions
-    loadTrack.setBounds(0, 0, getWidth() / 2, rowH * 1.0);
-    loadToDeckOne.setBounds(0, rowH * 1.0, getWidth() / 2, rowH * 1.0);
-    loadToDeckTwo.setBounds(0, rowH * 2.0, getWidth() / 2, rowH * 1.0);
-    removeTrack.setBounds(0, rowH * 3.0, getWidth() / 2, rowH * 1.0);
+    loadTrack.setBounds(0, 0, getWidth() / 2.0, rowH * 1.0);
+    loadToDeckOne.setBounds(0, rowH * 1.0, getWidth() / 2.0, rowH * 1.0);
+    loadToDeckTwo.setBounds(0, rowH * 2.0, getWidth() / 2.0, rowH * 1.0);
+    removeTrack.setBounds(0, rowH * 3.0, getWidth() / 2.0, rowH * 1.0);
 }
 
 void MusicControlDeck::repaintButtons()
@@ -113,7 +113,7 @@ void MusicControlDeck::buttonClicked(Button* button)
         populateTrackListVector();
     }
 
-    // add trakcs to one of the decks 
+    // add track to either of the decks
     if (button == &loadToDeckOne)
     {
         playList->addTrackToPlayerOne();

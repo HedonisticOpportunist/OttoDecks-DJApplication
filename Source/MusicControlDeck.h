@@ -19,7 +19,7 @@ class MusicControlDeck : public juce::Component,
                                 public Button::Listener
 {
 public:
-    MusicControlDeck(PlaylistComponent* _playlist);
+    MusicControlDeck(PlayListComponent* _playlist);
 
     ~MusicControlDeck() override;
 
@@ -48,7 +48,7 @@ private:
     TextButton removeTrack{ "Remove Track From List" };
 
     // PlayListComponent 
-    PlaylistComponent* playList;
+    PlayListComponent* playList;
 
     // Existing Track List for trackiing purposes
     std::vector<TrackFile> filesAlreadyLoaded;

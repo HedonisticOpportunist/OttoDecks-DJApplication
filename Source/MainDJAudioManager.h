@@ -53,8 +53,8 @@ private:
 
     // Player List 
     DJAudioPlayer metadataCheckPlayer{ formatManager };
-    PlaylistComponent playlistComponent{&deck1, &deck2, &metadataCheckPlayer};
-    MusicControlDeck musicControlDeck{&playlistComponent};
+    PlayListComponent playListComponent{&deck1, &deck2, &metadataCheckPlayer};
+    MusicControlDeck musicControlDeck{&playListComponent};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainDJAudioManager)
 };

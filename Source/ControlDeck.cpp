@@ -88,7 +88,7 @@ void ControlDeck::resized()
 {
     double rowH = getHeight() / 10.5;
 
-    // wave form display 
+    // waveform display 
     waveformDisplay.setBounds(0, 0, getWidth(), rowH * 1);
 
     // play, stop and load button positions

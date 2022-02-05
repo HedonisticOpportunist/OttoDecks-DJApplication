@@ -36,7 +36,7 @@ MainDJAudioManager::MainDJAudioManager()
 
     // make the music control decks visible
     addAndMakeVisible(musicControlDeck);
-    addAndMakeVisible(playlistComponent);
+    addAndMakeVisible(playListComponent);
 }
 
 MainDJAudioManager::~MainDJAudioManager()
@@ -88,6 +88,6 @@ void MainDJAudioManager::resized()
     musicControlDeck.setBounds(0, getHeight() / 4.2, getWidth() / 4.2, getHeight() / 4.2);
  
     // PLAYLIST
-    playlistComponent.setBounds(getWidth() / 4.2, getHeight() / 4.2, getWidth() / 4.2, getHeight() / 4.2);
+    playListComponent.setBounds(getWidth() / 4.2, getHeight() / 4.2, getWidth() / 4.2, getHeight() / 4.2);
 
 }
