@@ -158,7 +158,7 @@ void PlayListComponent::addTracksToFile(TrackFile& trackFile)
     tracks.push_back(trackFile);
 }
 
-//R3B: Component parsesand displays meta data such as filenameand song length
+//R3B: Component parses and displays meta data such as filenameand song length
 juce::String PlayListComponent::getLength(juce::URL audioURL)
 {
     metaData->loadURL(audioURL);
@@ -169,16 +169,15 @@ juce::String PlayListComponent::getLength(juce::URL audioURL)
 
 juce::String PlayListComponent::convertSecondsToMinutes(double seconds)
 {
-    //find seconds and minutes and make into string
     int secondsRounded{ int(std::round(seconds)) };
     juce::String min{ std::to_string(secondsRounded / 60) };
     juce::String sec{ std::to_string(secondsRounded % 60) };
 
-    if (sec.length() < 2) // if seconds is 1 digit or less
+    if (sec.length() < 2)
     {
-        //add '0' to seconds until seconds is length 2
         sec = sec.paddedLeft('0', 2);
     }
+
     return juce::String{ min + ":" + sec };
 }
 
@@ -189,7 +188,7 @@ void PlayListComponent::saveTracks()
     // save library to file
     for (TrackFile& track : tracks)
     {
-        tracksToSave << track.getTrackFileProperties().getFullPathName() << "\n";
+        tracksToSave << track.getTrackFileProperties().getFullPathName() << "," << track.getFileLength() << "\n";
     }
 }
 
@@ -201,17 +200,14 @@ void PlayListComponent::loadTracks()
 
     if (savedTracks.is_open())
     {
-        while (savedTracks) 
+        while (std::getline(savedTracks, filePath, ','))
         {
-            
-            std::getline(savedTracks, filePath);
-            
-            if (filePath != "")
-            {
-                juce::File file{ filePath };
-                TrackFile track{ file };
-                tracks.push_back(track);
-            }
+            juce::File file{ filePath };
+            TrackFile track{ file };
+
+            std::getline(savedTracks, length);
+            track.setFileLength(length);
+            tracks.push_back(track);
         }
     }
 
@@ -233,4 +229,11 @@ void PlayListComponent::searchThePlaylist(juce::String inputText)
 
         playListTable.selectRow(matchingTrackTitleId);
     }
+}
+
+void PlayListComponent::deleteTrack()
+{
+    tracks.clear();
+    playListTable.updateContent();
+    playListTable.repaint();
 }

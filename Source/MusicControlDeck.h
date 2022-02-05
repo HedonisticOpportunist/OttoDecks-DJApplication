@@ -31,21 +31,21 @@ public:
 
     void repaintButtons();
 
-    void addToDeck(ControlDeck* deck);
-
     void populateTrackListVector();
 
     bool checkIfTrackAlreadyLoaded(TrackFile& trackFile);
 
     juce::Array<juce::File> loadInTracks();
 
+    void removeAllContentsFromFile();
+
 private:
 
     // Text Buttons 
-    TextButton loadTrack{ "Add Track to List" };
+    TextButton loadTrack{"Add Track to List"};
     TextButton loadToDeckOne{"Play Track in Deck One" };
     TextButton loadToDeckTwo{"Play Track in Deck Two" };
-    TextButton removeTrack{ "Remove Track From List" };
+    TextButton removeTrack{"Remove All Tracks From List" };
 
     // PlayListComponent 
     PlayListComponent* playList;

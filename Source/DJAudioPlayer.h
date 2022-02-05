@@ -55,10 +55,10 @@ public:
 	/** Sets a relative position */
 	void setPositionRelative(double pos);
 
-	/** Sets speed */
+	/** Sets a speed */
 	void setSpeed(double speed);
 
-	/** get the relative position of the play head */
+	/** Get the relative position of the play head */
 	double getPositionRelative();
 
 	/** Starts a loop */
@@ -69,6 +69,7 @@ public:
 
 	double determineFileLengthInSeconds();
 
+	/** Override methods from the PositionableAudioSource class */
 	void setNextReadPosition(juce::int64 newPosition) override;
 	juce::int64 getNextReadPosition() const override;
 	juce::int64 getTotalLength() const override;

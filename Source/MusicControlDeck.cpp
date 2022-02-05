@@ -27,6 +27,7 @@ MusicControlDeck::MusicControlDeck(PlayListComponent* _playList): playList(_play
     loadTrack.addListener(this);
     loadToDeckOne.addListener(this);
     loadToDeckTwo.addListener(this);
+    removeTrack.addListener(this);
 
 }
 
@@ -123,6 +124,11 @@ void MusicControlDeck::buttonClicked(Button* button)
     {
         playList->addTrackToPlayerTwo();
     }
+
+    if (button == &removeTrack)
+    {
+        removeAllContentsFromFile();
+    }
 }
 
 // R3A: Component allows the user to add files to their library
@@ -179,4 +185,13 @@ void MusicControlDeck::populateTrackListVector()
     }
 
     fileList.close();
+}
+
+void MusicControlDeck::removeAllContentsFromFile()
+{
+    std::ofstream trackListToDelete;
+    trackListToDelete.open("tracks.txt", std::ofstream::out | std::ofstream::trunc);
+    trackListToDelete.close();
+
+    playList->deleteTrack();
 }

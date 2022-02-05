@@ -31,7 +31,7 @@ public:
     /** The ControlDeck destructor */
     ~ControlDeck() override;
 
-    /** Paints the screen */
+    /** Paints on the screen */
     void paint(juce::Graphics&) override;
 
     /** Resizes the screen */
@@ -46,21 +46,12 @@ public:
     /** Allows timer callback */
     void timerCallback() override;
 
-    /** Repaint the buttons if they are not in use */
-    void repaintButtons();
-
-    /** Repaint the sliders if they are not in use */
-    void repaintSliders();
-
-    /** Deal with the differing states of the play button status */
-    void displayPlayButtonText(bool paused);
-
     /** Load a file that has been dragged and dropped */
     void loadDroppedTrack(juce::URL url);
 
 private:
 
-    // buttons 
+    // Text Buttons 
     TextButton playButton{ "Play |>" };
     TextButton stopButton{ "Stop / Pause ||| " };
     TextButton loadButton{ "Load" };
@@ -69,20 +60,31 @@ private:
     TextButton fastForwardButton{ "FastForward >>" };
     TextButton loopButton{ "Loop ()" };
 
-    // sliders 
+    // Sliders 
     Slider volumeSlider;
     Slider positionSlider;
     Slider speedSlider;
 
-    // wave form 
+    // Waveform
     WaveformDisplay waveformDisplay;
 
-    // status of pause button 
+    // Status of pause button 
     bool paused = false;
 
-    // audio-related variables
+    // Audio-related variables
     juce::FileChooser chooser{ "Browse audio file" };
     DJAudioPlayer* player;
 
+    /*Private Methods */
+    
+    /** Repaint the buttons if they are not in use */
+    void repaintButtons();
+
+    /** Repaint the sliders if they are not in use */
+    void repaintSliders();
+
+    /** Deal with the differing states of the play button status */
+    void displayPlayButtonText(bool paused);
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControlDeck)
 };

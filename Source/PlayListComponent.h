@@ -44,6 +44,8 @@ public:
 
     void addTrackToPlayerTwo();
 
+    void deleteTrack();
+
 private:
 
     // Tracks 

@@ -4,6 +4,9 @@
     ControlDeck.cpp
     Author: anita.pal
 
+    ** Controls the basic play, stop as well as audio functions of the 
+    ** DJ app 
+
   ==============================================================================
 */
 
@@ -81,27 +84,27 @@ void ControlDeck::paint(juce::Graphics& graphics)
     repaintSliders();
 }
 
-// R4A: GUI layout is significantly different from the basic DeckGUI shown in class, with
+/* R4A: GUI layout is significantly different from the basic DeckGUI shown in class, with
 // extra controls
-// R4B: GUI layout includes the custom Component from R2
+// R4B: GUI layout includes the custom Component from R2 */
 void ControlDeck::resized()
 {
     double rowH = getHeight() / 10.5;
 
-    // waveform display 
+    // Waveform Display 
     waveformDisplay.setBounds(0, 0, getWidth(), rowH * 1);
 
-    // play, stop and load button positions
+    // Play, Stop and Load button positions
     playButton.setBounds(0, rowH * 1.0, getWidth(), rowH * 1.0);
     stopButton.setBounds(0, rowH * 2.0, getWidth(), rowH * 1.0);
     loadButton.setBounds(0, rowH * 3.0, getWidth(), rowH * 1.0);
 
-    // slider positions 
+    // Slider Positions 
     volumeSlider.setBounds(0, rowH * 4.2, getWidth(), rowH * 1.5);
     positionSlider.setBounds(0, rowH * 5.2, getWidth(), rowH * 1.5);
     speedSlider.setBounds(0, rowH * 6.2, getWidth(), rowH * 1.5);
 
-    // loop / playback buttons
+    // Rewind, Fastforward and Loop buttons
     rewindButton.setBounds(0, rowH * 7.5, getWidth(), rowH * 1.0);
     fastForwardButton.setBounds(0, rowH * 8.5, getWidth(), rowH * 1.0);
     loopButton.setBounds(0, rowH * 9.5, getWidth(), rowH * 1.0);
@@ -251,8 +254,8 @@ void ControlDeck::buttonClicked(Button* button)
     displayPlayButtonText(paused);
 }
 
-// R1C: can mix the tracks by varying each of their volumes
-// R1D: can speed up and slow down the tracks
+/* /R1C: can mix the tracks by varying each of their volumes
+// R1D: can speed up and slow down the tracks */
 void ControlDeck::sliderValueChanged(Slider* slider)
 {
     if (slider == &volumeSlider)
