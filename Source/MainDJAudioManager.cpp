@@ -9,7 +9,7 @@
 
 #include "MainDJAudioManager.h"
 
-MainComponent::MainComponent()
+MainDJAudioManager::MainDJAudioManager()
 {
     setSize(1200, 800);
 
@@ -36,18 +36,16 @@ MainComponent::MainComponent()
 
     // make the music control decks visible
     addAndMakeVisible(musicControlDeck);
-
-    // make the music library-related decks visible 
     addAndMakeVisible(playlistComponent);
 }
 
-MainComponent::~MainComponent()
+MainDJAudioManager::~MainDJAudioManager()
 {
     shutdownAudio();
 }
 
 // R1B: can play two or more tracks
-void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
+void MainDJAudioManager::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     mixerSource.addInputSource(&deckOnePlayer, false);
     mixerSource.addInputSource(&deckTwoPlayer, false);
@@ -56,12 +54,12 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     deckTwoPlayer.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
-void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
+void MainDJAudioManager::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
     mixerSource.getNextAudioBlock(bufferToFill);
 }
 
-void MainComponent::releaseResources()
+void MainDJAudioManager::releaseResources()
 {
     mixerSource.removeAllInputs();
     mixerSource.releaseResources();
@@ -70,16 +68,26 @@ void MainComponent::releaseResources()
     deckTwoPlayer.releaseResources();
 }
 
-void MainComponent::paint (juce::Graphics& graphics)
+void MainDJAudioManager::paint (juce::Graphics& graphics)
 {
     graphics.drawImage(backgroundImage, getLocalBounds().toFloat());
 }
 
-void MainComponent::resized()
+void MainDJAudioManager::resized()
 {
-    // layout is smaller, as we want to display the background image 
-    deck1.setBounds(0, 0, getWidth() / 3.2, getHeight() / 3.2);
-    deck2.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2); 
-    musicControlDeck.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2);
-    playlistComponent.setBounds(0, getHeight() / 3, getWidth() / 3, getHeight() / 3);
+    /**
+    *  DECK 1 | DECK 2 
+    | MUSIC CONTROL DECK | PLAYLIST |
+    **/
+
+    // DECKS
+    deck1.setBounds(0, 0, getWidth() / 4.2, getHeight() / 4.2);
+    deck2.setBounds(getWidth() / 4.2, 0, getWidth() / 4.2, getHeight() / 4.2);
+
+    // MUSIC CONTROL DECK 
+    musicControlDeck.setBounds(0, getHeight() / 4.2, getWidth() / 4.2, getHeight() / 4.2);
+ 
+    // PLAYLIST
+    playlistComponent.setBounds(getWidth() / 4.2, getHeight() / 4.2, getWidth() / 4.2, getHeight() / 4.2);
+
 }

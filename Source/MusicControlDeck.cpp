@@ -10,24 +10,21 @@
 #include <JuceHeader.h>
 #include "MusicControlDeck.h"
 
-MusicControlDeck::MusicControlDeck
-(
-    ControlDeck* _controlDeckOne,
-    ControlDeck* _controlDeckTwo)
-    : controlDeckOne(_controlDeckOne), controlDeckTwo(_controlDeckTwo)
-        
+MusicControlDeck::MusicControlDeck(PlaylistComponent* _playList): playList(_playList)      
 {
     // background image 
     // @credit https://unsplash.com/@gradienta
     backgroundImage = ImageCache::getFromMemory(BinaryData::background_img_png, BinaryData::background_img_pngSize);
 
     // make buttons visible 
-    addAndMakeVisible(loadButton);
+    addAndMakeVisible(loadTrack);
     addAndMakeVisible(loadToDeckOne);
+
     addAndMakeVisible(loadToDeckTwo);
+    addAndMakeVisible(removeTrack);
 
     // add listeners to the buttons 
-    loadButton.addListener(this);
+    loadTrack.addListener(this);
     loadToDeckOne.addListener(this);
     loadToDeckTwo.addListener(this);
 
@@ -49,12 +46,13 @@ void MusicControlDeck::paint(juce::Graphics& graphics)
 
 void MusicControlDeck::resized()
 {
-    double rowH = getHeight() / 3.0;
+    double rowH = getHeight() / 4.0;
 
     // play, stop and load button positions
-    loadButton.setBounds(0, 0, getWidth() / 2, rowH * 1.0);
+    loadTrack.setBounds(0, 0, getWidth() / 2, rowH * 1.0);
     loadToDeckOne.setBounds(0, rowH * 1.0, getWidth() / 2, rowH * 1.0);
     loadToDeckTwo.setBounds(0, rowH * 2.0, getWidth() / 2, rowH * 1.0);
+    removeTrack.setBounds(0, rowH * 3.0, getWidth() / 2, rowH * 1.0);
 }
 
 void MusicControlDeck::repaintButtons()
@@ -84,27 +82,33 @@ void MusicControlDeck::repaintButtons()
     }
 
     // set the colour for the load button if mouse over OR it has stopped playing 
-    if (loadButton.isOver() || loadButton.isMouseOver())
+    if (loadTrack.isOver() || loadTrack.isMouseOver())
     {
-        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::cornsilk);
+        loadTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::cornsilk);
     }
 
     // set the colour of the load button when mouse is not hovering over it 
     else
     {
-        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::cornflowerblue);
+        loadTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::cornflowerblue);
     }
-}
 
-//R3D: Component allows the user to load files from the library into a deck
-void MusicControlDeck::addToDeck(ControlDeck* deck)
-{
-    //deck->loadDroppedTrack(audioURL);
+    // set the colour for the remove button if mouse over OR it has stopped playing 
+    if (removeTrack.isOver() || removeTrack.isMouseOver())
+    {
+        removeTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::lemonchiffon);
+    }
+
+    // set the colour of the remove button when mouse is not hovering over it 
+    else
+    {
+        removeTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::navy);
+    }
 }
 
 void MusicControlDeck::buttonClicked(Button* button)
 {
-    if (button == &loadButton)
+    if (button == &loadTrack)
     {
         populateTrackListVector();
     }
@@ -112,12 +116,12 @@ void MusicControlDeck::buttonClicked(Button* button)
     // add trakcs to one of the decks 
     if (button == &loadToDeckOne)
     {
-        addToDeck(controlDeckOne);
+        playList->addTrackToPlayerOne();
     }
 
     if (button == &loadToDeckTwo)
     {
-        addToDeck(controlDeckTwo);
+        playList->addTrackToPlayerTwo();
     }
 }
 
@@ -132,19 +136,19 @@ juce::Array<juce::File> MusicControlDeck::loadInTracks()
 
     if (chooser.browseForMultipleFilesToOpen())
     {
-        juce::Array<juce::File> trackFiles = chooser.getResults();
+        trackFiles = chooser.getResults();
     }
 
     return trackFiles;
 }
 
-bool MusicControlDeck::checkIfTrackHasBeenLoaded(std::vector<TrackFile>& trackList)
+bool MusicControlDeck::checkIfTrackAlreadyLoaded(TrackFile& trackFile)
 {
     bool trackAlreadyLoaded = false;
 
-    for (TrackFile& existingTrackFile : trackList)
+    for (TrackFile& existingTrackFile : filesAlreadyLoaded)
     {
-        if (existingTrackFile.getFileName() == existingTrackFile.getFileName())
+        if (existingTrackFile.getFileName() == trackFile.getFileName())
         {
             trackAlreadyLoaded = true;
         }
@@ -155,17 +159,24 @@ bool MusicControlDeck::checkIfTrackHasBeenLoaded(std::vector<TrackFile>& trackLi
 
 void MusicControlDeck::populateTrackListVector()
 {
-    std::ofstream playList;
-    playList.open("playlist.txt");
+    std::ofstream fileList;
+
+    // append the track list into the existing play list 
+    fileList.open("tracks.txt", std::fstream::app);
    
     juce::Array<juce::File> files = loadInTracks();
 
-    for (juce::File& file : files)
+    for (File& file : files)
     {
-       TrackFile trackFile{ file };
-       playList << trackFile.getFileName() << "\n";
-        
+       TrackFile trackFile{file};
+
+       if (!checkIfTrackAlreadyLoaded(trackFile))
+       {
+           filesAlreadyLoaded.push_back(trackFile);
+           fileList << trackFile.getTrackFileProperties().getFullPathName() << "\n";
+           playList->addTracksToFile(trackFile);
+       }
     }
 
-    playList.close();
+    fileList.close();
 }

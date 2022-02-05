@@ -7,10 +7,10 @@
     <FILE id="toRtyL" name="background_img.png" compile="0" resource="1"
           file="Source/background_img.png"/>
     <GROUP id="{5C119B31-75FC-9F7E-FE0A-0D3FB45B1D6C}" name="Source">
-      <FILE id="HuXHXb" name="PlayListManager.cpp" compile="1" resource="0"
-            file="Source/PlayListManager.cpp"/>
-      <FILE id="OBSQig" name="PlayListManager.h" compile="0" resource="0"
-            file="Source/PlayListManager.h"/>
+      <FILE id="NY5Ho4" name="PlayListComponent.cpp" compile="1" resource="0"
+            file="Source/PlayListComponent.cpp"/>
+      <FILE id="i0oIB7" name="PlayListComponent.h" compile="0" resource="0"
+            file="Source/PlayListComponent.h"/>
       <FILE id="DZvRlj" name="TrackFile.cpp" compile="1" resource="0" file="Source/TrackFile.cpp"/>
       <FILE id="I57SMB" name="TrackFile.h" compile="0" resource="0" file="Source/TrackFile.h"/>
       <FILE id="MWzEJU" name="MusicControlDeck.cpp" compile="1" resource="0"

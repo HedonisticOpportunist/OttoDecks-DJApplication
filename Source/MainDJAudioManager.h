@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    MainComponent.h
+    MainDJAudioManager.h
     Author:  anita.pal
 
   ==============================================================================
@@ -12,16 +12,16 @@
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
 #include "MusicControlDeck.h"
-#include "PlayListManager.h"
+#include "PlayListComponent.h"
 
-class MainComponent  : public juce::AudioAppComponent
+class MainDJAudioManager : public juce::AudioAppComponent
                   
 {
 public:
     
-    MainComponent();
+    MainDJAudioManager();
 
-    ~MainComponent() override;
+    ~MainDJAudioManager() override;
 
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
 
@@ -53,8 +53,8 @@ private:
 
     // Player List 
     DJAudioPlayer metadataCheckPlayer{ formatManager };
-    PlayListManager playlistComponent;
-    MusicControlDeck musicControlDeck{ &deck1, &deck2};
+    PlaylistComponent playlistComponent{&deck1, &deck2, &metadataCheckPlayer};
+    MusicControlDeck musicControlDeck{&playlistComponent};
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainDJAudioManager)
 };

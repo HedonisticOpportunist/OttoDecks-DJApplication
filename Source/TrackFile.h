@@ -23,15 +23,16 @@ public:
 
     juce::String getFileName(); 
 
-    void setFileLength(std::string length);
+    void setFileLength(juce::String);
 
-    std::string getFileLength();
+    juce::String getFileLength();
 
     juce::URL getFileURL();
 
 private:
+
     juce::File trackFile; 
     juce::URL fileURL;
     juce::String trackTitle;
-    std::string fileLength;
+    juce::String fileLength;
 };

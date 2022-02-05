@@ -8,19 +8,18 @@
 */
 
 #pragma once
-#include "ControlDeck.h"
 #include <fstream>
 #include <iostream>
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
-#include "PlayListManager.h"
+#include "PlayListComponent.h"
 #include "TrackFile.h"
 
 class MusicControlDeck : public juce::Component,
                                 public Button::Listener
 {
 public:
-    MusicControlDeck(ControlDeck* _controlDeckOne, ControlDeck* _controlDeckTwo);
+    MusicControlDeck(PlaylistComponent* _playlist);
 
     ~MusicControlDeck() override;
 
@@ -36,23 +35,26 @@ public:
 
     void populateTrackListVector();
 
+    bool checkIfTrackAlreadyLoaded(TrackFile& trackFile);
+
     juce::Array<juce::File> loadInTracks();
 
 private:
 
     // Text Buttons 
-    TextButton loadButton{ "Load" };
-    TextButton loadToDeckOne{ "Load to Deck One" };
-    TextButton loadToDeckTwo{ "Load to Deck Two" };
+    TextButton loadTrack{ "Add Track to List" };
+    TextButton loadToDeckOne{"Play Track in Deck One" };
+    TextButton loadToDeckTwo{"Play Track in Deck Two" };
+    TextButton removeTrack{ "Remove Track From List" };
 
-    // ControlDeck One and Two
-    ControlDeck* controlDeckOne;
-    ControlDeck* controlDeckTwo;
+    // PlayListComponent 
+    PlaylistComponent* playList;
+
+    // Existing Track List for trackiing purposes
+    std::vector<TrackFile> filesAlreadyLoaded;
 
     // background image 
     Image backgroundImage;
-
-    bool checkIfTrackHasBeenLoaded(std::vector<TrackFile>& trackList);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MusicControlDeck)
 };
