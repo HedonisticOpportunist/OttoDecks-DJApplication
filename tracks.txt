@@ -1,0 +1,4 @@
+C:\Users\anita.pal\Documents\OttoDecks\OttoDecks\tracks\fast_melody_regular_drums.mp3,1:24
+C:\Users\anita.pal\Documents\OttoDecks\OttoDecks\tracks\c_major_theme.mp3,1:47
+C:\Users\anita.pal\Documents\OttoDecks\OttoDecks\tracks\electro_smash.mp3,2:14
+C:\Users\anita.pal\Documents\OttoDecks\OttoDecks\tracks\bleep_2.mp3,0:50
