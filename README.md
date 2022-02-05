@@ -1,2 +1,2 @@
 # DJApplication
-DJ Application built using the Juce framework 
+DJ Application built using the Juce framework. 
