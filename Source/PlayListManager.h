@@ -43,7 +43,7 @@ public:
 
     void addTrackToPlayerTwo();
 
-    void deleteTrack();
+    void deleteTracks();
 
 private:
 

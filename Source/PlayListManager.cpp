@@ -208,7 +208,7 @@ void PlayListManager::searchThePlaylist(juce::String inputText)
     }
 }
 
-void PlayListManager::deleteTrack()
+void PlayListManager::deleteTracks()
 {
     tracks.clear();
     playListTable.updateContent();

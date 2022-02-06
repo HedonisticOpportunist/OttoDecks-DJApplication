@@ -194,5 +194,5 @@ void MusicControlDeck::removeAllContentsFromFile()
     trackListToDelete.open("tracks.txt", std::ofstream::out | std::ofstream::trunc);
     trackListToDelete.close();
 
-    playList->deleteTrack();
+    playList->deleteTracks();
 }
