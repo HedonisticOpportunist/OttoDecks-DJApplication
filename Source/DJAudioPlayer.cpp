@@ -30,6 +30,7 @@ void DJAudioPlayer::loadURL(URL audioURL)
 		readerSource.reset(newSource.release());
 	}
 }
+
 void DJAudioPlayer::playSong()
 {
 	transportSource.start();
@@ -112,6 +113,7 @@ void DJAudioPlayer::setSpeed(double ratio)
 	{
 		std::cout << "DJAudioPlayer::setSpeed ratio should be between 0 and 100" << std::endl;
 	}
+
 	else 
 	{
 		resampleSource.setResamplingRatio(ratio);
@@ -125,7 +127,7 @@ double DJAudioPlayer::getPositionRelative()
 
 void DJAudioPlayer::setNextReadPosition(juce::int64 newPosition)
 {
-
+	//
 }
 
 juce::int64 DJAudioPlayer::getNextReadPosition() const

@@ -12,14 +12,14 @@
 #include <iostream>
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
-#include "PlayListComponent.h"
+#include "PlayListManager.h"
 #include "TrackFile.h"
 
 class MusicControlDeck : public juce::Component,
                                 public Button::Listener
 {
 public:
-    MusicControlDeck(PlayListComponent* _playlist);
+    MusicControlDeck(PlayListManager* _playlist);
 
     ~MusicControlDeck() override;
 
@@ -47,8 +47,8 @@ private:
     TextButton loadToDeckTwo{"Play Track in Deck Two" };
     TextButton removeTrack{"Remove All Tracks From List" };
 
-    // PlayListComponent 
-    PlayListComponent* playList;
+    // PlayList Manager 
+    PlayListManager* playList;
 
     // Existing Track List for trackiing purposes
     std::vector<TrackFile> filesAlreadyLoaded;

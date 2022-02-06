@@ -8,11 +8,12 @@
 */
 
 #pragma once
+#include "AudioMetaData.h"
 #include "ControlDeck.h"
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
 #include "MusicControlDeck.h"
-#include "PlayListComponent.h"
+#include "PlayListManager.h"
 
 class MainDJAudioManager : public juce::AudioAppComponent
                   
@@ -51,9 +52,12 @@ private:
     DJAudioPlayer deckTwoPlayer{formatManager};
     ControlDeck deck2{&deckTwoPlayer, formatManager, thumbCache};
 
+    // Audio Meta Data
+    DJAudioPlayer djAudioPlayer{formatManager};
+    AudioMetaData audioMetaData{ &djAudioPlayer};
+
     // Player List 
-    DJAudioPlayer metadataCheckPlayer{ formatManager };
-    PlayListComponent playListComponent{&deck1, &deck2, &metadataCheckPlayer};
+    PlayListManager playListComponent{&audioMetaData, &deck1, &deck2};
     MusicControlDeck musicControlDeck{&playListComponent};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainDJAudioManager)

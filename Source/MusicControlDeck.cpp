@@ -10,7 +10,7 @@
 #include <JuceHeader.h>
 #include "MusicControlDeck.h"
 
-MusicControlDeck::MusicControlDeck(PlayListComponent* _playList): playList(_playList)
+MusicControlDeck::MusicControlDeck(PlayListManager* _playList): playList(_playList)
 {
     // background image 
     // @credit goes to https://unsplash.com/@gradienta
@@ -190,6 +190,7 @@ void MusicControlDeck::populateTrackListVector()
 void MusicControlDeck::removeAllContentsFromFile()
 {
     std::ofstream trackListToDelete;
+
     trackListToDelete.open("tracks.txt", std::ofstream::out | std::ofstream::trunc);
     trackListToDelete.close();
 

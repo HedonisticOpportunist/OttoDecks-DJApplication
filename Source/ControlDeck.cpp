@@ -108,7 +108,6 @@ void ControlDeck::resized()
     rewindButton.setBounds(0, rowH * 7.5, getWidth(), rowH * 1.0);
     fastForwardButton.setBounds(0, rowH * 8.5, getWidth(), rowH * 1.0);
     loopButton.setBounds(0, rowH * 9.5, getWidth(), rowH * 1.0);
-
 }
 
 void ControlDeck::repaintButtons()
