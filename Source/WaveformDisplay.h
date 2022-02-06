@@ -4,6 +4,7 @@
     WaveformDisplay.h
     Author:  anita.pal
 
+    This component displays a waveform. 
   ==============================================================================
 */
 
@@ -15,26 +16,26 @@ class WaveformDisplay  : public juce::Component,
 {
 public:
 
-    /** The wave form constructor  */
+    /** The WaveformDisplay constructor  */
     WaveformDisplay(AudioFormatManager& formatManagerToUse,
         AudioThumbnailCache& cacheToUse);
 
-    /** The waveform destructor */
+    /** The WaveformDisplay destructor */
     ~WaveformDisplay() override;
 
-    /** Paint the wave form */
+    /** Paints the waveform */
     void paint (juce::Graphics&) override;
 
-    /** Resize the waveform */
+    /** Resizes the waveform */
     void resized() override;
 
-    /** Load the url */
+    /** Loads the url */
     void loadURL(URL audioURL);
 
-    /** Change the listener callback */
+    /** Changes the listener callback */
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
-    /** set the relative position of the play head */
+    /** Sets the relative position of the play head */
     void setPositionRelative(double pos);
 
 private:

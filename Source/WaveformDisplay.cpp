@@ -24,13 +24,13 @@ WaveformDisplay::~WaveformDisplay()
 
 void WaveformDisplay::paint (juce::Graphics& graphics)
 {
-    graphics.fillAll(juce::Colours::darksalmon);
-    graphics.setColour(juce::Colours::peachpuff);
+    graphics.fillAll(juce::Colours::midnightblue);
+    graphics.setColour(juce::Colours::mediumpurple);
     graphics.drawRect(getLocalBounds(), 1);
 
     if (fileLoaded)
     {
-        // setting the colour of the wave form 
+        // setting the colour of the waveform 
         graphics.setColour(juce::Colours::blueviolet); 
         audioThumbnail.drawChannel(graphics, getLocalBounds(), 0, audioThumbnail.getTotalLength(), 0, 1.0f);
         graphics.drawRect(position * getWidth(), 0, getWidth() / 20, getHeight());

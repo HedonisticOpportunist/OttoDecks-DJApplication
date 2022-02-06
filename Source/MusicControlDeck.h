@@ -4,6 +4,8 @@
     MusicControlDeck.h
     Author:  anita.pal
 
+    This component deals with the tracks.txt file and the event handling of 
+    the PlayListManager component. 
   ==============================================================================
 */
 
@@ -19,24 +21,26 @@ class MusicControlDeck : public juce::Component,
                                 public Button::Listener
 {
 public:
+
+    /** The MusicControlDeck constructor */
     MusicControlDeck(PlayListManager* _playlist);
 
+    /** The MusicControlDeck destructor */
     ~MusicControlDeck() override;
 
+    /** Paints onto the screen */
     void paint(juce::Graphics&) override;
 
+    /** Resizes the screen */
     void resized() override;
 
+    /** Deals with button clicks */
     void buttonClicked(Button* button) override;
 
-    void repaintButtons();
+    /** Populates the tracks txt file */
+    void populateTracksFile();
 
-    void populateTrackListVector();
-
-    bool checkIfTrackAlreadyLoaded(TrackFile& trackFile);
-
-    juce::Array<juce::File> loadInTracks();
-
+    /** Removes all contents from the txt file */
     void removeAllContentsFromFile();
 
 private:
@@ -50,11 +54,22 @@ private:
     // PlayList Manager 
     PlayListManager* playList;
 
-    // Existing Track List for trackiing purposes
+    // A list for tracking purposes
     std::vector<TrackFile> filesAlreadyLoaded;
-
-    // background image 
+    
+    // Background image 
     Image backgroundImage;
+
+    /** PRIVATE METHODS */
+    
+    /** Repaints buttons depending on specific properties */
+    void repaintButtons();
+
+    /** Checks if a track has already been loaded */
+    bool checkIfTrackAlreadyLoaded(TrackFile& trackFile);
+
+    /** Loads a track */
+    juce::Array<juce::File> loadInTracks();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MusicControlDeck)
 };

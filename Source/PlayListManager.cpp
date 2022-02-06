@@ -13,7 +13,7 @@
 PlayListManager::PlayListManager(AudioMetaData* _audioMetaData, ControlDeck* _deck1, ControlDeck* _deck2)
     : audioMetaData(_audioMetaData), deck1(_deck1), deck2(_deck2)
 {
-    // make the playlist table visible 
+    // Make the playlist table visible 
     addAndMakeVisible(playListTable);
 
     // PLAYLIST COLUMNS
@@ -33,13 +33,14 @@ PlayListManager::PlayListManager(AudioMetaData* _audioMetaData, ControlDeck* _de
     searchField.onTextChange = [this] {searchThePlaylist(searchField.getText());};
     searchField.onEscapeKey = [this] {searchField.clear(); playListTable.deselectAllRows();};
 
-
-    loadTracks();
+    // Load the playlist txt file 
+    loadTracksFile();
 }
 
 PlayListManager::~PlayListManager()
 {
-    saveTracks();
+    // Save the playlist 
+    saveTracksFile();
 }
 
 void PlayListManager::paint(juce::Graphics& graphics)
@@ -59,7 +60,7 @@ void PlayListManager::resized()
 
 int PlayListManager::getNumRows()
 {
-    return tracks.size();
+    return trackList.size();
 }
 
 void PlayListManager::paintRowBackground(juce::Graphics& graphics,
@@ -73,6 +74,7 @@ void PlayListManager::paintRowBackground(juce::Graphics& graphics,
     {
         graphics.fillAll(juce::Colours::orchid);
     }
+
     else
     {
         graphics.fillAll(juce::Colours::lightgreen);
@@ -91,7 +93,7 @@ void PlayListManager::paintCell(juce::Graphics& g,
     {
         if (columnId == 1)
         {
-            g.drawText(tracks[rowNumber].getFileName(),
+            g.drawText(trackList[rowNumber].getFileName(),
                 2,
                 0,
                 width - 4,
@@ -100,9 +102,10 @@ void PlayListManager::paintCell(juce::Graphics& g,
                 true
             );
         }
+
         if (columnId == 2)
         {
-            g.drawText(tracks[rowNumber].getFileLength(),
+            g.drawText(trackList[rowNumber].getFileLength(),
                 2,
                 0,
                 width - 4,
@@ -128,48 +131,46 @@ juce::Component* PlayListManager::refreshComponentForCell(int rowNumber,
     return existingComponentToUpdate;
 }
 
-// R3D: Component allows the user to load files from the library into a deck
 void PlayListManager::addTrackToPlayerOne()
 {
     int selectedRow = playListTable.getSelectedRow();
 
     if (selectedRow != -1)
     {
-        deck1->loadDroppedTrack(tracks[selectedRow].getFileURL());
+        deck1->loadDroppedTrack(trackList[selectedRow].getFileURL());
     }
 }
 
-// R3D: Component allows the user to load files from the library into a deck
 void PlayListManager::addTrackToPlayerTwo()
 {
     int selectedRow = playListTable.getSelectedRow();
 
     if (selectedRow != -1)
     {
-        deck2->loadDroppedTrack(tracks[selectedRow].getFileURL());
+        deck2->loadDroppedTrack(trackList[selectedRow].getFileURL());
     }
 }
 
-void PlayListManager::addTracksToFile(TrackFile& trackFile)
+void PlayListManager::addTrackToTracksVector(TrackFile& trackFile)
 {
     File file = trackFile.getTrackFileProperties();
     juce::URL audioURL{ file };
     trackFile.setFileLength(audioMetaData->getAudioTrackLength(audioURL));
-    tracks.push_back(trackFile);
+    trackList.push_back(trackFile);
 }
 
-void PlayListManager::saveTracks()
+void PlayListManager::saveTracksFile()
 {
     std::ofstream tracksToSave("tracks.txt.");
 
-    // save library to file
-    for (TrackFile& track : tracks)
+    // Save library to the tracks.txt file
+    for (TrackFile& track : trackList)
     {
         tracksToSave << track.getTrackFileProperties().getFullPathName() << "," << track.getFileLength() << "\n";
     }
 }
 
-void PlayListManager::loadTracks()
+void PlayListManager::loadTracksFile()
 {
     std::ifstream savedTracks("tracks.txt");
     std::string filePath;
@@ -183,23 +184,27 @@ void PlayListManager::loadTracks()
             TrackFile track{ file };
 
             std::getline(savedTracks, length);
-            track.setFileLength(length);
-            tracks.push_back(track);
+            
+            // Convert the length string to a juce string 
+            track.setFileLength(juce::String(length));
+
+            trackList.push_back(track);
         }
     }
 
     savedTracks.close();
+
+    // Update the table to represent the contents of the txt file 
     playListTable.updateContent();
 }
 
-// R3C: Component allows the user to search for files
-void PlayListManager::searchThePlaylist(juce::String inputText)
+void PlayListManager::searchThePlaylist(juce::String& inputtedText)
 {
-    int matchingTrackTitleId;
+    int matchingTrackTitleId = 0;
 
-    for (int i = 0; i < tracks.size(); ++i)
+    for (unsigned int i = 0; i < trackList.size(); ++i)
     {
-        if (tracks[i].getFileName().contains(inputText))
+        if (trackList[i].getFileName().contains(inputtedText))
         {
             matchingTrackTitleId = i;
         }
@@ -208,9 +213,12 @@ void PlayListManager::searchThePlaylist(juce::String inputText)
     }
 }
 
-void PlayListManager::deleteTracks()
+void PlayListManager::deleteTracksFromTable()
 {
-    tracks.clear();
+    // Clear the tracks vector 
+    trackList.clear();
+
+    // Update the table 
     playListTable.updateContent();
     playListTable.repaint();
 }

@@ -3,8 +3,10 @@
   ==============================================================================
 
 	DJAudioPlayer.h
-	Author:  anita.pal
+	Author:  @anita.pal
 
+	This class deals with the audio and the way various ways it playback 
+	can be controlled / manipulated. 
   ==============================================================================
 */
 
@@ -22,8 +24,8 @@ public:
 	/** The DJAudioPlayer destructor */
 	~DJAudioPlayer() override;
 
-	/**loads a file from a given URL  */
-	void loadURL(URL file);
+	/** Loads a file from a given URL */
+	void loadURL(URL& file);
 
 	/** Plays a file */
 	void playSong();
@@ -31,10 +33,10 @@ public:
 	/** Stops playing a file */
 	void stopSong();
 
-	/** Rewinds a file **/
+	/** Rewinds a song **/
 	void rewindSong();
 
-	/** Fastforwards a file */
+	/** Fast forwards a song */
 	void fastForwardSong();
 
 	/** Sets a position */
@@ -58,7 +60,7 @@ public:
 	/** Sets a speed */
 	void setSpeed(double speed);
 
-	/** Get the relative position of the play head */
+	/** Gets the relative position of the play head */
 	double getPositionRelative();
 
 	/** Starts a loop */
@@ -67,7 +69,8 @@ public:
 	/** Ends a loop */
 	void endLoop();
 
-	double determineFileLengthInSeconds();
+	/** Returns the file length in seconds */
+	double getFileLengthSeconds();
 
 	/** Override methods from the PositionableAudioSource class */
 	void setNextReadPosition(juce::int64 newPosition) override;
@@ -77,7 +80,7 @@ public:
 
 private:
 
-	// private members of the class 
+	// Private members of the class 
 	AudioFormatManager& formatManager;
 	std::unique_ptr<AudioFormatReaderSource> readerSource;
 	AudioTransportSource transportSource;

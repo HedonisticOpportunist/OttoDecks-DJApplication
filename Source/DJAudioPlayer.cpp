@@ -18,8 +18,7 @@ DJAudioPlayer::~DJAudioPlayer()
 {
 }
 
-// R1A: can load audio files into audio players
-void DJAudioPlayer::loadURL(URL audioURL)
+void DJAudioPlayer::loadURL(URL& audioURL)
 {
 	auto* reader = formatManager.createReaderFor(audioURL.createInputStream(false));
 
@@ -71,8 +70,6 @@ void DJAudioPlayer::setPosition(double posInSecs)
 {
 	if (posInSecs < 0 || posInSecs > transportSource.getLengthInSeconds()) 
 	{
-		DBG("DJAudioPlayer::setPosition: warning set position " << posInSecs \
-			<< " greater than length " << transportSource.getLengthInSeconds());
 		return;
 	}
 
@@ -111,7 +108,7 @@ void DJAudioPlayer::setSpeed(double ratio)
 {
 	if (ratio < 0 || ratio > 100.0)
 	{
-		std::cout << "DJAudioPlayer::setSpeed ratio should be between 0 and 100" << std::endl;
+		return;
 	}
 
 	else 
@@ -127,7 +124,7 @@ double DJAudioPlayer::getPositionRelative()
 
 void DJAudioPlayer::setNextReadPosition(juce::int64 newPosition)
 {
-	//
+	// NOTHING TO SEE HERE
 }
 
 juce::int64 DJAudioPlayer::getNextReadPosition() const
@@ -162,7 +159,7 @@ void DJAudioPlayer::endLoop()
 	}
 }
 
-double DJAudioPlayer::determineFileLengthInSeconds()
+double DJAudioPlayer::getFileLengthSeconds()
 {
 	return transportSource.getLengthInSeconds();
 }

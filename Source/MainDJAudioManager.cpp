@@ -81,13 +81,13 @@ void MainDJAudioManager::resized()
     **/
 
     // DECKS
-    deck1.setBounds(0, 0, getWidth() / 4.2, getHeight() / 4.2);
-    deck2.setBounds(getWidth() / 4.2, 0, getWidth() / 4.2, getHeight() / 4.2);
+    deck1.setBounds(0, 0, getWidth() / 3.2, getHeight() / 3.2);
+    deck2.setBounds(getWidth() / 3.2, 0, getWidth() / 3.2, getHeight() / 3.2);
 
     // MUSIC CONTROL DECK 
-    musicControlDeck.setBounds(0, getHeight() / 4.2, getWidth() / 4.2, getHeight() / 4.2);
+    musicControlDeck.setBounds(0, getHeight() / 3.2, getWidth() / 3.2, getHeight() / 3.2);
  
     // PLAYLIST
-    playListComponent.setBounds(getWidth() / 4.2, getHeight() / 4.2, getWidth() / 4.2, getHeight() / 4.2);
+    playListComponent.setBounds(getWidth() / 3.2, getHeight() / 3.2, getWidth() / 3.2, getHeight() / 3.2);
 
 }

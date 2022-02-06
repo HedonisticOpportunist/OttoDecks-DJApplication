@@ -32,7 +32,7 @@ juce::File TrackFile::getTrackFileProperties()
     return trackFile;
 }
 
-void TrackFile::setFileLength(juce::String length)
+void TrackFile::setFileLength(juce::String &length)
 {
     this->fileLength = length;
 }

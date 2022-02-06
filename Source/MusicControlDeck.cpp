@@ -35,7 +35,6 @@ MusicControlDeck::~MusicControlDeck()
 {
 }
 
-// R4C: GUI layout includes the music library component from R3
 void MusicControlDeck::paint(juce::Graphics& graphics)
 {
     graphics.fillAll(juce::Colours::whitesmoke);
@@ -111,7 +110,7 @@ void MusicControlDeck::buttonClicked(Button* button)
 {
     if (button == &loadTrack)
     {
-        populateTrackListVector();
+        populateTracksFile();
     }
 
     // add track to either of the decks
@@ -131,7 +130,6 @@ void MusicControlDeck::buttonClicked(Button* button)
     }
 }
 
-// R3A: Component allows the user to add files to their library
 juce::Array<juce::File> MusicControlDeck::loadInTracks()
 {
     juce::Array<juce::File> trackFiles{};
@@ -163,7 +161,7 @@ bool MusicControlDeck::checkIfTrackAlreadyLoaded(TrackFile& trackFile)
     return trackAlreadyLoaded;
 }
 
-void MusicControlDeck::populateTrackListVector()
+void MusicControlDeck::populateTracksFile()
 {
     std::ofstream fileList;
 
@@ -180,7 +178,7 @@ void MusicControlDeck::populateTrackListVector()
        {
            filesAlreadyLoaded.push_back(trackFile);
            fileList << trackFile.getTrackFileProperties().getFullPathName() << "\n";
-           playList->addTracksToFile(trackFile);
+           playList->addTrackToTracksVector(trackFile);
        }
     }
 
@@ -191,8 +189,9 @@ void MusicControlDeck::removeAllContentsFromFile()
 {
     std::ofstream trackListToDelete;
 
+    // Remove all content from the tracks.txt file 
     trackListToDelete.open("tracks.txt", std::ofstream::out | std::ofstream::trunc);
     trackListToDelete.close();
 
-    playList->deleteTracks();
+    playList->deleteTracksFromTable();
 }

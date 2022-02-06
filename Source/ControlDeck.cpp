@@ -4,9 +4,6 @@
     ControlDeck.cpp
     Author: anita.pal
 
-    ** Controls the basic play, stop as well as audio functions of the 
-    ** DJ app 
-
   ==============================================================================
 */
 
@@ -72,11 +69,10 @@ ControlDeck::~ControlDeck()
     stopTimer();
 }
 
-// R2A: Component has custom graphics implemented in a paint function
 void ControlDeck::paint(juce::Graphics& graphics)
 {
-    graphics.fillAll(juce::Colours::paleturquoise);
-    graphics.setColour(juce::Colours::peachpuff);
+    graphics.fillAll(juce::Colours::plum);
+    graphics.setColour(juce::Colours::ghostwhite);
     graphics.drawRect(getLocalBounds(), 0);
 
     //A call to the buttons and sliders painting functions
@@ -84,9 +80,6 @@ void ControlDeck::paint(juce::Graphics& graphics)
     repaintSliders();
 }
 
-/* R4A: GUI layout is significantly different from the basic DeckGUI shown in class, with
-// extra controls
-// R4B: GUI layout includes the custom Component from R2 */
 void ControlDeck::resized()
 {
     double rowH = getHeight() / 10.5;
@@ -122,67 +115,67 @@ void ControlDeck::repaintButtons()
     // set the colour of the play button when mouse is not hovering over it 
     else
     {
-        playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkslateblue);
+        playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightslategrey);
     }
 
     // set the colour of the stop button is mouse is over OR it has stopped playing 
     if (stopButton.isOver() || stopButton.isMouseOver())
     {
-        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkorchid);
+        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::palevioletred);
     }
 
     // set the colour of the stop button when mouse is not hovering over it 
     else
     {
-        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkturquoise);
+        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkcyan);
     }
 
     // set the colour for the load button if mouse over OR it has stopped playing 
     if (loadButton.isOver() || loadButton.isMouseOver())
     {
-        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::blanchedalmond);
+        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::royalblue);
     }
 
     // set the colour of the load button when mouse is not hovering over it 
     else
     {
-        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkorange);
+        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightseagreen);
     }
 
     // set the colour for the rewind button if mouse over OR it has stopped playing 
     if (rewindButton.isOver() || rewindButton.isMouseOver())
     {
-        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::forestgreen);
+        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
     }
 
     // set the colour of the rewind button when mouse is not hovering over it 
     else
     {
-        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::mediumorchid);
+        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::cadetblue);
     }
 
     // set the colour for the fast forward button if mouse over OR it has stopped playing 
     if (fastForwardButton.isOver() || fastForwardButton.isMouseOver())
     {
-        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::fuchsia);
+        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightsteelblue);
     }
 
     // set the colour of the fast forward button when mouse is not hovering over it 
     else
     {
-        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::gold);
+        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::silver);
     }
 
     // set the colour for the loop button if mouse over OR it has stopped playing 
     if (loopButton.isOver() || loopButton.isMouseOver())
     {
-        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::silver);
+        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::turquoise);
     }
 
     // set the colour of the loop button when mouse is not hovering over it 
     else
     {
-        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::palevioletred);
+        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::teal);
     }
 }
 
@@ -190,16 +183,15 @@ void ControlDeck::repaintSliders()
 {
     if (volumeSlider.isMouseOver() || positionSlider.isMouseOver() || speedSlider.isMouseOver())
     {
-        getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::lavender);
+        getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::mistyrose);
     }
 
     else
     {
-        getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::chocolate);
+        getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::gainsboro);
     }
 }
 
-//R2B: Component enables the user to control the playback of a deck somehow
 void ControlDeck::buttonClicked(Button* button)
 {
     if (button == &playButton)
@@ -245,6 +237,7 @@ void ControlDeck::buttonClicked(Button* button)
         paused = false;
         player->startLoop();
     }
+
     else
     {
         player->endLoop();
@@ -253,18 +246,18 @@ void ControlDeck::buttonClicked(Button* button)
     displayPlayButtonText(paused);
 }
 
-/* /R1C: can mix the tracks by varying each of their volumes
-// R1D: can speed up and slow down the tracks */
 void ControlDeck::sliderValueChanged(Slider* slider)
 {
     if (slider == &volumeSlider)
     {
         player->setGain(slider->getValue());
     }
+
     if (slider == &positionSlider)
     {
         player->setPositionRelative(slider->getValue());
     }
+
     if (slider == &speedSlider)
     {
         player->setSpeed(slider->getValue());
@@ -281,9 +274,11 @@ void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
     std::string playButtonText = "";
     switch (pauseButtonStatus)
     {
+
     case true:
         playButtonText = "Resume";
         break;
+
     case false:
         playButtonText = "Play";
         break;
@@ -292,7 +287,7 @@ void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
     playButton.setButtonText(playButtonText);
 }
 
-void ControlDeck::loadDroppedTrack(juce::URL songURL)
+void ControlDeck::loadDroppedTrack(juce::URL& songURL)
 {
     player->loadURL(songURL);
     waveformDisplay.loadURL(songURL);
