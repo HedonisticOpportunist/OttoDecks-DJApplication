@@ -31,7 +31,14 @@ ControlDeck::ControlDeck
     addAndMakeVisible(volumeSlider);
     addAndMakeVisible(positionSlider);
     addAndMakeVisible(speedSlider);
+
+    // make the waveform visible 
     addAndMakeVisible(waveformDisplay);
+
+    // make the labels visible 
+    addAndMakeVisible(volumeLabel);
+    addAndMakeVisible(positionLabel);
+    addAndMakeVisible(speedLabel);
 
     // add the listener events to the buttons
     playButton.addListener(this);
@@ -60,6 +67,26 @@ ControlDeck::ControlDeck
     speedSlider.setRange(0.0, 100.0);
     positionSlider.setRange(0.0, 1.0);
 
+    // adjust the sliders text box position 
+    volumeSlider.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 160, volumeSlider.getTextBoxHeight());
+    positionSlider.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 160, volumeSlider.getTextBoxHeight());
+    speedSlider.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 160, volumeSlider.getTextBoxHeight());
+
+    // adjust the font of the labels
+    volumeLabel.setFont(12.0f);
+    positionLabel.setFont(12.0f);
+    speedLabel.setFont(12.0f);
+
+    // add text to the labels
+    volumeLabel.setText("Volume", juce::dontSendNotification);
+    positionLabel.setText("Position", juce::dontSendNotification);
+    speedLabel.setText("Speed", juce::dontSendNotification);
+
+    // attach the labels to the sliders
+    volumeLabel.attachToComponent(&volumeSlider, true);
+    positionLabel.attachToComponent(&positionSlider, true);
+    speedLabel.attachToComponent(&speedSlider, true);
+
     startTimer(500);
 
 }
@@ -71,7 +98,7 @@ ControlDeck::~ControlDeck()
 
 void ControlDeck::paint(juce::Graphics& graphics)
 {
-    graphics.fillAll(juce::Colours::plum);
+    graphics.fillAll(juce::Colours::darkcyan);
     graphics.setColour(juce::Colours::ghostwhite);
     graphics.drawRect(getLocalBounds(), 0);
 
@@ -93,9 +120,9 @@ void ControlDeck::resized()
     loadButton.setBounds(0, rowH * 3.0, getWidth(), rowH * 1.0);
 
     // Slider Positions 
-    volumeSlider.setBounds(0, rowH * 4.2, getWidth(), rowH * 1.5);
-    positionSlider.setBounds(0, rowH * 5.2, getWidth(), rowH * 1.5);
-    speedSlider.setBounds(0, rowH * 6.2, getWidth(), rowH * 1.5);
+    volumeSlider.setBounds(50, rowH * 4.2, getWidth(), rowH * 1.5);
+    positionSlider.setBounds(50, rowH * 5.2, getWidth(), rowH * 1.5);
+    speedSlider.setBounds(50, rowH * 6.2, getWidth(), rowH * 1.5);
 
     // Rewind, Fastforward and Loop buttons
     rewindButton.setBounds(0, rowH * 7.5, getWidth(), rowH * 1.0);
@@ -121,13 +148,13 @@ void ControlDeck::repaintButtons()
     // set the colour of the stop button is mouse is over OR it has stopped playing 
     if (stopButton.isOver() || stopButton.isMouseOver())
     {
-        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::palevioletred);
+        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::aquamarine);
     }
 
     // set the colour of the stop button when mouse is not hovering over it 
     else
     {
-        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkcyan);
+        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::midnightblue);
     }
 
     // set the colour for the load button if mouse over OR it has stopped playing 

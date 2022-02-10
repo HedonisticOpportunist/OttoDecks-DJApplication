@@ -62,6 +62,11 @@ private:
     TextButton fastForwardButton{ "FastForward >>" };
     TextButton loopButton{ "Loop ()" };
 
+    // Text Labels
+    Label volumeLabel;
+    Label positionLabel;
+    Label speedLabel; 
+
     // Sliders 
     Slider volumeSlider;
     Slider positionSlider;

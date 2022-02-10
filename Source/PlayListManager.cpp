@@ -26,7 +26,7 @@ PlayListManager::PlayListManager(AudioMetaData* _audioMetaData, ControlDeck* _de
     searchField.applyFontToAllText(juce::Font{ 12.0f });
     searchField.setJustification(juce::Justification::centred);
 
-    searchField.setTextToShowWhenEmpty("SEARCH PLAYLIST (ESC KEY TO CLEAR)", juce::Colours::lightpink);
+    searchField.setTextToShowWhenEmpty("SEARCH PLAYLIST (ESC KEY TO CLEAR)", juce::Colours::darkorchid);
     searchField.setInputRestrictions(24);
     searchField.addListener(this);
 
@@ -72,12 +72,12 @@ void PlayListManager::paintRowBackground(juce::Graphics& graphics,
 {
     if (rowIsSelected)
     {
-        graphics.fillAll(juce::Colours::orchid);
+        graphics.fillAll(juce::Colours::mediumseagreen);
     }
 
     else
     {
-        graphics.fillAll(juce::Colours::lightgreen);
+        graphics.fillAll(juce::Colours::mediumaquamarine);
     }
 }
 
