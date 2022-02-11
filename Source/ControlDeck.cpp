@@ -262,12 +262,7 @@ void ControlDeck::buttonClicked(Button* button)
     if (button == &loopButton)
     {
         paused = false;
-        player->startLoop();
-    }
-
-    else
-    {
-        player->endLoop();
+        player->startLoop(loopButton.getToggleState());
     }
 
     displayPlayButtonText(paused);

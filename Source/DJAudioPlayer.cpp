@@ -122,40 +122,12 @@ double DJAudioPlayer::getPositionRelative()
 	return transportSource.getCurrentPosition() / transportSource.getLengthInSeconds();
 }
 
-void DJAudioPlayer::setNextReadPosition(juce::int64 newPosition)
-{
-	// NOTHING TO SEE HERE
-}
-
-juce::int64 DJAudioPlayer::getNextReadPosition() const
-{
-	return readerSource->getNextReadPosition();
-}
-
-juce::int64 DJAudioPlayer::getTotalLength() const
-{
-	return readerSource->getTotalLength();
-}
-
-bool DJAudioPlayer::isLooping() const
-{
-	return false;
-}
-
-void DJAudioPlayer::startLoop()
+void DJAudioPlayer::startLoop(bool buttonIsOn)
 {
 	
 	if (readerSource != nullptr)
 	{
-		readerSource->setLooping(true);
-	}
-}
-
-void DJAudioPlayer::endLoop()
-{
-	if (readerSource != nullptr)
-	{
-		readerSource->setLooping(false);
+		readerSource->setLooping(buttonIsOn);
 	}
 }
 

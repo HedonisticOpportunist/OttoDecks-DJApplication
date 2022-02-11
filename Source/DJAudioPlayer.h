@@ -13,8 +13,7 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class DJAudioPlayer : public AudioSource,
-	                  public PositionableAudioSource
+class DJAudioPlayer : public AudioSource
 {
 public:
 
@@ -64,19 +63,11 @@ public:
 	double getPositionRelative();
 
 	/** Starts a loop */
-	void startLoop();
-
-	/** Ends a loop */
-	void endLoop();
+	void startLoop(bool buttonIsOn);
 
 	/** Returns the file length in seconds */
 	double getFileLengthSeconds();
 
-	/** Override methods from the PositionableAudioSource class */
-	void setNextReadPosition(juce::int64 newPosition) override;
-	juce::int64 getNextReadPosition() const override;
-	juce::int64 getTotalLength() const override;
-	bool isLooping() const override;
 
 private:
 
