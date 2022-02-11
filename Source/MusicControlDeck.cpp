@@ -4,6 +4,7 @@
     MusicControlDeck.cpp
     Author:  anita.pal
 
+    The implementation of the MusicControlDeck component. 
   ==============================================================================
 */
 
@@ -40,7 +41,7 @@ void MusicControlDeck::paint(juce::Graphics& graphics)
     graphics.fillAll(juce::Colours::whitesmoke);
     graphics.drawImage(backgroundImage, getLocalBounds().toFloat());
 
-    //A call to the buttons and sliders painting functions
+    // A call to the buttons and sliders painting functions
     repaintButtons();
 }
 
@@ -48,7 +49,7 @@ void MusicControlDeck::resized()
 {
     double rowH = getHeight() / 4.0;
 
-    // play, stop and load button positions
+    // The play, stop and load button positions
     loadTrack.setBounds(0, 0, getWidth() / 2.0, rowH * 1.0);
     loadToDeckOne.setBounds(0, rowH * 1.0, getWidth() / 2.0, rowH * 1.0);
     loadToDeckTwo.setBounds(0, rowH * 2.0, getWidth() / 2.0, rowH * 1.0);
@@ -63,7 +64,7 @@ void MusicControlDeck::repaintButtons()
         loadToDeckOne.setColour(juce::TextButton::buttonColourId, juce::Colours::mistyrose);
     }
 
-    // set the colour of the load to deck one button when mouse is not hovering over it 
+    // set the colour of the load to deck one button when the mouse is not hovering over it 
     else
     {
         loadToDeckOne.setColour(juce::TextButton::buttonColourId, juce::Colours::olive);
@@ -75,7 +76,7 @@ void MusicControlDeck::repaintButtons()
         loadToDeckTwo.setColour(juce::TextButton::buttonColourId, juce::Colours::lightcoral);
     }
 
-    // set the colour of the load to deck two button when mouse is not hovering over it 
+    // set the colour of the load to deck two button when the mouse is not hovering over it 
     else
     {
         loadToDeckTwo.setColour(juce::TextButton::buttonColourId, juce::Colours::gainsboro);
@@ -87,7 +88,7 @@ void MusicControlDeck::repaintButtons()
         loadTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::cornsilk);
     }
 
-    // set the colour of the load button when mouse is not hovering over it 
+    // set the colour of the load button when the mouse is not hovering over it 
     else
     {
         loadTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::cornflowerblue);
@@ -99,7 +100,7 @@ void MusicControlDeck::repaintButtons()
         removeTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::lemonchiffon);
     }
 
-    // set the colour of the remove button when mouse is not hovering over it 
+    // set the colour of the remove button when the mouse is not hovering over it 
     else
     {
         removeTrack.setColour(juce::TextButton::buttonColourId, juce::Colours::navy);

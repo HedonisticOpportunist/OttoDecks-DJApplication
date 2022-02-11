@@ -16,7 +16,7 @@ class WaveformDisplay  : public juce::Component,
 {
 public:
 
-    /** The WaveformDisplay constructor  */
+    /** The WaveformDisplay constructor */
     WaveformDisplay(AudioFormatManager& formatManagerToUse,
         AudioThumbnailCache& cacheToUse);
 
@@ -32,10 +32,10 @@ public:
     /** Loads the url */
     void loadURL(URL audioURL);
 
-    /** Changes the listener callback */
+    /** Changes the listener's callback */
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
-    /** Sets the relative position of the play head */
+    /** Sets the relative position of the play's head */
     void setPositionRelative(double pos);
 
 private:

@@ -4,6 +4,7 @@
 	DJAudioPlayer.cpp
 	Author:  anita.pal
 
+	The implementation of the DJAudioPlayer class. 
   ==============================================================================
 */
 
@@ -124,7 +125,6 @@ double DJAudioPlayer::getPositionRelative()
 
 void DJAudioPlayer::startLoop(bool buttonIsOn)
 {
-	
 	if (readerSource != nullptr)
 	{
 		readerSource->setLooping(buttonIsOn);

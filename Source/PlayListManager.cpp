@@ -4,6 +4,7 @@
     PlayListManager.cpp
     Author:  anita.pal
 
+    The implementation of the PlayListManager component. 
   ==============================================================================
 */
 

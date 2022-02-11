@@ -4,6 +4,7 @@
     WaveformDisplay.cpp
     Author:  anita.pal
 
+    The implementation of the WaveFormDisplay component. 
   ==============================================================================
 */
 

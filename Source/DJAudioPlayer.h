@@ -5,7 +5,7 @@
 	DJAudioPlayer.h
 	Author:  @anita.pal
 
-	This class deals with the audio and the way various ways it playback 
+	This class deals with the audio and the various ways its playback 
 	can be controlled / manipulated. 
   ==============================================================================
 */

@@ -4,8 +4,8 @@
     PlayListManager.h
     Author: @anita.pal
 
-    This component deals with the management and organisation of the playlist
-    table and its respective content. 
+    This component deals with the organisation of the playlist table and 
+    its respective content. 
   ==============================================================================
 */
 
@@ -62,10 +62,10 @@ public:
 
 private:
 
-    // A point to the AudioMetaData class 
+    // A pointer to the AudioMetaData class 
     AudioMetaData* audioMetaData;
 
-    // Tracks list vector 
+    // Track list vector 
     std::vector<TrackFile> trackList;
 
     // The playlist table 

@@ -4,6 +4,7 @@
     TrackFile.cpp
     Author:  anita.pal
 
+    The implementation of the TrackFile class. 
   ==============================================================================
 */
 

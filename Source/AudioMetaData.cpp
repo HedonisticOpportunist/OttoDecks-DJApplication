@@ -4,6 +4,7 @@
     AudioMetaData.cpp
     Author:  anita.pal
 
+    The implementation of the AudioMetaData class. 
   ==============================================================================
 */
 

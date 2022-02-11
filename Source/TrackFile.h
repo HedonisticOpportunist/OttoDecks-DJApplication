@@ -23,19 +23,19 @@ public:
     /** The TrackFile destructor */
     ~TrackFile();
 
-    /** Returns track file properties */
+    /** Returns the track file's properties */
     juce::File getTrackFileProperties();
 
-    /** Returns the file name  */
+    /** Returns the file's name  */
     juce::String getFileName(); 
 
-    /**- Sets the file length */
+    /**- Sets the file's length */
     void setFileLength(juce::String& length);
 
-    /** Returns the file length */
+    /** Returns the file's length */
     juce::String getFileLength();
 
-    /** Gets the file url */
+    /** Gets the file's url */
     juce::URL getFileURL();
 
 private:

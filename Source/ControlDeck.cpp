@@ -4,6 +4,7 @@
     ControlDeck.cpp
     Author: anita.pal
 
+    The implementation of the ControlDeck component. 
   ==============================================================================
 */
 
@@ -67,7 +68,7 @@ ControlDeck::ControlDeck
     speedSlider.setRange(0.0, 100.0);
     positionSlider.setRange(0.0, 1.0);
 
-    // adjust the sliders text box position 
+    // adjust the sliders' text box position 
     volumeSlider.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 160, volumeSlider.getTextBoxHeight());
     positionSlider.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 160, volumeSlider.getTextBoxHeight());
     speedSlider.setTextBoxStyle(juce::Slider::TextBoxLeft, true, 160, volumeSlider.getTextBoxHeight());
@@ -88,7 +89,6 @@ ControlDeck::ControlDeck
     speedLabel.attachToComponent(&speedSlider, true);
 
     startTimer(500);
-
 }
 
 ControlDeck::~ControlDeck()
@@ -102,7 +102,7 @@ void ControlDeck::paint(juce::Graphics& graphics)
     graphics.setColour(juce::Colours::ghostwhite);
     graphics.drawRect(getLocalBounds(), 0);
 
-    //A call to the buttons and sliders painting functions
+    // A call to the buttons and sliders painting functions
     repaintButtons();
     repaintSliders();
 }
@@ -139,19 +139,19 @@ void ControlDeck::repaintButtons()
         playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkblue);
     }
 
-    // set the colour of the play button when mouse is not hovering over it 
+    // set the colour of the play button when the mouse is not hovering over it 
     else
     {
         playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightslategrey);
     }
 
-    // set the colour of the stop button is mouse is over OR it has stopped playing 
+    // set the colour of the stop button if mouse is over OR it has stopped playing 
     if (stopButton.isOver() || stopButton.isMouseOver())
     {
         stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::aquamarine);
     }
 
-    // set the colour of the stop button when mouse is not hovering over it 
+    // set the colour of the stop button when the mouse is not hovering over it 
     else
     {
         stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::midnightblue);
@@ -163,7 +163,7 @@ void ControlDeck::repaintButtons()
         loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::royalblue);
     }
 
-    // set the colour of the load button when mouse is not hovering over it 
+    // set the colour of the load button when the mouse is not hovering over it 
     else
     {
         loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightseagreen);
@@ -175,7 +175,7 @@ void ControlDeck::repaintButtons()
         rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
     }
 
-    // set the colour of the rewind button when mouse is not hovering over it 
+    // set the colour of the rewind button when the mouse is not hovering over it 
     else
     {
         rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::cadetblue);
@@ -187,7 +187,7 @@ void ControlDeck::repaintButtons()
         fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightsteelblue);
     }
 
-    // set the colour of the fast forward button when mouse is not hovering over it 
+    // set the colour of the fast forward button when the mouse is not hovering over it 
     else
     {
         fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::silver);
@@ -199,7 +199,7 @@ void ControlDeck::repaintButtons()
         loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::turquoise);
     }
 
-    // set the colour of the loop button when mouse is not hovering over it 
+    // set the colour of the loop button when the mouse is not hovering over it 
     else
     {
         loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::teal);
@@ -258,7 +258,7 @@ void ControlDeck::buttonClicked(Button* button)
         paused = false;
     }
 
-    // only loop when the loop button has been pressed 
+    // only loop when the loop button has been pressed / is on
     if (button == &loopButton)
     {
         paused = false;

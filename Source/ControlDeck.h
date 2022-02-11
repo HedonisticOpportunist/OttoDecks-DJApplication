@@ -22,6 +22,7 @@ class ControlDeck : public juce::Component,
 {
 
 public:
+
     /** The ControlDeck constructor */
     ControlDeck
     (
@@ -75,7 +76,7 @@ private:
     // Waveform
     WaveformDisplay waveformDisplay;
 
-    // Status of pause button 
+    // Default status of the pause button 
     bool paused = false;
 
     // Audio-related variables

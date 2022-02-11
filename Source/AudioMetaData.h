@@ -4,7 +4,7 @@
     AudioMetaData.h
     Author: @ anita.pal
 
-    This class deals with gathering audio metadata information related to file 
+    This class deals with gathering audio metadata information related to the file 
     length which is retrieved from the DJAudioPlayer class.
 
   ==============================================================================
@@ -19,13 +19,14 @@ class AudioMetaData
 {
 
 public:
+
     /** AudioMetaData constructor */
     AudioMetaData(DJAudioPlayer* _djAudioPlayer);
 
     /** AudioMetaData destructor */
     ~AudioMetaData();
 
-    /** Returns the audio track length */
+    /** Returns the audio track's length */
     juce::String getAudioTrackLength(juce::URL& audioURL);
 
 private:

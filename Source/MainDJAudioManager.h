@@ -4,6 +4,7 @@
     MainDJAudioManager.h
     Author:  anita.pal
 
+    This component serves as a gateway for all the other components. 
   ==============================================================================
 */
 
@@ -20,18 +21,25 @@ class MainDJAudioManager : public juce::AudioAppComponent
 {
 public:
     
+    /** The MainDJAudioManager constructor */
     MainDJAudioManager();
 
+    /** The MainDJAudioManager destructor */
     ~MainDJAudioManager() override;
 
+    /** Prepares to play audio */
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
 
+    /** Gets the next audio block */
     void getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill) override;
 
+    /** Releases resources */
     void releaseResources() override;
 
+    /** Paints onto the screen */
     void paint (juce::Graphics& g) override;
 
+    /** Resizes the screen */
     void resized() override;
 
 private:
@@ -52,7 +60,7 @@ private:
     DJAudioPlayer deckTwoPlayer{formatManager};
     ControlDeck deck2{&deckTwoPlayer, formatManager, thumbCache};
 
-    // Audio Meta Data
+    // Audio Metadata
     DJAudioPlayer djAudioPlayer{formatManager};
     AudioMetaData audioMetaData{ &djAudioPlayer};
 
