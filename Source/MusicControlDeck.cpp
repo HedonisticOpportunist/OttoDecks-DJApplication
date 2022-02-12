@@ -166,7 +166,7 @@ void MusicControlDeck::populateTracksFile()
 {
     std::ofstream fileList;
 
-    // append the track list into the existing play list 
+    // append the track list into the existing playlist 
     fileList.open("tracks.txt", std::fstream::app);
    
     juce::Array<juce::File> files = loadInTracks();
