@@ -36,6 +36,11 @@ MainDJAudioManager::MainDJAudioManager()
 
     // make the music control decks visible
     addAndMakeVisible(musicControlDeck);
+
+    // make the search field visible 
+    addAndMakeVisible(searchField);
+
+    // make the playlist component visible 
     addAndMakeVisible(playListComponent);
 }
 
@@ -78,6 +83,7 @@ void MainDJAudioManager::resized()
     /**
     *  DECK 1 | DECK 2 
     | MUSIC CONTROL DECK | PLAYLIST |
+    | SEARCH FIELD
     **/
 
     // DECKS
@@ -86,8 +92,10 @@ void MainDJAudioManager::resized()
 
     // MUSIC CONTROL DECK 
     musicControlDeck.setBounds(0, getHeight() / 3.2, getWidth() / 3.2, getHeight() / 3.2);
- 
+
     // PLAYLIST
     playListComponent.setBounds(getWidth() / 3.2, getHeight() / 3.2, getWidth() / 3.2, getHeight() / 3.2);
 
+    // SEARCH FIELD 
+    searchField.setBounds(0, getHeight() - 300, getWidth() / 4.2, getHeight() / 4.2);
 }

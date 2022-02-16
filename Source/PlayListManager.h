@@ -18,8 +18,7 @@
 #include <vector>
 
 class PlayListManager : public juce::Component,
-                        public juce::TableListBoxModel,
-                        public juce::TextEditor::Listener
+                        public juce::TableListBoxModel
                           
 {
 public:
@@ -60,6 +59,12 @@ public:
     /** Refreshes the components for the cell */
     Component* refreshComponentForCell(int rowNumber, int columnId, bool isRowSelected, Component* existingComponentToUpdate) override;
 
+    /** Searches for the playlist for a specific track */
+    void searchThePlaylist(juce::String& inputtedText);
+
+    /** Deselects all rows from the playlist table */
+    void deselectAllRowsFromTheTable(); 
+
 private:
 
     // A pointer to the AudioMetaData class 
@@ -68,15 +73,12 @@ private:
     // Track list vector 
     std::vector<TrackFile> trackList;
 
-    // The playlist table 
-    juce::TableListBox playListTable;
-    
     // Control Decks 
     ControlDeck* deck1;
     ControlDeck* deck2;
 
-    // Search Field
-    juce::TextEditor searchField;
+    // The playlist table 
+    juce::TableListBox playListTable;
 
     /* PRIVATE METHODS */
     
@@ -85,9 +87,6 @@ private:
 
     /** Loads the tracks.txt file */
     void loadTracksFile();
-    
-    /** Searches for the playlist for a specific track */
-    void searchThePlaylist(juce::String& inputtedText);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayListManager)
 };

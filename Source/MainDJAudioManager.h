@@ -15,6 +15,7 @@
 #include <JuceHeader.h>
 #include "MusicControlDeck.h"
 #include "PlayListManager.h"
+#include "SearchField.h"
 
 class MainDJAudioManager : public juce::AudioAppComponent
                   
@@ -67,6 +68,9 @@ private:
     // Player List 
     PlayListManager playListComponent{&audioMetaData, &deck1, &deck2};
     MusicControlDeck musicControlDeck{&playListComponent};
+
+    // Search Field 
+    SearchField searchField{&playListComponent};
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainDJAudioManager)
 };

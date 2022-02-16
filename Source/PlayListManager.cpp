@@ -11,8 +11,8 @@
 #include <JuceHeader.h>
 #include "PlayListManager.h"
 
-PlayListManager::PlayListManager(AudioMetaData* _audioMetaData, ControlDeck* _deck1, ControlDeck* _deck2)
-    : audioMetaData(_audioMetaData), deck1(_deck1), deck2(_deck2)
+PlayListManager::PlayListManager(AudioMetaData* _audioMetaData, ControlDeck* _deck1, 
+    ControlDeck* _deck2): audioMetaData(_audioMetaData), deck1(_deck1), deck2(_deck2)
 {
     // Make the playlist table visible 
     addAndMakeVisible(playListTable);
@@ -21,18 +21,6 @@ PlayListManager::PlayListManager(AudioMetaData* _audioMetaData, ControlDeck* _de
     playListTable.getHeader().addColumn("Track Title", 1, 100);
     playListTable.getHeader().addColumn("Track Duration", 2, 100);
     playListTable.setModel(this);
-
-    // SEARCH FIELD
-    addAndMakeVisible(searchField);
-    searchField.applyFontToAllText(juce::Font{ 12.0f });
-    searchField.setJustification(juce::Justification::centred);
-
-    searchField.setTextToShowWhenEmpty("SEARCH PLAYLIST (ESC KEY TO CLEAR)", juce::Colours::darkorchid);
-    searchField.setInputRestrictions(24);
-    searchField.addListener(this);
-
-    searchField.onTextChange = [this] {searchThePlaylist(searchField.getText());};
-    searchField.onEscapeKey = [this] {searchField.clear(); playListTable.deselectAllRows();};
 
     // Load the playlist txt file 
     loadTracksFile();
@@ -53,7 +41,6 @@ void PlayListManager::paint(juce::Graphics& graphics)
 
 void PlayListManager::resized()
 {
-    searchField.setBounds(0, 0, getWidth(), getHeight() / 10);
     playListTable.setBounds(0, getHeight() * 1 / 10, getWidth(), getHeight() * 4 / 5);
     playListTable.getHeader().setColumnWidth(1, getWidth() / 4);
     playListTable.getHeader().setColumnWidth(2, getWidth() / 4);
@@ -222,4 +209,9 @@ void PlayListManager::deleteTracksFromTable()
     // Update the table 
     playListTable.updateContent();
     playListTable.repaint();
+}
+
+void PlayListManager::deselectAllRowsFromTheTable()
+{
+    playListTable.deselectAllRows(); 
 }

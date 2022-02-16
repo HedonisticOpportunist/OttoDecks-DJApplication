@@ -38,7 +38,11 @@ void DJAudioPlayer::playSong()
 
 void DJAudioPlayer::stopSong()
 {
-	transportSource.stop();
+	// @ credit Matthias Truxa (UoL Slack Channel post) 
+	juce::Thread::launch([&]() 
+		{
+			this->transportSource.stop();
+		});
 }
 
 void DJAudioPlayer::rewindSong()
