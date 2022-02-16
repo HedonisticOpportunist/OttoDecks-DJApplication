@@ -14,7 +14,7 @@
 MusicControlDeck::MusicControlDeck(PlayListManager* _playList): playList(_playList)
 {
     // background image 
-    // @credit goes to https://unsplash.com/@gradienta
+    // @credit goes to <a href="https://www.vecteezy.com/free-vector/cat">Cat Vectors by Vecteezy</a>
     backgroundImage = ImageCache::getFromMemory(BinaryData::background_img_png, BinaryData::background_img_pngSize);
 
     // make buttons visible 
