@@ -6,7 +6,10 @@
     <FILE id="gt6enX" name="background.png" compile="0" resource="1" file="Source/background.png"/>
     <FILE id="toRtyL" name="background_img.png" compile="0" resource="1"
           file="Source/background_img.png"/>
+    <FILE id="xLTRBz" name="cat.png" compile="0" resource="1" file="Source/cat.png"/>
     <GROUP id="{5C119B31-75FC-9F7E-FE0A-0D3FB45B1D6C}" name="Source">
+      <FILE id="Tqoykg" name="SearchField.cpp" compile="1" resource="0" file="Source/SearchField.cpp"/>
+      <FILE id="P3fnSc" name="SearchField.h" compile="0" resource="0" file="Source/SearchField.h"/>
       <FILE id="TtwbL8" name="AudioMetaData.cpp" compile="1" resource="0"
             file="Source/AudioMetaData.cpp"/>
       <FILE id="eAAPOl" name="AudioMetaData.h" compile="0" resource="0" file="Source/AudioMetaData.h"/>
@@ -49,7 +52,7 @@
         <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\..\juce-6.1.5-windows\JUCE\modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
