@@ -4,6 +4,7 @@
     MainDJAudioManager.cpp
     Author:  anita.pal
 
+    The implementation of the MainDJAudioManager component.
   ==============================================================================
 */
 
