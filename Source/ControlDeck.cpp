@@ -249,6 +249,7 @@ void ControlDeck::buttonClicked(Button* button)
 
     if (button == &fastForwardButton)
     {
+        player->fastForwardSong();
         paused = false;
     }
 
