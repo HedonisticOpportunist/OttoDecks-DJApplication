@@ -271,6 +271,12 @@ void ControlDeck::repaintButtons()
     {
         loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::royalblue);
     }
+
+    // set the colour of the load button when the mouse is not hovering over it 
+    else
+    {
+        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightseagreen);
+    }
 }
 
 void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)

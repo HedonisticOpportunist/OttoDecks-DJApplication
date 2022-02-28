@@ -10,8 +10,6 @@
           file="Source/cat_background.png"/>
     <FILE id="uJeSM4" name="fastforward.png" compile="0" resource="1" file="Source/fastforward.png"/>
     <FILE id="mtP3Wf" name="loop.png" compile="0" resource="1" file="Source/loop.png"/>
-    <FILE id="p8GhEC" name="play.png" compile="0" resource="1" file="Source/play.png"/>
-    <FILE id="UNDQpg" name="resume.png" compile="0" resource="1" file="Source/resume.png"/>
     <FILE id="EhfcRL" name="rewind.png" compile="0" resource="1" file="Source/rewind.png"/>
     <GROUP id="{5C119B31-75FC-9F7E-FE0A-0D3FB45B1D6C}" name="Source">
       <FILE id="Tqoykg" name="SearchField.cpp" compile="1" resource="0" file="Source/SearchField.cpp"/>
@@ -59,7 +57,7 @@
         <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="..\juce-6.1.5-windows\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\juce\JUCE\modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
