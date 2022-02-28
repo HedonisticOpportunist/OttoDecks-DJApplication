@@ -54,14 +54,15 @@ public:
 
 private:
 
-    // Text Buttons 
+    // Image Buttons 
+    ImageButton rewindButton;
+    ImageButton fastForwardButton;
+    ImageButton loopButton;
+
+    // Text Button 
     TextButton playButton{ "Play |>" };
     TextButton stopButton{ "Stop / Pause ||| " };
     TextButton loadButton{ "Load" };
-
-    TextButton rewindButton{ "<< Rewind" };
-    TextButton fastForwardButton{ "FastForward >>" };
-    TextButton loopButton{ "Loop ()" };
 
     // Text Labels
     Label volumeLabel;
@@ -82,16 +83,16 @@ private:
     // Audio-related variables
     juce::FileChooser chooser{ "Browse audio file" };
     DJAudioPlayer* player;
-
-    /* PRIVATE METHODS */
     
-    /** Repaints the buttons depending on specific conditions  */
-    void repaintButtons();
+    /** PRIVATE METHODS */
 
-    /** Repaint the sliders depending on specific conditions */
+    /** Repaints the buttons */
+    void repaintButtons(); 
+
+    /** Redraws the colours of the sliders differently depending on specific conditions */
     void repaintSliders();
 
-    /** Deals with the differing states of the play button */
+    /** Display the play button text depending on differing statues */
     void displayPlayButtonText(bool paused);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ControlDeck)

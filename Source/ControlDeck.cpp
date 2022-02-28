@@ -19,6 +19,30 @@ ControlDeck::ControlDeck
     player(_player),
     waveformDisplay(formatManagerToUse, cacheToUse)
 {
+    // load the image buttons 
+    // credit goes to: https://icons8.com for all the buttons 
+
+    Image rewindImg = ImageCache::getFromMemory(BinaryData::rewind_png, BinaryData::rewind_pngSize);
+    rewindButton.setImages
+    (false, false, false, rewindImg, 1.0f,
+        { Colour(juce::Colours::transparentWhite) }, rewindImg, 1.0f,
+        { Colour(Colours::transparentWhite) }, rewindImg,
+        1.0f, { Colour(Colours::transparentWhite) });
+
+    Image fastForwardImg = ImageCache::getFromMemory(BinaryData::fastforward_png, BinaryData::fastforward_pngSize);
+    fastForwardButton.setImages
+    (false, false, false, fastForwardImg, 1.0f,
+        { Colour(juce::Colours::transparentWhite) }, fastForwardImg, 1.0f,
+        { Colour(Colours::transparentWhite) }, fastForwardImg,
+        1.0f, { Colour(Colours::transparentWhite) });
+
+    Image loopImg = ImageCache::getFromMemory(BinaryData::loop_png, BinaryData::loop_pngSize);
+    loopButton.setImages
+    (false, false, false, loopImg, 1.0f,
+        { Colour(juce::Colours::transparentWhite) }, loopImg, 1.0f,
+        { Colour(Colours::transparentWhite) }, loopImg,
+        1.0f, { Colour(Colours::transparentWhite) });
+
     // make the buttons visible 
     addAndMakeVisible(playButton);
     addAndMakeVisible(stopButton);
@@ -130,82 +154,6 @@ void ControlDeck::resized()
     loopButton.setBounds(0, rowH * 9.5, getWidth(), rowH * 1.0);
 }
 
-void ControlDeck::repaintButtons()
-{
-
-    // set the colour for the play button if mouse over OR it has stopped playing 
-    if (playButton.isOver() || playButton.isMouseOver())
-    {
-        playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkblue);
-    }
-
-    // set the colour of the play button when the mouse is not hovering over it 
-    else
-    {
-        playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightslategrey);
-    }
-
-    // set the colour of the stop button if mouse is over OR it has stopped playing 
-    if (stopButton.isOver() || stopButton.isMouseOver())
-    {
-        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::aquamarine);
-    }
-
-    // set the colour of the stop button when the mouse is not hovering over it 
-    else
-    {
-        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::midnightblue);
-    }
-
-    // set the colour for the load button if mouse over OR it has stopped playing 
-    if (loadButton.isOver() || loadButton.isMouseOver())
-    {
-        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::royalblue);
-    }
-
-    // set the colour of the load button when the mouse is not hovering over it 
-    else
-    {
-        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightseagreen);
-    }
-
-    // set the colour for the rewind button if mouse over OR it has stopped playing 
-    if (rewindButton.isOver() || rewindButton.isMouseOver())
-    {
-        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkgrey);
-    }
-
-    // set the colour of the rewind button when the mouse is not hovering over it 
-    else
-    {
-        rewindButton.setColour(juce::TextButton::buttonColourId, juce::Colours::cadetblue);
-    }
-
-    // set the colour for the fast forward button if mouse over OR it has stopped playing 
-    if (fastForwardButton.isOver() || fastForwardButton.isMouseOver())
-    {
-        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightsteelblue);
-    }
-
-    // set the colour of the fast forward button when the mouse is not hovering over it 
-    else
-    {
-        fastForwardButton.setColour(juce::TextButton::buttonColourId, juce::Colours::silver);
-    }
-
-    // set the colour for the loop button if mouse over OR it has stopped playing 
-    if (loopButton.isOver() || loopButton.isMouseOver())
-    {
-        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::turquoise);
-    }
-
-    // set the colour of the loop button when the mouse is not hovering over it 
-    else
-    {
-        loopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::teal);
-    }
-}
-
 void ControlDeck::repaintSliders()
 {
     if (volumeSlider.isMouseOver() || positionSlider.isMouseOver() || speedSlider.isMouseOver())
@@ -290,6 +238,39 @@ void ControlDeck::sliderValueChanged(Slider* slider)
 void ControlDeck::timerCallback()
 {
     waveformDisplay.setPositionRelative(player->getPositionRelative());
+}
+
+void ControlDeck::repaintButtons()
+{
+    // set the colour for the play button if mouse over OR it has stopped playing 
+    if (playButton.isOver() || playButton.isMouseOver())
+    {
+        playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::darkblue);
+    }
+
+    // set the colour of the play button when the mouse is not hovering over it 
+    else
+    {
+        playButton.setColour(juce::TextButton::buttonColourId, juce::Colours::lightslategrey);
+    }
+
+    // set the colour of the stop button if mouse is over OR it has stopped playing 
+    if (stopButton.isOver() || stopButton.isMouseOver())
+    {
+        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::aquamarine);
+    }
+
+    // set the colour of the stop button when the mouse is not hovering over it 
+    else
+    {
+        stopButton.setColour(juce::TextButton::buttonColourId, juce::Colours::midnightblue);
+    }
+
+    // set the colour for the load button if mouse over OR it has stopped playing 
+    if (loadButton.isOver() || loadButton.isMouseOver())
+    {
+        loadButton.setColour(juce::TextButton::buttonColourId, juce::Colours::royalblue);
+    }
 }
 
 void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
