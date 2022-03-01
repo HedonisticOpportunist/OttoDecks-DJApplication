@@ -27,7 +27,7 @@ SearchField::SearchField(PlayListManager* _playListManager) : playListManager(_p
     // SEARCH FIELD
     addAndMakeVisible(searchField);
     setUpSearchFieldProperties();
-    changeTextWhenSearching(); 
+    searchThroughPlaylist(); 
 }
 
 SearchField::~SearchField()
@@ -38,7 +38,7 @@ void SearchField::buttonClicked(Button* button)
 {
     if (button == &searchButton)
     {
-        changeTextWhenSearching();
+        searchThroughPlaylist();
     }
 
     if (button == &clearButton)
@@ -51,7 +51,7 @@ void SearchField::paint (juce::Graphics& graphics)
 {
     graphics.drawImage(catImage, getLocalBounds().toFloat());
 
-    // repaint the search button 
+    // repaint the search and clear button 
     repaintButtons(); 
 }
 
@@ -64,10 +64,10 @@ void SearchField::resized()
     clearButton.setBounds(150, rowH * 1.0, getWidth() / 2, rowH * 1.0);
 }
 
-void SearchField::changeTextWhenSearching()
+void SearchField::searchThroughPlaylist()
 {
     juce::String inputString = searchField.getText();
-    playListManager->searchThePlaylist(inputString);
+    playListManager->searchThePlaylist(inputString); // playlist pointer that calls the method which performs the searching of the tracks vector 
 }
 
 void SearchField::setUpSearchFieldProperties()
@@ -80,6 +80,7 @@ void SearchField::setUpSearchFieldProperties()
 
 void SearchField::deselectRow()
 {
+    // de-selects the row with the found track from the playlist table 
     playListManager->deselectAllRowsFromTheTable(); 
 }
 

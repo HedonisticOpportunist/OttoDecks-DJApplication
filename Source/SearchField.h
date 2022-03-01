@@ -52,7 +52,7 @@ private:
     /**  PRIVATE METHODS **/
 
     /** Changes text when searching */
-    void changeTextWhenSearching();
+    void searchThroughPlaylist();
 
     /** Sets up the search field and its respective properties */
     void setUpSearchFieldProperties();

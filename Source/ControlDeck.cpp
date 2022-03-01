@@ -20,23 +20,26 @@ ControlDeck::ControlDeck
     waveformDisplay(formatManagerToUse, cacheToUse)
 {
     // load the image buttons 
-    // credit goes to: https://icons8.com for all the buttons 
+    // credit goes to: https://icons8.com for all the buttons' images 
 
-    Image rewindImg = ImageCache::getFromMemory(BinaryData::rewind_png, BinaryData::rewind_pngSize);
+    Image rewindImg = ImageCache::getFromMemory(BinaryData::rewind_png, BinaryData::rewind_pngSize); // load the rewind button image 
+
     rewindButton.setImages
     (false, false, false, rewindImg, 1.0f,
         { Colour(juce::Colours::transparentWhite) }, rewindImg, 1.0f,
         { Colour(Colours::transparentWhite) }, rewindImg,
         1.0f, { Colour(Colours::transparentWhite) });
 
-    Image fastForwardImg = ImageCache::getFromMemory(BinaryData::fastforward_png, BinaryData::fastforward_pngSize);
+    Image fastForwardImg = ImageCache::getFromMemory(BinaryData::fastforward_png, BinaryData::fastforward_pngSize); // load the fastforward button image 
+
     fastForwardButton.setImages
     (false, false, false, fastForwardImg, 1.0f,
         { Colour(juce::Colours::transparentWhite) }, fastForwardImg, 1.0f,
         { Colour(Colours::transparentWhite) }, fastForwardImg,
         1.0f, { Colour(Colours::transparentWhite) });
 
-    Image loopImg = ImageCache::getFromMemory(BinaryData::loop_png, BinaryData::loop_pngSize);
+    Image loopImg = ImageCache::getFromMemory(BinaryData::loop_png, BinaryData::loop_pngSize); // load the loop button image
+
     loopButton.setImages
     (false, false, false, loopImg, 1.0f,
         { Colour(juce::Colours::transparentWhite) }, loopImg, 1.0f,
@@ -83,9 +86,9 @@ ControlDeck::ControlDeck
     getLookAndFeel().setColour(juce::Slider::trackColourId, juce::Colours::lightcoral);
 
     getLookAndFeel().setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::honeydew);
-    volumeSlider.setSliderStyle(juce::Slider::Rotary);
-    positionSlider.setSliderStyle(juce::Slider::Rotary);
-    speedSlider.setSliderStyle(juce::Slider::Rotary);
+    volumeSlider.setSliderStyle(juce::Slider::Rotary);  // make the volume slider rotary 
+    positionSlider.setSliderStyle(juce::Slider::Rotary); // make the position slider rotary 
+    speedSlider.setSliderStyle(juce::Slider::Rotary); // make the speed slider rotary 
 
     // set ranges for the slider 
     volumeSlider.setRange(0.0, 1.0);
@@ -126,7 +129,7 @@ void ControlDeck::paint(juce::Graphics& graphics)
     graphics.setColour(juce::Colours::ghostwhite);
     graphics.drawRect(getLocalBounds(), 0);
 
-    // A call to the buttons and sliders painting functions
+    // A call to the buttons and sliders re-painting functions
     repaintButtons();
     repaintSliders();
 }
@@ -156,11 +159,13 @@ void ControlDeck::resized()
 
 void ControlDeck::repaintSliders()
 {
+    // if the mouse is over the sliders
     if (volumeSlider.isMouseOver() || positionSlider.isMouseOver() || speedSlider.isMouseOver())
     {
         getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::mistyrose);
     }
 
+    // if the mouse is not in direct vicinity of the sliders 
     else
     {
         getLookAndFeel().setColour(juce::Slider::thumbColourId, juce::Colours::gainsboro);
@@ -214,7 +219,7 @@ void ControlDeck::buttonClicked(Button* button)
         player->startLoop(loopButton.getToggleState());
     }
 
-    displayPlayButtonText(paused);
+    displayPlayButtonText(paused); // this method determines what the play button's text will display 
 }
 
 void ControlDeck::sliderValueChanged(Slider* slider)
@@ -286,11 +291,11 @@ void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
     {
 
     case true:
-        playButtonText = "Resume";
+        playButtonText = "Resume"; // if the audio has been paused, showcase 'Resume' 
         break;
 
     case false:
-        playButtonText = "Play";
+        playButtonText = "Play"; // if the audio has not been paused, then showcase 'Play' 
         break;
     }
 

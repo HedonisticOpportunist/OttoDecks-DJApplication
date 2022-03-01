@@ -154,6 +154,7 @@ void PlayListManager::saveTracksFile()
     // Save library to the tracks.txt file
     for (TrackFile& track : trackList)
     {
+        // determine the format of how the file is saved 
         tracksToSave << track.getTrackFileProperties().getFullPathName() << "," << track.getFileLength() << "\n";
     }
 }
@@ -194,10 +195,10 @@ void PlayListManager::searchThePlaylist(juce::String& inputtedText)
     {
         if (trackList[i].getFileName().contains(inputtedText))
         {
-            matchingTrackTitleId = i;
+            matchingTrackTitleId = i; // if there is a match, assign the variable to the counter's value 
         }
 
-        playListTable.selectRow(matchingTrackTitleId);
+        playListTable.selectRow(matchingTrackTitleId); // select the row which matches the value of matchingTrackTitleId
     }
 }
 

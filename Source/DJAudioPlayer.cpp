@@ -47,27 +47,27 @@ void DJAudioPlayer::stopSong()
 
 void DJAudioPlayer::rewindSong()
 {
-	int currentPosition = transportSource.getCurrentPosition();
+	int currentPosition = transportSource.getCurrentPosition(); // get the current position of the audio 
 
 	if (currentPosition > 0.5)
 	{
-		setPosition(currentPosition - 5.0);
+		setPosition(currentPosition - 5.0); // subtract a value of 5 from the current position 
 	}
 
 	else
 	{
-		setPosition(0.0);
+		setPosition(0.0); // reset the position to a value of 0
 	}
 }
 
 void DJAudioPlayer::fastForwardSong()
 {
-	double lastPositionHeld = transportSource.getLengthInSeconds();
-	int currentPosition = transportSource.getCurrentPosition();
+	double lastPositionHeld = transportSource.getLengthInSeconds(); // get the length in seconds, showcasing what the last file length was
+	int currentPosition = transportSource.getCurrentPosition(); // get the current position  of the audio 
 
 	if (currentPosition + 1.5 != lastPositionHeld && currentPosition + 1.5 > lastPositionHeld)
 	{
-		transportSource.setPosition(currentPosition + 2.0);
+		transportSource.setPosition(currentPosition + 2.0); // add a value of 2 to the current position 
 	}
 }
 
@@ -129,9 +129,9 @@ double DJAudioPlayer::getPositionRelative()
 
 void DJAudioPlayer::startLoop(bool buttonIsOn)
 {
-	if (readerSource != nullptr)
+	if (readerSource != nullptr) // if the reader source is not a null pointer 
 	{
-		readerSource->setLooping(buttonIsOn);
+		readerSource->setLooping(buttonIsOn); // start looping 
 	}
 }
 
