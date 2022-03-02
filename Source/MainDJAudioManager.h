@@ -13,7 +13,7 @@
 #include "ControlDeck.h"
 #include "DJAudioPlayer.h"
 #include <JuceHeader.h>
-#include "MusicControlDeck.h"
+#include "PlayListControlDeck.h"
 #include "PlayListManager.h"
 #include "SearchField.h"
 
@@ -67,7 +67,7 @@ private:
 
     // Player List 
     PlayListManager playListComponent{&audioMetaData, &deck1, &deck2};
-    MusicControlDeck musicControlDeck{&playListComponent};
+    PlayListControlDeck musicControlDeck{&playListComponent};
 
     // Search Field 
     SearchField searchField{&playListComponent};

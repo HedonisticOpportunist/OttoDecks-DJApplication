@@ -23,10 +23,10 @@
             file="Source/PlayListManager.h"/>
       <FILE id="DZvRlj" name="TrackFile.cpp" compile="1" resource="0" file="Source/TrackFile.cpp"/>
       <FILE id="I57SMB" name="TrackFile.h" compile="0" resource="0" file="Source/TrackFile.h"/>
-      <FILE id="MWzEJU" name="MusicControlDeck.cpp" compile="1" resource="0"
-            file="Source/MusicControlDeck.cpp"/>
-      <FILE id="IqgTZY" name="MusicControlDeck.h" compile="0" resource="0"
-            file="Source/MusicControlDeck.h"/>
+      <FILE id="MWzEJU" name="PlayListControlDeck.cpp" compile="1" resource="0"
+            file="Source/PlayListControlDeck.cpp"/>
+      <FILE id="IqgTZY" name="PlayListControlDeck.h" compile="0" resource="0"
+            file="Source/PlayListControlDeck.h"/>
       <FILE id="RTks5i" name="ControlDeck.h" compile="0" resource="0" file="Source/ControlDeck.h"/>
       <FILE id="vFjsKP" name="ControlDeck.cpp" compile="1" resource="0" file="Source/ControlDeck.cpp"/>
       <FILE id="dQFG3y" name="WaveformDisplay.cpp" compile="1" resource="0"
