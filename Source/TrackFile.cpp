@@ -2,7 +2,7 @@
   ==============================================================================
 
     TrackFile.cpp
-    Author:  anita.pal
+    Author:  @anita.pal
 
     The implementation of the TrackFile class. 
   ==============================================================================
@@ -28,6 +28,7 @@ juce::String TrackFile::getFileName()
     return trackTitle;
 }
 
+// get specific file properties like the full path name
 juce::File TrackFile::getTrackFileProperties()
 {
     return trackFile;

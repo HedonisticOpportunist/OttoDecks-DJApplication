@@ -2,7 +2,7 @@
   ==============================================================================
 
     PlayListControlDeck.h
-    Author:  anita.pal
+    Author: @anita.pal
 
     This component deals with the tracks.txt file and the event handling of 
     the PlayListManager component. 

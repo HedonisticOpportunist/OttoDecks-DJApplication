@@ -2,7 +2,7 @@
   ==============================================================================
 
     SearchField.cpp
-    Author:  anita.pal
+    Author: @anita.pal
 
     The implementation of the SearchField component.
   ==============================================================================

@@ -2,7 +2,7 @@
   ==============================================================================
 
 	DJAudioPlayer.cpp
-	Author:  anita.pal
+	Author: @anita.pal
 
 	The implementation of the DJAudioPlayer class. 
   ==============================================================================
@@ -23,7 +23,7 @@ void DJAudioPlayer::loadURL(URL& audioURL)
 {
 	auto* reader = formatManager.createReaderFor(audioURL.createInputStream(false));
 
-	if (reader != nullptr) 
+	if (reader != nullptr) // if the reader is not a null pointer 
 	{
 		std::unique_ptr<AudioFormatReaderSource> newSource(new AudioFormatReaderSource(reader, true));
 		transportSource.setSource(newSource.get(), 0, nullptr, reader->sampleRate);
@@ -78,7 +78,7 @@ void DJAudioPlayer::setPosition(double posInSecs)
 		return;
 	}
 
-	transportSource.setPosition(posInSecs);
+	transportSource.setPosition(posInSecs); // set the position to the seconds passed into the argument 
 }
 
 void DJAudioPlayer::setGain(double gain)
@@ -137,5 +137,5 @@ void DJAudioPlayer::startLoop(bool buttonIsOn)
 
 double DJAudioPlayer::getFileLengthSeconds()
 {
-	return transportSource.getLengthInSeconds();
+	return transportSource.getLengthInSeconds(); // get the file length in seconds from the transport source 
 }

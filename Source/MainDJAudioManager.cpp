@@ -2,7 +2,7 @@
   ==============================================================================
 
     MainDJAudioManager.cpp
-    Author:  anita.pal
+    Author: @anita.pal
 
     The implementation of the MainDJAudioManager component.
   ==============================================================================
@@ -82,9 +82,9 @@ void MainDJAudioManager::paint (juce::Graphics& graphics)
 void MainDJAudioManager::resized()
 {
     /**
-    *  DECK 1 | DECK 2 
+    | DECK 1 | DECK 2 |
     | MUSIC CONTROL DECK | PLAYLIST |
-    | SEARCH FIELD
+    | SEARCH FIELD |
     **/
 
     // DECKS

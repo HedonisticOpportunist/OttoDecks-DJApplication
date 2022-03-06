@@ -2,7 +2,7 @@
   ==============================================================================
 
     ControlDeck.h
-    Author:  @anita.pal
+    Author: @anita.pal
 
     This component deals with button clicks and the way audio is controlled 
     via the DJAudioPlayer class. 

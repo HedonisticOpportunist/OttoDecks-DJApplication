@@ -2,7 +2,7 @@
   ==============================================================================
 
     PlayListControlDeck.cpp
-    Author:  anita.pal
+    Author: @anita.pal
 
     The implementation of the PlayListControlDeck component. 
   ==============================================================================
@@ -111,7 +111,7 @@ void PlayListControlDeck::buttonClicked(Button* button)
 {
     if (button == &loadTrack)
     {
-        populateTracksFile();
+        populateTracksFile(); // add a track to the tracks.txt file 
     }
 
     // add track to either of the decks
@@ -127,7 +127,7 @@ void PlayListControlDeck::buttonClicked(Button* button)
 
     if (button == &removeTrack)
     {
-        removeAllContentsFromFile();
+        removeAllContentsFromFile(); // remove all contents from the tracks.txt file 
     }
 }
 
@@ -153,7 +153,7 @@ bool PlayListControlDeck::checkIfTrackAlreadyLoaded(TrackFile& trackFile)
 
     for (TrackFile& existingTrackFile : filesAlreadyLoaded)
     {
-        if (existingTrackFile.getFileName() == trackFile.getFileName())
+        if (existingTrackFile.getFileName() == trackFile.getFileName()) // if the file names match 
         {
             trackAlreadyLoaded = true;
         }
@@ -178,7 +178,7 @@ void PlayListControlDeck::populateTracksFile()
        if (!checkIfTrackAlreadyLoaded(trackFile))
        {
            filesAlreadyLoaded.push_back(trackFile);
-           fileList << trackFile.getTrackFileProperties().getFullPathName() << "\n";
+           fileList << trackFile.getTrackFileProperties().getFullPathName() << "\n"; // display full file name of track 
            playList->addTrackToTracksVector(trackFile);
        }
     }

@@ -2,7 +2,7 @@
   ==============================================================================
 
     TrackFile.h
-    Author:  @anita.pal
+    Author: @anita.pal
 
     This class is a representation of a track file and its respective
     properties. 

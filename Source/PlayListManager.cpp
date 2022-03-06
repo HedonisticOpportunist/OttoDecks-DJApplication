@@ -2,7 +2,7 @@
   ==============================================================================
 
     PlayListManager.cpp
-    Author:  anita.pal
+    Author: @anita.pal
 
     The implementation of the PlayListManager component. 
   ==============================================================================
@@ -141,9 +141,9 @@ void PlayListManager::addTrackToPlayerTwo()
 
 void PlayListManager::addTrackToTracksVector(TrackFile& trackFile)
 {
-    File file = trackFile.getTrackFileProperties();
-    juce::URL audioURL{ file };
-    trackFile.setFileLength(audioMetaData->getAudioTrackLength(audioURL));
+    File file = trackFile.getTrackFileProperties(); // get file specific properties  
+    juce::URL audioURL{ file }; // get the url 
+    trackFile.setFileLength(audioMetaData->getAudioTrackLength(audioURL)); // set the file length 
     trackList.push_back(trackFile);
 }
 

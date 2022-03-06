@@ -2,7 +2,7 @@
   ==============================================================================
 
     MainDJAudioManager.h
-    Author:  anita.pal
+    Author: @anita.pal
 
     This component serves as a gateway for all the other components. 
   ==============================================================================

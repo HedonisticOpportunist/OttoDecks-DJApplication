@@ -2,7 +2,7 @@
   ==============================================================================
 
     ControlDeck.cpp
-    Author: anita.pal
+    Author: @anita.pal
 
     The implementation of the ControlDeck component. 
   ==============================================================================
@@ -295,7 +295,7 @@ void ControlDeck::displayPlayButtonText(bool pauseButtonStatus)
         break;
 
     case false:
-        playButtonText = "Play"; // if the audio has not been paused, then showcase 'Play' 
+        playButtonText = "Play |>"; // if the audio has not been paused, then showcase 'Play' 
         break;
     }
 

@@ -2,7 +2,7 @@
   ==============================================================================
 
     SearchField.h
-    Author:  anita.pal
+    Author: @anita.pal
 
     The search field component displays a search field. 
   ==============================================================================
