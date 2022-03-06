@@ -10,11 +10,11 @@
 #include "MainDJAudioManager.h"
 
 //==============================================================================
-class NewProjectApplication  : public juce::JUCEApplication
+class OttoDecks  : public juce::JUCEApplication
 {
 public:
     //==============================================================================
-    NewProjectApplication() {}
+    OttoDecks() {}
 
     const juce::String getApplicationName() override       { return ProjectInfo::projectName; }
     const juce::String getApplicationVersion() override    { return ProjectInfo::versionString; }
@@ -102,4 +102,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (NewProjectApplication)
+START_JUCE_APPLICATION (OttoDecks)
