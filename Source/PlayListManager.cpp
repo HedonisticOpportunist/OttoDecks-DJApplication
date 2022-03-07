@@ -196,12 +196,12 @@ void PlayListManager::searchThePlaylist(juce::String& inputtedText)
 
     for (unsigned int i = 0; i < trackList.size(); ++i)
     {
-        if (trackList[i].getFileName().contains(inputtedText))
+        if (trackList[i].getTrackFileProperties().getFileName().contains(inputtedText) || trackList[i].getTrackFileProperties().getFileName() == inputtedText)
         {
             matchingTrackTitleId = i; // if there is a match, assign the variable to the counter's value 
+            playListTable.selectRow(matchingTrackTitleId); // select the row which matches the value of matchingTrackTitleId
+            break;
         }
-
-        playListTable.selectRow(matchingTrackTitleId); // select the row which matches the value of matchingTrackTitleId
     }
 }
 
