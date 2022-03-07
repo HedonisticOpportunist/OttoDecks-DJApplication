@@ -145,6 +145,9 @@ void PlayListManager::addTrackToTracksVector(TrackFile& trackFile)
     juce::URL audioURL{ file }; // get the url 
     trackFile.setFileLength(audioMetaData->getAudioTrackLength(audioURL)); // set the file length 
     trackList.push_back(trackFile);
+
+    // update the table 
+    playListTable.updateContent();
 }
 
 void PlayListManager::saveTracksFile()
